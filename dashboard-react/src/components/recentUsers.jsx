@@ -19,7 +19,6 @@ export default function RecentUsers() {
     }
 
 
-
     function handleButton(user) {
         setSelectedUser(user)
         setShowModal(true)
@@ -60,7 +59,7 @@ export default function RecentUsers() {
                         <span className="card-action-list">Vedi Tutti</span>
                     </div>
                 </div>
-                <button className="custom-btn" id="add-clients" onClick={() => { setShowModal(true), setMessage('Aggiungi cliente'), setCheck(false) }}>Aggiungi cliente </button>
+                <button className="custom-btn" id="add-clients" onClick={() => { setShowModal(true), setMessage('Aggiungi cliente'), setIsNew(false) }}>Aggiungi cliente </button>
                 <div className="client-list" id="client-list-id">
                     {userList.map(item => {
                         return (

@@ -20,11 +20,11 @@ function UserModal({ show, onHide, user, title, check, onUserChange }) {
                 <Modal.Body>
                     <form action="" onSubmit={(e) => e.preventDefault}>
                         <label htmlFor="name">Nome</label><br />
-                        <input type="text" defaultValue={user.firstName} placeholder='Inserisci nome...' onChange={(e) => setLocalUser({ ...user, firstName: e.target.value })} /><br /><br />
+                        <input type="text" defaultValue={localUser.firstName} placeholder='Inserisci nome...' onChange={(e) => setLocalUser({ ...localUser, firstName: e.target.value })} /><br /><br />
                         <label htmlFor="name">Cognome</label><br />
-                        <input type="text" defaultValue={user.lastName} onChange={(e) => setLocalUser({ ...user, lastName: e.target.value })}/><br /><br />
+                        <input type="text" defaultValue={localUser.lastName} onChange={(e) => setLocalUser({ ...localUser, lastName: e.target.value })}/><br /><br />
                         <label htmlFor="name">Azienda</label><br />
-                        <input type="text" defaultValue={user.company.department} onChange={(e) => setLocalUser({ ...user, company: { department: e.target.value }})}/><br />
+                        <input type="text" defaultValue={localUser.company.department} onChange={(e) => setLocalUser({ ...localUser, company: { department: e.target.value }})}/><br />
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
