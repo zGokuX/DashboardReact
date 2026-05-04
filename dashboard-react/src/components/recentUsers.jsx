@@ -2,52 +2,82 @@ import { useEffect, useState } from "react"
 import fetchUser from "../services/requests"
 import UserModal from "./UserModal"
 
-export default function RecentUsers() {
+export default function RecentUsers(props) {
     const [userList, setUserList] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const [message, setMessage] = useState('')
-    const [isNew, setIsNew] = useState(true) //isNew
-    useEffect(() => {
-        getUser(20)
-
-    }, [])
-
+    const [isNew, setIsNew] = useState(false) //isNew
+    
     async function getUser(maxUser) {
         const user = await fetchUser(maxUser)
+        // console.log(user.map(item => item.id))
+        // console.log(user.length)
         setUserList(user)
     }
+    
+    useEffect(() => {
+        getUser(10)
+        
+    }, [])
 
-
-    function handleButton(user) {
+    function editButton(user) {
         setSelectedUser(user)
         setShowModal(true)
-        setIsNew(true)
+        setIsNew(false)
         setMessage('Modifica utente')
         console.log(user)
     }
 
+    function addButton(){
+        setShowModal(true)
+        setMessage('Aggiungi cliente')
+        setIsNew(true) 
+    }
+
+    function renderUser() {
+        return (userList.map(item => {
+            // console.log(item)
+            return (
+                <div className="row-list" key={item.id + item.firstName}>
+                    <div className="client-avatar">
+                        <img src={item.image} alt="Client Avatar" />
+                    </div>
+                    <div className="client-info">
+                        <h5>{item.firstName + " " + item.lastName}</h5>
+                        <h6>{item.company.department}</h6>
+                    </div>
+                    <div className="client-price">
+                        <span>€ 1.200</span>
+                    </div>
+                    <button className="custom-btn modify-btn" onClick={() => editButton(item)}>Modifica</button>
+                    <button className="filter-btn custom-btn" onClick={() => props.onSelectUser(item)}>Filtra</button>
+                </div>
+            )
+        }))
+    }
     return (
         <>
             {showModal && (
                 <UserModal show={showModal}
                     onHide={() => setShowModal(false)}
-                    onUserChange={(user, isCheck) => {
-                        console.log(user)
-                        if (!isCheck) {
+                    onUserChange={(user, isNewUser) => {
+                        console.log("E UN NUOVO UTENTE: ",isNewUser)
+                        console.log("UTENTE: ",user)
+                        if (isNewUser) {
+                            setUserList([...userList, user])
+                        } else {
                             setUserList(userList.map(item => {
                                 if (user.id === item.id) {
                                     return { ...item, ...user }
                                 }
                                 return item
                             }))
-                        } else {
-                            setUserList([...userList, user])
                         }
                     }}
                     user={selectedUser}
                     title={message}
-                    check={isNew}
+                    isNew={isNew}
                 />
             )}
             <div className="card client-card">
@@ -59,27 +89,9 @@ export default function RecentUsers() {
                         <span className="card-action-list">Vedi Tutti</span>
                     </div>
                 </div>
-                <button className="custom-btn" id="add-clients" onClick={() => { setShowModal(true), setMessage('Aggiungi cliente'), setIsNew(false) }}>Aggiungi cliente </button>
+                <button className="custom-btn" id="add-clients" onClick={addButton}>Aggiungi cliente </button>
                 <div className="client-list" id="client-list-id">
-                    {userList.map(item => {
-                        return (
-
-                            <div className="row-list" key={item.id}>
-                                <div className="client-avatar">
-                                    <img src={item.image} alt="Client Avatar" />
-                                </div>
-                                <div className="client-info">
-                                    <h5>{item.firstName + " " + item.lastName}</h5>
-                                    <h6>{item.company.department}</h6>
-                                </div>
-                                <div className="client-price">
-                                    <span>€ 1.200</span>
-                                </div>
-                                <button className="custom-btn modify-btn" onClick={() => handleButton(item)}>Modifica</button>
-                                <button className="filter-btn custom-btn">Filtra</button>
-                            </div>
-                        )
-                    })}
+                    {renderUser()}
 
                 </div>
             </div>

@@ -300,6 +300,7 @@ main {
     flex: 1;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 .container-full-width-full-width .card {
     background-color: var(--background-color);
     border: 1px solid var(--border-color, #ddd);
@@ -396,7 +397,7 @@ main {
 }
 
 .clienti.container-full-width .card {
-    flex: 3;
+    flex: 1;
 }
 
 .clienti.container-full-width .card.client-card {
@@ -422,7 +423,7 @@ main {
     border-radius: 5px;
     margin-top: 6px;
     cursor: pointer;
-        
+
     transition: background-color 0.3s ease;
 }
 
@@ -743,4 +744,8 @@ main {
 .modal-shadow .modal #close:hover {
     background-color: #88261f;
 
+}
+
+.input-row-list {
+    width: 20rem;
 }

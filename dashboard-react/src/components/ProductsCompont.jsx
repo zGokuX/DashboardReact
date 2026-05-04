@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { fetchProducts } from "../services/requests"
-export default function Products() {
+export default function Products(props) {
 
     const [productList, setProductList] = useState([])
     useEffect(() => {
@@ -9,9 +9,11 @@ export default function Products() {
 
     async function getProduct(userId) {
         const product = await fetchProducts(userId)
+        props.onSelectProduct(product)
         setProductList(product)
     }
 
+    
     return (
         <>
             <div className="card container-card">

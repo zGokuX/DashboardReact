@@ -7,7 +7,6 @@ export default function fetchUser(maxUser) {
 
 export function fetchCarts(userId = null) {
   return fetch(`https://dummyjson.com/carts?limit=10&userId=${userId}`).then(res => res.json()).then(cartResponse => {
-    console.log(cartResponse)
     return cartResponse.carts
 
   })
@@ -15,7 +14,6 @@ export function fetchCarts(userId = null) {
 
 export function fetchProducts(userId = null) {
   return fetch(`https://dummyjson.com/products?limit=20&userId=${userId}`).then(res => res.json()).then(productResponse => {
-    console.log(productResponse)
     return productResponse.products
 
   })

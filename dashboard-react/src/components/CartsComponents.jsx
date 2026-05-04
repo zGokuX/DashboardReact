@@ -1,18 +1,36 @@
 import { useEffect, useState } from "react"
 import { fetchCarts } from "../services/requests"
+import CartsModal from "./CartsModal"
+import Button from 'react-bootstrap/Button';
 
-export default function Carts() {
+export default function Carts(props) {
     const [cartList, setCartList] = useState([])
-        useEffect(() => {
-            getCart(1)
-        }, [])
-    
-        async function getCart(userId) {
-            const cart = await fetchCarts(userId)
-            setCartList(cart)
-        }
+    const [showModal, setShowModal] = useState(false)
+    const [selectSingleProduct, setSelectSingleProduct] = useState(null)
+    useEffect(() => {
+        getCart(1)
+    }, [])
+
+    async function getCart(userId) {
+        const cart = await fetchCarts(userId)
+        setCartList(cart)
+    }
     return (
         <>
+            {showModal &&
+                <>
+                    <CartsModal
+                        show={showModal}
+                        onHide={() => setShowModal(false)}
+                        nomeProdotto={selectSingleProduct.title}
+                        immagineProdotto={selectSingleProduct.thumbnail}
+                        categoriaProdotto={selectSingleProduct.category}
+                        recensioneProdotto={selectSingleProduct.rating}
+                        prezzoProdotto={selectSingleProduct.price}
+                        descrizioneRecensioneProdotto={selectSingleProduct.reviews}
+                    />
+                </>
+            }
             <div className="card container-card">
                 <div className="card-title">
                     <span>Carts<i className="fa-solid fa-cart-shopping"></i></span>
@@ -21,25 +39,69 @@ export default function Carts() {
                 <table className="card-table">
                     <thead>
                         <tr className="table-header">
+                            <th className="col nome">Utente id</th>
                             <th className="col nome">Prodotti Totali</th>
                             <th className="col cliente">Quantità</th>
                             <th className="col stato">Totale</th>
-
+                            <th className="col stato"></th>
                         </tr>
                     </thead>
 
                     <tbody id="bodyTable2">
-                         {cartList.map(item => {
-                            return (
 
+                        {props.userId &&
+
+                            cartList.filter(item => {
+                                if (props.userId === item.userId) {
+
+                                    return true
+                                }
+                                return false
+                            }).map(item => {
+                                return (
+
+                                    <tr key={item.id}>
+                                        <td>{item.userId}</td>
+                                        <td>{item.totalProducts}</td>
+                                        <td>{item.totalQuantity}</td>
+                                        <td>€ {Math.round(item.total)}</td>
+                                        <td><Button variant="outline-primary" onClick={() => {
+                                            props.productItem
+                                                .filter(product => product.id === item.id)
+                                                .forEach(product => {
+                                                    setSelectSingleProduct(product)
+                                                    setShowModal(true)
+                                                })
+                                        }}>
+                                            details
+                                        </Button></td>
+                                    </tr>
+
+                                )
+                            })}
+
+                        {!props.userId && cartList.map(item => {
+
+                            return (
                                 <tr key={item.id}>
+                                    <td>{item.userId}</td>
                                     <td>{item.totalProducts}</td>
                                     <td>{item.totalQuantity}</td>
                                     <td>€ {Math.round(item.total)}</td>
+                                    <td><Button variant="outline-primary" onClick={() => {
+                                        props.productItem
+                                            .filter(product => product.id === item.id)
+                                            .forEach(product => {
+                                                setSelectSingleProduct(product)
+                                                setShowModal(true)
+                                            })
+                                    }}>
+                                        details
+                                    </Button></td>
                                 </tr>
-
                             )
                         })}
+
                     </tbody>
                 </table>
             </div>
