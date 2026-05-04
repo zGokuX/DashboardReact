@@ -89,6 +89,7 @@ header .topbar-main {
 
 .logo-container {
     width: 200px;
+    height: 3rem;
 }
 
 .user-profile-container {
@@ -274,8 +275,8 @@ nav a:hover {
 }
 
 .logo-container img {
-    height: 40px;
-    padding: 10px;
+    height: 3rem;
+    padding: 7px;
 }
 
 .user-menu ul {
@@ -409,6 +410,17 @@ main {
     flex-direction: column;
     justify-content: center;
     flex: 1;
+}
+
+.clienti.container-full-width .card.client-card .client-list .row-list .client-info h5 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.clienti.container-full-width .card.client-card .client-list .row-list .client-info h6 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: Verdana, sans-serif;
 }
 
 .clienti.container-full-width .card.client-card .client-list {

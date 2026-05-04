@@ -1,14 +1,14 @@
 import { useState } from "react";
 import BigGraphic from "./BigGraphic";
-import CardTitle from "./cardTitleComponent";
-import Carts from "./CartsComponents";
-import Graphic from "./GraphicComponent";
-import Products from "./ProductsCompont";
+import CardTitle from "./cardTitle";
+import Carts from "./Carts";
+import Graphic from "./Graphic";
+import Products from "./Products";
 import RecentUsers from "./recentUsers";
 
 export default function Maincomponent() {
     const [selectUser, setSelectUser] = useState(null)
-    const [selectProduct,setSelectProduct] = useState(null)
+    const [selectProduct, setSelectProduct] = useState(null)
     return (
         <>
             <main>
@@ -19,12 +19,12 @@ export default function Maincomponent() {
                 <Graphic />
                 <div className="clienti container-full-width">
                     <div className="card">
-                        <CardTitle/>
+                        <CardTitle />
 
                         <BigGraphic />
 
                     </div>
-                    <RecentUsers onSelectUser={(user) => setSelectUser(user)}/>
+                    <RecentUsers onSelectUser={(user) => setSelectUser(user)} />
                 </div>
                 <div className="container-full-width">
                     <Carts userId={selectUser?.id} productItem={selectProduct} />
