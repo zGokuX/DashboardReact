@@ -9,23 +9,27 @@ export default function Products(props) {
     }, [])
 
     async function getProduct(userId) {
-        const product = await fetchProducts(userId,props.maxViewProduct)
-        if(props.onSelectProduct){
-             props.onSelectProduct(product)
+        const product = await fetchProducts(userId, props.maxViewProduct)
+        if (props.onSelectProduct) {
+            props.onSelectProduct(product)
         }
-       
+
         setProductList(product)
     }
 
 
     return (
         <>
-            <div className="card container-card">
+        <div className="clienti container-full-width">
+            <div className="card client-card">
                 <div className="card-title">
                     <span>Products<i className="fa-solid fa-list"></i></span>
-                    <span className="card-action">Vedi Tutte</span>
+                    <div className="card-actions" id="btn-card-actions">
+                        <span className="card-action-list">Vedi Tutti</span>
+                    </div>
                 </div>
-               <ProductsTable productList={productList}/>
+                <ProductsTable productList={productList} />
+            </div>
             </div>
         </>
     )

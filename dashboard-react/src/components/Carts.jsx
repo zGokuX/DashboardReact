@@ -32,43 +32,46 @@ export default function Carts(props) {
                     />
                 </>
             }
-            <div className="card container-card">
-                <div className="card-title">
-                    <span>Carts<i className="fa-solid fa-cart-shopping"></i></span>
-                    <span className="card-action">Vedi Tutti</span>
-                </div>
-                <table className="card-table">
-                    <thead>
-                        <tr className="table-header">
-                            <th className="col nome">Utente id</th>
-                            <th className="col nome">Prodotti Totali</th>
-                            <th className="col cliente">Quantità</th>
-                            <th className="col stato">Totale</th>
-                            <th className="col stato"></th>
-                        </tr>
-                    </thead>
+            <div className="clienti container-full-width">
+                <div className="card client-card">
+                    <div className="card-title">
+                        <span>Carts<i className="fa-solid fa-cart-shopping"></i></span>
+                        <div className="card-actions" id="btn-card-actions">
+                            <span className="card-action-list">Vedi Tutti</span>
+                        </div>
+                    </div>
+                    <table className="card-table">
+                        <thead>
+                            <tr className="table-header">
+                                <th className="col nome">Utente id</th>
+                                <th className="col nome">Prodotti Totali</th>
+                                <th className="col cliente">Quantità</th>
+                                <th className="col stato">Totale</th>
+                                <th className="col stato"></th>
+                            </tr>
+                        </thead>
 
-                    <tbody id="bodyTable2">
+                        <tbody id="bodyTable2">
 
-                        {cartList.filter(item => {
-                            if (!props.userId) {
-                                return true
-                            }
+                            {cartList.filter(item => {
+                                if (!props.userId) {
+                                    return true
+                                }
 
-                            if (props.userId === item.userId) {
+                                if (props.userId === item.userId) {
 
-                                return true
-                            }
-                            return false
-                        }).map(item => {
-                            return (
+                                    return true
+                                }
+                                return false
+                            }).map(item => {
+                                return (
 
-                                <tr key={item.id}>
-                                    <td>{item.userId}</td>
-                                    <td>{item.totalProducts}</td>
-                                    <td>{item.totalQuantity}</td>
-                                    <td>€ {Math.round(item.total)}</td>
-                                    {/* <td><Button variant="outline-primary" onClick={() => {
+                                    <tr key={item.id}>
+                                        <td>{item.userId}</td>
+                                        <td>{item.totalProducts}</td>
+                                        <td>{item.totalQuantity}</td>
+                                        <td>€ {Math.round(item.total)}</td>
+                                        {/* <td><Button variant="outline-primary" onClick={() => {
                                             props.productItem
                                                 .filter(product => product.id === item.id)
                                                 .forEach(product => {
@@ -78,15 +81,16 @@ export default function Carts(props) {
                                         }}>
                                             details
                                         </Button></td> */}
-                                    <td><Button variant="outline-primary" onClick={() => detailsButton(item)}>
-                                        details
-                                    </Button></td>
-                                </tr>
+                                        <td><Button variant="outline-primary" onClick={() => detailsButton(item)}>
+                                            details
+                                        </Button></td>
+                                    </tr>
 
-                            )
-                        })}
-                    </tbody>
-                </table>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     )
