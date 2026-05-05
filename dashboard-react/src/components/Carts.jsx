@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { fetchCarts } from "../services/requests"
 import CartsModal from "./CartsModal"
 import Button from 'react-bootstrap/Button';
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import CartsView from "../views/CartsView";
 
 export default function Carts(props) {
     const [cartList, setCartList] = useState([])
@@ -36,44 +38,50 @@ export default function Carts(props) {
                 <div className="card client-card">
                     <div className="card-title">
                         <span>Carts<i className="fa-solid fa-cart-shopping"></i></span>
-                        <div className="card-actions" id="btn-card-actions">
-                            <span className="card-action-list">Vedi Tutti</span>
-                        </div>
+
+                        {!props.inPage &&
+                            <div className="card-actions" id="btn-card-actions">
+                        <nav>
+                            <Link to="/cards"><span className="card-action-list">Vedi Tutti</span></Link>
+                        </nav>
                     </div>
-                    <table className="card-table">
-                        <thead>
-                            <tr className="table-header">
-                                <th className="col nome">Utente id</th>
-                                <th className="col nome">Prodotti Totali</th>
-                                <th className="col cliente">Quantità</th>
-                                <th className="col stato">Totale</th>
-                                <th className="col stato">Sconto totale</th>
-                                <th className="col stato"></th>
-                            </tr>
-                        </thead>
+                            }
 
-                        <tbody id="bodyTable2">
+                </div>
+                <table className="card-table">
+                    <thead>
+                        <tr className="table-header">
+                            <th className="col nome">Utente id</th>
+                            <th className="col nome">Prodotti Totali</th>
+                            <th className="col cliente">Quantità</th>
+                            <th className="col stato">Totale</th>
+                            <th className="col stato">Sconto totale</th>
+                            <th className="col stato"></th>
+                        </tr>
+                    </thead>
 
-                            {cartList.filter(item => {
-                                if (!props.userId) {
-                                    return true
-                                }
+                    <tbody id="bodyTable2">
 
-                                if (props.userId === item.userId) {
+                        {cartList.filter(item => {
+                            if (!props.userId) {
+                                return true
+                            }
 
-                                    return true
-                                }
-                                return false
-                            }).map(item => {
-                                return (
+                            if (props.userId === item.userId) {
 
-                                    <tr key={item.id}>
-                                        <td>{item.userId}</td>
-                                        <td>{item.totalProducts}</td>
-                                        <td>{item.totalQuantity}</td>
-                                        <td>€ {Math.round(item.total)}</td>
-                                        <td>€ {Math.round(item.discountedTotal)}</td>
-                                        {/* <td><Button variant="outline-primary" onClick={() => {
+                                return true
+                            }
+                            return false
+                        }).map(item => {
+                            return (
+
+                                <tr key={item.id}>
+                                    <td>{item.userId}</td>
+                                    <td>{item.totalProducts}</td>
+                                    <td>{item.totalQuantity}</td>
+                                    <td>€ {Math.round(item.total)}</td>
+                                    <td>€ {Math.round(item.discountedTotal)}</td>
+                                    {/* <td><Button variant="outline-primary" onClick={() => {
                                             props.productItem
                                                 .filter(product => product.id === item.id)
                                                 .forEach(product => {
@@ -83,17 +91,18 @@ export default function Carts(props) {
                                         }}>
                                             details
                                         </Button></td> */}
-                                        <td><Button variant="outline-primary" onClick={() => detailsButton(item)}>
-                                            details
-                                        </Button></td>
-                                    </tr>
+                                    <td><Button variant="outline-primary" onClick={() => detailsButton(item)}>
+                                        details
+                                    </Button></td>
+                                </tr>
 
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+                            )
+                        })}
+                    </tbody>
+                </table>
             </div>
+        </div >
+
         </>
     )
 }

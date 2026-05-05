@@ -35,9 +35,9 @@ export default function Layout() {
                         </nav>
                     </aside>
                     <Routes>
-                        <Route path="/" element={<DashboardView maxViewProduct={10} maxViewCarts={10} maxViewUser={10}/>} />
+                        <Route path="/*" element={<DashboardView maxViewProduct={10} maxViewCarts={10} maxViewUser={10}/>} />
                         <Route path="/users" element={<RecentUsersView  maxViewUser={20}/>} />
-                        <Route path="/cards" element={<CartsView maxViewCarts={20}/>} />
+                        <Route path="/cards/*" element={<CartsView maxViewCarts={20} inPage={true}/>} />
                         <Route path="/products" element={<ProductsView maxViewProduct={20}/>} />
                     </Routes>
                     

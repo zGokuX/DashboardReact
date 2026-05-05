@@ -22,7 +22,7 @@ function CartsModal({ show, onHide, cart }) {
                 </Button>
             </Modal.Footer>
         </Modal>
-    );
+    )
 }
 
 export default CartsModal;

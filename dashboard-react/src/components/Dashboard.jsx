@@ -26,7 +26,7 @@ export default function Dashboard(props) {
                     <RecentUsers onSelectUser={(user) => setSelectUser(user)}/>
                 </div>
                 <div className="container-full-width">
-                    <Carts userId={selectUser?.id} productItem={selectProduct}/>
+                    <Carts userId={selectUser?.id} productItem={selectProduct} inPage={false}/>
                     <Products  onSelectProduct={(product) => setSelectProduct(product)}/>
                 </div>
             </main>

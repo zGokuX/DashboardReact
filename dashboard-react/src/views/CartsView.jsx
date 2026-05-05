@@ -6,7 +6,7 @@ export default function CartsView(props) {
         <>
             <div className="adjustment-layout-product">
                 <h2>Lista carelli</h2>
-                <Carts maxViewCarts={props.maxViewCarts} />
+                <Carts maxViewCarts={20} inPage={true} />
             </div>
 
         </>
