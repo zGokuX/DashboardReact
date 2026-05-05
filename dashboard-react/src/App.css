@@ -79,6 +79,7 @@ header .topbar-main {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
+    flex: 2;
 }
 
 .container-full-width-full-width {
