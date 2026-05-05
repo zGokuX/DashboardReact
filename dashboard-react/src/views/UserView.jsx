@@ -24,6 +24,7 @@ export default function UserView(props) {
                         <p>Nome: {user.firstName}</p>
                         <p>Cognome: {user.lastName}</p>
                         <p>Genere: {user.gender}</p>
+                        <p>Eta': {user.age}</p>
                         <p>Email: {user.email}</p>
                         <p>Numero di telefono: {user.phone}</p>
                         <p>Azienda: {user.company?.department}</p>
