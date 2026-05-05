@@ -5,6 +5,7 @@ import ProductsView from "../views/ProductsView";
 import DashboardView from "../views/DashboardView";
 import CartsView from "../views/CartsView";
 import RecentUsersView from "../views/RecentUsersView";
+import UserView from "../views/UserView";
 
 export default function Layout() {
     return (
@@ -24,7 +25,7 @@ export default function Layout() {
                                     <Link to="/users">Users</Link>
                                 </li>
                                 <li>
-                                    <Link to="/cards">Cards</Link>
+                                    <Link to="/cards">Carts</Link>
                                 </li>
 
                                 <li>
@@ -39,6 +40,7 @@ export default function Layout() {
                         <Route path="/users/*" element={<RecentUsersView  maxViewUser={20} />} />
                         <Route path="/cards/*" element={<CartsView maxViewCarts={20}/>} />
                         <Route path="/products/*" element={<ProductsView maxViewProduct={20}/>} />
+                        <Route path="/user/:userid" element={<UserView/>} />
                     </Routes>
                     
                 </div>

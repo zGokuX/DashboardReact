@@ -10,13 +10,24 @@ function ProductModal({ show, onHide, product }) {
             </Modal.Header>
             <Modal.Body>
                 {console.log(product)}
-                <div className='clienti container-full-width'>
-                    <div className='card client-card'>
-                        <ProductsTable productList={[product]} modalMode={true} isCarts={false} showMoreOption={true}/>
-                    </div>
-                    
+                <h5>Nome prodotto: {product.title}</h5>
+                <p>id prodotto: {product.id}</p>
+                <p>Valutazione: {product.rating}</p>
+                <p>Categoria: {product.category}</p>
+                <p>Descrizione: {product.description}</p>
+                <p>Policy rimborso: {product.returnPolicy}</p>
+                <p>Garaniza: {product.warrantyInformation}</p>
+                <div>
+                    <p>Ultime valutazioni con commento:</p>
+
+                    <ul>
+                        {product.reviews.map((item, index) => (
+                            <li key={index}>
+                                Rating: {item.rating} — {item.comment}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-                
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHide}>

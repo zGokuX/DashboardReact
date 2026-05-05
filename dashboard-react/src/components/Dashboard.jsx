@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BigGraphic from "../layouts/BigGraphic";
 import CardTitle from "../components/cardTitle";
 import Carts from "./Carts";
 import Graphic from "../layouts/Graphic";
 import Products from "./Products";
 import RecentUsers from "./recentUsers";
+import { fetchSingleUser } from "../services/requests";
 
 export default function Dashboard(props) {
     const [selectUser, setSelectUser] = useState(null)
     const [selectProduct, setSelectProduct] = useState(null)
+    
     return (
         <>
             <main>

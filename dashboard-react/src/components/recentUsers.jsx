@@ -56,8 +56,11 @@ export default function RecentUsers(props) {
                     </div>
                     <Button variant="outline-primary" className="modify-btn" onClick={() => editButton(item)}>Modifica</Button>
                     <Button variant="outline-primary" className="filter-btn " onClick={() => props.onSelectUser(item)}>Filtra</Button> {/* custom-btn */}
+                    <nav>
+                        <Link to={`/user/${item.id}`}><Button variant="outline-primary" className="filter-btn "><i className="fa fa-info" aria-hidden="true"></i></Button></Link>
+                    </nav>
                 </div>
-            )
+            ) 
         }))
     }
     return (
