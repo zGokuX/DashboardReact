@@ -6,7 +6,7 @@ export default function ProductsView(props) {
         <>
             <div className="adjustment-layout-product">
                 <h2>Lista prodotti</h2>
-                <Products  maxViewProduct={props.maxViewProduct}/>
+                <Products  maxViewProduct={props.maxViewProduct} inPage={true}/>
             </div>
         </>
     )

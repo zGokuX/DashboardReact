@@ -6,7 +6,7 @@ export default function RecentUsersView(props) {
         <>
             <div className="adjustment-layout-user">
                 <h2>Lista clienti</h2>
-                <RecentUsers maxViewUser={props.maxViewUser} />
+                <RecentUsers maxViewUser={props.maxViewUser} inPage={true}/>
             </div>
 
         </>

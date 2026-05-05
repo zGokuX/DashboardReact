@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import fetchUser from "../services/requests"
 import UserModal from "./UserModal"
 import { Button } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 export default function RecentUsers(props) {
     const [userList, setUserList] = useState([])
@@ -88,10 +89,13 @@ export default function RecentUsers(props) {
                     <div className="card-title">
 
                         <h4>Clienti recenti</h4>
-
-                        <div className="card-actions" id="btn-card-actions">
-                            <span className="card-action-list">Vedi Tutti</span>
-                        </div>
+                        {!props.inPage &&
+                            <div className="card-actions" id="btn-card-actions">
+                                <nav>
+                                    <Link to="/users"><span className="card-action-list">Vedi Tutti</span></Link>
+                                </nav>
+                            </div>
+                        }
                     </div>
                     <button className="custom-btn" id="add-clients" onClick={addButton}>Aggiungi cliente </button>
                     <div className="client-list" id="client-list-id">
