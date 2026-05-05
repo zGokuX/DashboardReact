@@ -2,9 +2,13 @@ import Carts from "../components/Carts";
 
 
 export default function CartsView(props) {
- return (
-    <>
-    <Carts maxViewCarts={props.maxViewCarts}/>
-    </>
+    return (
+        <>
+            <div className="adjustment-layout-product">
+                <h2>Lista carelli</h2>
+                <Carts maxViewCarts={props.maxViewCarts} />
+            </div>
+
+        </>
     )
 }
