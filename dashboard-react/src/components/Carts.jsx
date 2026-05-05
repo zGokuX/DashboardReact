@@ -6,15 +6,21 @@ import Button from 'react-bootstrap/Button';
 export default function Carts(props) {
     const [cartList, setCartList] = useState([])
     const [showModal, setShowModal] = useState(false)
-    const [selectSingleProduct, setSelectSingleProduct] = useState(null)
+    const [selectSingleCart, setSelectSingleCart] = useState(null)
     useEffect(() => {
         getCart(1)
     }, [])
 
     async function getCart(userId) {
-        const cart = await fetchCarts(userId)
+        const cart = await fetchCarts(userId, props.maxViewCarts)
         setCartList(cart)
     }
+
+    function detailsButton(cart) {
+        setSelectSingleCart(cart)
+        setShowModal(true)
+    }
+
     return (
         <>
             {showModal &&
@@ -22,12 +28,7 @@ export default function Carts(props) {
                     <CartsModal
                         show={showModal}
                         onHide={() => setShowModal(false)}
-                        nomeProdotto={selectSingleProduct.title}
-                        immagineProdotto={selectSingleProduct.thumbnail}
-                        categoriaProdotto={selectSingleProduct.category}
-                        recensioneProdotto={selectSingleProduct.rating}
-                        prezzoProdotto={selectSingleProduct.price}
-                        descrizioneRecensioneProdotto={selectSingleProduct.reviews}
+                        cart={selectSingleCart}
                     />
                 </>
             }
@@ -49,23 +50,25 @@ export default function Carts(props) {
 
                     <tbody id="bodyTable2">
 
-                        {props.userId &&
+                        {cartList.filter(item => {
+                            if (!props.userId) {
+                                return true
+                            }
 
-                            cartList.filter(item => {
-                                if (props.userId === item.userId) {
+                            if (props.userId === item.userId) {
 
-                                    return true
-                                }
-                                return false
-                            }).map(item => {
-                                return (
+                                return true
+                            }
+                            return false
+                        }).map(item => {
+                            return (
 
-                                    <tr key={item.id}>
-                                        <td>{item.userId}</td>
-                                        <td>{item.totalProducts}</td>
-                                        <td>{item.totalQuantity}</td>
-                                        <td>€ {Math.round(item.total)}</td>
-                                        <td><Button variant="outline-primary" onClick={() => {
+                                <tr key={item.id}>
+                                    <td>{item.userId}</td>
+                                    <td>{item.totalProducts}</td>
+                                    <td>{item.totalQuantity}</td>
+                                    <td>€ {Math.round(item.total)}</td>
+                                    {/* <td><Button variant="outline-primary" onClick={() => {
                                             props.productItem
                                                 .filter(product => product.id === item.id)
                                                 .forEach(product => {
@@ -74,34 +77,14 @@ export default function Carts(props) {
                                                 })
                                         }}>
                                             details
-                                        </Button></td>
-                                    </tr>
-
-                                )
-                            })}
-
-                        {!props.userId && cartList.map(item => {
-
-                            return (
-                                <tr key={item.id}>
-                                    <td>{item.userId}</td>
-                                    <td>{item.totalProducts}</td>
-                                    <td>{item.totalQuantity}</td>
-                                    <td>€ {Math.round(item.total)}</td>
-                                    <td><Button variant="outline-primary" onClick={() => {
-                                        props.productItem
-                                            .filter(product => product.id === item.id)
-                                            .forEach(product => {
-                                                setSelectSingleProduct(product)
-                                                setShowModal(true)
-                                            })
-                                    }}>
+                                        </Button></td> */}
+                                    <td><Button variant="outline-primary" onClick={() => detailsButton(item)}>
                                         details
                                     </Button></td>
                                 </tr>
+
                             )
                         })}
-
                     </tbody>
                 </table>
             </div>

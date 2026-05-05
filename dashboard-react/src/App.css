@@ -761,3 +761,12 @@ main {
 .input-row-list {
     width: 20rem;
 }
+
+.adjustment-layout-product{
+    padding: 40px;
+    flex: 1;
+}
+.adjustment-layout-user{
+    padding: 40px;
+    flex: 1;
+}

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import BigGraphic from "./BigGraphic";
-import CardTitle from "./cardTitle";
+import BigGraphic from "../layouts/BigGraphic";
+import CardTitle from "../components/cardTitle";
 import Carts from "./Carts";
-import Graphic from "./Graphic";
+import Graphic from "../layouts/Graphic";
 import Products from "./Products";
 import RecentUsers from "./recentUsers";
 
-export default function Maincomponent() {
+export default function Dashboard(props) {
     const [selectUser, setSelectUser] = useState(null)
     const [selectProduct, setSelectProduct] = useState(null)
     return (
@@ -20,15 +20,14 @@ export default function Maincomponent() {
                 <div className="clienti container-full-width">
                     <div className="card">
                         <CardTitle />
-
                         <BigGraphic />
 
                     </div>
-                    <RecentUsers onSelectUser={(user) => setSelectUser(user)} />
+                    <RecentUsers onSelectUser={(user) => setSelectUser(user)}/>
                 </div>
                 <div className="container-full-width">
-                    <Carts userId={selectUser?.id} productItem={selectProduct} />
-                    <Products onSelectProduct={(product) => setSelectProduct(product)} />
+                    <Carts userId={selectUser?.id} productItem={selectProduct}/>
+                    <Products  onSelectProduct={(product) => setSelectProduct(product)}/>
                 </div>
             </main>
         </>

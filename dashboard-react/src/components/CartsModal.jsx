@@ -1,25 +1,15 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import ProductsTable from './ProductTable';
 
-function CartsModal({ show, onHide, nomeProdotto, immagineProdotto, prezzoProdotto, categoriaProdotto, recensioneProdotto, descrizioneRecensioneProdotto }) {
+function CartsModal({ show, onHide, cart }) {
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
                 <Modal.Title>Carts details</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h3>{nomeProdotto}</h3>
-                <p>Categoria: <b>{categoriaProdotto}</b></p>
-                <p>Immagine prodotto:</p>
-                <img width={100} src={immagineProdotto} alt="Product image" />
-                <p>Prezzo: <b>{prezzoProdotto} €</b></p>
-                <p>Valutazione: <b>{recensioneProdotto}</b></p>
-                <p>ULTIME RECENSIONI</p>
-                {descrizioneRecensioneProdotto.map((item, index) => (
-                    <div key={item.id ? item.id : index}>
-                        <p>Rating: <b>{item.rating}</b> - Comment: {item.comment}</p>
-                    </div>
-                ))}
+                <ProductsTable productList={cart.products} modalMode={true}/>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHide}>

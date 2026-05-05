@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import fetchUser from "../services/requests"
 import UserModal from "./UserModal"
+import { Button } from "react-bootstrap"
 
 export default function RecentUsers(props) {
     const [userList, setUserList] = useState([])
@@ -11,13 +12,15 @@ export default function RecentUsers(props) {
     
     async function getUser(maxUser) {
         const user = await fetchUser(maxUser)
+        console.log(maxUser)
         // console.log(user.map(item => item.id))
         // console.log(user.length)
         setUserList(user)
     }
     
     useEffect(() => {
-        getUser(10)
+        
+        getUser(props.maxViewUser)
         
     }, [])
 
@@ -50,8 +53,8 @@ export default function RecentUsers(props) {
                     <div className="client-price">
                         <span>€ 1.200</span>
                     </div>
-                    <button className="custom-btn modify-btn" onClick={() => editButton(item)}>Modifica</button>
-                    <button className="filter-btn custom-btn" onClick={() => props.onSelectUser(item)}>Filtra</button>
+                    <Button variant="outline-primary"className="modify-btn" onClick={() => editButton(item)}>Modifica</Button>
+                    <Button variant="outline-primary" className="filter-btn " onClick={() => props.onSelectUser(item)}>Filtra</Button> {/* custom-btn */}
                 </div>
             )
         }))
@@ -80,7 +83,6 @@ export default function RecentUsers(props) {
                     isNew={isNew}
                 />
             )}
-            <div className="card client-card">
                 <div className="card-title">
 
                     <h4>Clienti recenti</h4>
@@ -94,7 +96,6 @@ export default function RecentUsers(props) {
                     {renderUser()}
 
                 </div>
-            </div>
         </>
     )
 }
