@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import fetchUser from "../services/requests"
 import UserModal from "./UserModal"
-import { Button } from "react-bootstrap"
+import { Button, Form } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 export default function RecentUsers(props) {
     const [userList, setUserList] = useState([])
+    const [filter, setFilter] = useState("default")
     const [selectedUser, setSelectedUser] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const [message, setMessage] = useState('')
@@ -40,7 +41,15 @@ export default function RecentUsers(props) {
     }
 
     function renderUser() {
-        return (userList.map(item => {
+        return (userList.filter(itemFilter => {
+            if (filter == "default") {
+                return true
+            }
+            if (filter === itemFilter.gender) {
+                return true
+            }
+            return false
+        }).map(item => {
             // console.log(item)
             return (
                 <div className="row-list" key={item.id + item.firstName}>
@@ -60,7 +69,7 @@ export default function RecentUsers(props) {
                         <Link to={`/user/${item.id}`}><Button variant="outline-primary" className="filter-btn "><i className="fa fa-info" aria-hidden="true"></i></Button></Link>
                     </nav>
                 </div>
-            ) 
+            )
         }))
     }
     return (
@@ -102,6 +111,12 @@ export default function RecentUsers(props) {
                     </div>
                     <button className="custom-btn" id="add-clients" onClick={addButton}>Aggiungi cliente </button>
                     <div className="client-list" id="client-list-id">
+                        <Form.Select aria-label="Default select example" defaultValue={filter}
+                            onChange={(e) => setFilter(e.target.value)}>
+                            <option value="default">Genere</option>
+                            <option value="male">Maschio</option>
+                            <option value="female">Femmina</option>
+                        </Form.Select>
                         {renderUser()}
 
                     </div>

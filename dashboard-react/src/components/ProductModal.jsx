@@ -19,7 +19,6 @@ function ProductModal({ show, onHide, product }) {
                 <p>Garaniza: {product.warrantyInformation}</p>
                 <div>
                     <p>Ultime valutazioni con commento:</p>
-
                     <ul>
                         {product.reviews.map((item, index) => (
                             <li key={index}>
