@@ -2,17 +2,19 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ProductsTable from './ProductTable';
 
-function CartsModal({ show, onHide, cart }) {
+function ProductModal({ show, onHide, product }) {
     return (
-        <Modal show={show} onHide={onHide} size='lg'>
+        <Modal show={show} onHide={onHide} dialogClassName="custom-modal">
             <Modal.Header closeButton>
-                <Modal.Title>Carts details</Modal.Title>
+                <Modal.Title>Product details</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                {console.log(product)}
                 <div className='clienti container-full-width'>
                     <div className='card client-card'>
-                        <ProductsTable productList={cart.products} modalMode={true} isCarts={true} showMoreOption={false}/>
+                        <ProductsTable productList={[product]} modalMode={true} isCarts={false} showMoreOption={true}/>
                     </div>
+                    
                 </div>
                 
             </Modal.Body>
@@ -25,4 +27,4 @@ function CartsModal({ show, onHide, cart }) {
     );
 }
 
-export default CartsModal;
+export default ProductModal;

@@ -771,3 +771,7 @@ main {
     padding: 40px;
     flex: 1;
 }
+
+.custom-modal {
+    max-width: 90%;
+}

@@ -47,6 +47,7 @@ export default function Carts(props) {
                                 <th className="col nome">Prodotti Totali</th>
                                 <th className="col cliente">Quantità</th>
                                 <th className="col stato">Totale</th>
+                                <th className="col stato">Sconto totale</th>
                                 <th className="col stato"></th>
                             </tr>
                         </thead>
@@ -71,6 +72,7 @@ export default function Carts(props) {
                                         <td>{item.totalProducts}</td>
                                         <td>{item.totalQuantity}</td>
                                         <td>€ {Math.round(item.total)}</td>
+                                        <td>€ {Math.round(item.discountedTotal)}</td>
                                         {/* <td><Button variant="outline-primary" onClick={() => {
                                             props.productItem
                                                 .filter(product => product.id === item.id)
