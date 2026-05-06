@@ -243,15 +243,10 @@ input {
 }
 
 nav {
-    
     color: var(--accent-text-color, white);
     padding: 10px 0;
     height: 100%;
 
-}
-
-#move-nav{
-    position: fixed;
 }
 
 nav a {
