@@ -13,7 +13,7 @@ export default function Layout() {
             <BrowserRouter>
                 <div className="layout container-full-width">
                     <aside>
-                        <nav>
+                        <nav id="move-nav">
                             <ul>
                                 <li>
                                     <Link to="/">Home</Link>
@@ -37,9 +37,9 @@ export default function Layout() {
                     </aside>
                     <Routes>
                         <Route path="/*" element={<DashboardView maxViewProduct={10} maxViewCarts={10} maxViewUser={10}/>} />
-                        <Route path="/users/*" element={<RecentUsersView  maxViewUser={20} />} />
+                        <Route path="/users/*" element={<RecentUsersView  maxViewUser={40} />} />
                         <Route path="/cards/*" element={<CartsView maxViewCarts={20}/>} />
-                        <Route path="/products/*" element={<ProductsView maxViewProduct={20}/>} />
+                        <Route path="/products/*" element={<ProductsView maxViewProduct={40}/>} />
                         <Route path="/user/:userid" element={<UserView/>} />
                     </Routes>
                     
