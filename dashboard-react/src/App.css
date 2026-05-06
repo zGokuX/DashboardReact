@@ -387,6 +387,10 @@ main {
     gap: 10px;
 }
 
+.container-full-width.clienti.in-page .row-list {
+    display: table-row;
+}
+
 .container-full-width.clienti .row-list .client-info .custom-btn {
     background-color: #688BC5;
     color: white;
@@ -416,6 +420,14 @@ main {
     justify-content: center;
     flex: 1;
 }
+
+.clienti.container-full-width.in-page .card.client-card .client-list .row-list .client-info {
+    display: table-cell;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
 
 .clienti.container-full-width .card.client-card .client-list .row-list .client-info h5 {
     font-size: 1rem;
@@ -488,6 +500,12 @@ main {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+}
+
+.container-full-width.clienti.in-page .row-list img{
+    width: 50px;
+    height: 50px;
+    margin: 10px;
 }
 
 .search-container {
