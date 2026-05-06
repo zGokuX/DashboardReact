@@ -8,6 +8,7 @@ import CartsView from "../views/CartsView";
 export default function Carts(props) {
     const [cartList, setCartList] = useState([])
     const [showModal, setShowModal] = useState(false)
+    const [cartLength, setCartLength] = useState(0)
     const [selectSingleCart, setSelectSingleCart] = useState(null)
     useEffect(() => {
         getCart(1)

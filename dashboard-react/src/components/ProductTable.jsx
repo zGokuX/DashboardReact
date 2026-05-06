@@ -28,7 +28,10 @@ export default function ProductsTable(props) {
                         <th>Nome prodotto</th>
                         <th>{props.modalMode && props.isCarts ? 'Quantità' : 'Categoria'}</th>
                         <th>Prezzo</th>
-                        <th>Disponibilità</th>
+                        {!props.isCarts &&
+                            <th>Disponibilità</th>
+                        }
+
                         <th>Sconto</th>
                         {!props.isCarts && !props.modalMode &&
 
@@ -53,8 +56,11 @@ export default function ProductsTable(props) {
                                 <td><img style={{ display: "flex" }} width="50px" src={item.thumbnail} alt="Products Avatar" />{item.title}</td>
                                 <td>{props.modalMode && props.isCarts ? item.quantity : item.category}</td>
                                 <td>€ {Math.round(item.price)}</td>
-                                <td>{item.availabilityStatus}</td>
-                                <td>{item.discountPercentage}</td>
+                                 {!props.isCarts &&
+                                 <td>{item.availabilityStatus}</td>
+                                 }
+                                
+                                <td>{item.discountPercentage}%</td>
 
                                 {
                                     !props.isCarts && props.showMoreOption ? (
