@@ -91,25 +91,55 @@ export default function RecentUsers(props) {
         return (userList.map(item => {
             // console.log(item)
             return (
-                <div className="row-list" key={item.id + item.firstName}>
-                    <div className="client-avatar">
-                        <img src={item.image} alt="Client Avatar" />
-                    </div>
-                    <div className="client-info">
-                        <h5>{item.firstName + " " + item.lastName}</h5>
+                <tr className='row-list' key={item.id + item.firstName}>
+                    <td className='client-avatar'>
+                        <img src={item.image} alt='Client Avatar' />
+                    </td>
+                    <td className='client-info'>
+                        <h5>{item.firstName + ' ' + item.lastName}</h5>
                         <h6>{item.company.department}</h6>
-                    </div>
-                    <div className="client-price">
-                        <span>€ 1.200</span>
-                    </div>
-                    <Button variant="outline-primary" className="modify-btn" onClick={() => editButton(item)}>Modifica</Button>
-                    {!props.inPage &&
-                        <Button variant="outline-primary" className="filter-btn " onClick={() => props.onSelectUser(item)}>Filtra</Button>
-                    }
-                    <nav>
-                        <Link to={`/user/${item.id}`}><Button variant="outline-primary" className="filter-btn ">Details</Button></Link>
-                    </nav>
-                </div>
+                    </td>
+                    <td className='client-info'>
+                        <span>{item.email}</span>
+                    </td>
+{/*                     <td className='client-info'>
+                        <span>{item.age}</span>
+                    </td> */}
+                    <td className='client-info'>
+                        <span>
+                            {item.address.state} {item.addresscity}{' '}
+                            {item.address.address} 
+                        </span>
+                    </td>
+                    <td className='client-info'>
+                        <span>{item.phone}</span>
+                    </td>
+                    <td className='client-actions'>
+                        <Button
+                            variant='outline-primary'
+                            className='modify-btn'
+                            onClick={() => editButton(item)}
+                        >
+                            Modifica
+                        </Button>
+                        {'  '}
+                        {!props.inPage && (
+                            <Button
+                                variant='outline-primary'
+                                className='filter-btn '
+                                onClick={() => props.onSelectUser(item)}
+                            >
+                                Filtra
+                            </Button>
+                        )}
+
+                        <Link to={`/user/${item.id}`}>
+                            <Button variant='outline-primary' className='filter-btn '>
+                                Details
+                            </Button>
+                        </Link>
+                    </td>
+                </tr>
             )
         }))
     }
@@ -137,7 +167,7 @@ export default function RecentUsers(props) {
                     isNew={isNew}
                 />
             )}
-            <div className="clienti container-full-width">
+            <div className={'clienti container-full-width' + (props.inPage ? ' in-page' : '')}>
                 <div className="card client-card">
                     <div className="card-title">
 
@@ -167,13 +197,13 @@ export default function RecentUsers(props) {
                                                 setFilterInput(value)
                                             }}
                                         />
-                                            <Button variant="outline-primary" type="submit" onClick={() => {
-                                                if(filterInput != ''){
-                                                    filterNames(filterInput)
-                                                }
-                                            }}>Cerca</Button>
+                                        <Button variant="outline-primary" type="submit" onClick={() => {
+                                            if (filterInput != '') {
+                                                filterNames(filterInput)
+                                            }
+                                        }}>Cerca</Button>
                                     </InputGroup>
-                                    
+
                                 </form>
                                 <div className='d-flex p-2 gap-3'>
                                     <Form.Select className="w-25 h-25" aria-label="Default select example" value={filterGender}
@@ -209,7 +239,9 @@ export default function RecentUsers(props) {
 
                             </>
                         }
-                        {renderUser()}
+                        <table>
+                            <tbody>{renderUser()}</tbody>
+                        </table>
 
                     </div>
                 </div>
