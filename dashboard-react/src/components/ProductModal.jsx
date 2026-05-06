@@ -16,7 +16,7 @@ function ProductModal({ show, onHide, product }) {
                         </div>
                         <div className='ms-3 card-title d-block'>
                             <h5 className='mb-3'>{product.title}</h5>
-                            <div className='mb-5 bg-primary-subtle w-25 align-items-center'><span className='text-primary'>{product.category}</span></div>
+                            <div className='rounded d-flex mb-5 bg-primary-subtle w-25 justify-content-center p-1'><span className='text-primary'>{product.category}</span></div>
                             <div className='card-topbar d-flex gap-5'>
                                 <div className='id-product-container'>
                                     <span className='text-secondary '>ID prodotto<p className='text-dark'><b>{product.id}</b></p></span>
