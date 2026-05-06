@@ -11,18 +11,18 @@ function ProductModal({ show, onHide, product }) {
             <Modal.Body>
                 <div className='p-4'>
                     <div className='d-flex'>
-                        <div className='card image-container mb-4'>
+                        <div className='shadow-sm card image-container mb-4'>
                             <img src={product.thumbnail} alt="" />
                         </div>
                         <div className='ms-3 card-title d-block'>
                             <h5 className='mb-3'>{product.title}</h5>
-                            <div className='rounded d-flex mb-5 bg-primary-subtle w-25 justify-content-center p-1'><span className='text-primary'>{product.category}</span></div>
+                            <div className='text-nowrap rounded d-flex mb-5 bg-body-tertiary shadow-sm w-25 bg-light border justify-content-center p-2 px-5'><i class="text-primary d-flex align-items-center fa fa-shopping-basket" aria-hidden="true"></i><span className='ms-2 text-primary'>{product.category}</span></div>
                             <div className='card-topbar d-flex gap-5'>
-                                <div className='id-product-container'>
-                                    <span className='text-secondary '>ID prodotto<p className='text-dark'><b>{product.id}</b></p></span>
+                                <div className='bg-light border id-product-container rounded p-2'>
+                                    <span className='text-muted  '>ID prodotto<p className='text-dark'><b>{product.id}</b></p></span>
                                 </div>
-                                <div className='rating-product-container'>
-                                    <span className='text-secondary '>Valutazione <p className='text-dark'><b>{product.rating}</b></p></span>
+                                <div className='rating-product-container bg-light border id-product-container rounded p-2'>
+                                    <span className='text-muted '>Valutazione <p className='text-dark'><b>{product.rating}</b></p></span>
                                 </div>
 
                             </div>
