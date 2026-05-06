@@ -9,7 +9,10 @@ export default function RecentUsers(props) {
     const [selectedUser, setSelectedUser] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const [allUsers, setAllUsers] = useState([])
+    const [filterInput, setFilterInput] = useState('')
     const [filterAge, setFilterAge] = useState(0)
+    const [filterGender, setFilterGender] = useState('default')
+    const [filterRole, setFilterRole] = useState('default')
     const [message, setMessage] = useState('')
     const [isNew, setIsNew] = useState(false) //isNew
 
@@ -34,13 +37,26 @@ export default function RecentUsers(props) {
     }
 
     function filterPlus(filterName, value) {
+        if (filterName === 'gender') {
+            setFilterRole('default')
+            setFilterAge(0)
+            setFilterInput('')
+        } else if (filterName === 'role') {
+            setFilterGender('default')
+            setFilterAge(0)
+            setFilterInput('')
+        } else {
+            setFilterGender('default')
+            setFilterRole('default')
+            setFilterInput('')
+        }
         if (value === 'default') {
             setUserList(allUsers)
             return
         }
 
         if (filterName === 'age') {
-            const filtered = allUsers.filter(user => user.age == value)
+            const filtered = allUsers.filter(user => user.age == value) /* user.age > value da rivedere */
 
             if (filtered.length === 0) {
                 setUserList(allUsers)
@@ -49,12 +65,15 @@ export default function RecentUsers(props) {
             }
             return
         }
-        
+
         fetchUserFilter(filterName, value).then((res) => {
             setUserList(res)
         })
     }
     function filterNames(value) {
+        setFilterGender('default')
+        setFilterRole('default')
+        setFilterAge(0)
         console.log(value)
         fetchFilterNames(value).then((res) => {
             setUserList(res)
@@ -135,28 +154,42 @@ export default function RecentUsers(props) {
                     <div className="client-list" id="client-list-id">
                         {props.inPage &&
                             <>
-                                <InputGroup className="mb-3">
-                                    <InputGroup.Text id="basic-addon1"><i className="fa fa-search" aria-hidden="true"></i></InputGroup.Text>
-                                    <Form.Control
-                                        placeholder="Cerca nome dell'utente"
-                                        aria-label="Username"
-                                        aria-describedby="basic-addon1"
-                                        onChange={(e) => filterNames(e.target.value)}
-                                    />
-                                </InputGroup>
+                                <form action="" onSubmit={(e) => e.preventDefault()}>
+                                    <InputGroup className="mb-3">
+                                        <InputGroup.Text id="basic-addon1"><i className="fa fa-search" aria-hidden="true"></i></InputGroup.Text>
+                                        <Form.Control
+                                            placeholder="Cerca nome dell'utente"
+                                            value={filterInput}
+                                            aria-label="Username"
+                                            aria-describedby="basic-addon1"
+                                            onChange={(e) => {
+                                                const value = e.target.value
+                                                setFilterInput(value)
+                                            }}
+                                        />
+                                            <Button variant="outline-primary" type="submit" onClick={() => {
+                                                if(filterInput != ''){
+                                                    filterNames(filterInput)
+                                                }
+                                            }}>Cerca</Button>
+                                    </InputGroup>
+                                    
+                                </form>
                                 <div className='d-flex p-2 gap-3'>
-                                    <Form.Select className="w-25 h-25" aria-label="Default select example" defaultValue="default"
+                                    <Form.Select className="w-25 h-25" aria-label="Default select example" value={filterGender}
                                         onChange={(e) => {
                                             const value = e.target.value
+                                            setFilterGender(value)
                                             filterPlus('gender', value)
                                         }}>
                                         <option value="default">Genere</option>
                                         <option value="male">Maschio</option>
                                         <option value="female">Femmina</option>
                                     </Form.Select>
-                                    <Form.Select className="w-25 h-25" aria-label="Default select example" defaultValue="default"
+                                    <Form.Select className="w-25 h-25" aria-label="Default select example" value={filterRole}
                                         onChange={(e) => {
                                             const value = e.target.value
+                                            setFilterRole(value)
                                             filterPlus('role', value)
                                         }}>
                                         <option value="default">Ruolo</option>
@@ -166,10 +199,10 @@ export default function RecentUsers(props) {
                                     </Form.Select>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Età - {filterAge}</Form.Label>
-                                        <Form.Range max={140} defaultValue={filterAge} onChange={(e) => {
+                                        <Form.Range max={140} value={filterAge} onChange={(e) => {
                                             const value = e.target.value
                                             setFilterAge(value)
-                                            filterPlus('age', value)
+                                            filterPlus('age', value,)
                                         }} />
                                     </Form.Group>
                                 </div>

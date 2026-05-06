@@ -779,3 +779,9 @@ main {
 .custom-modal {
     max-width: 90%;
 }
+
+.container-card .card-topbar{
+    display: flex;
+    white-space: nowrap;
+    gap: 20px;
+}

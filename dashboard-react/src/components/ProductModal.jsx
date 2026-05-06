@@ -9,27 +9,48 @@ function ProductModal({ show, onHide, product }) {
                 <Modal.Title>Product details</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {console.log(product)}
-                <h5>Nome prodotto: {product.title}</h5>
-                <p>id prodotto: {product.id}</p>
-                <p>Valutazione: {product.rating}</p>
-                <p>Categoria: {product.category}</p>
-                <p>Descrizione: {product.description}</p>
-                <p>Policy rimborso: {product.returnPolicy}</p>
-                <p>Garaniza: {product.warrantyInformation}</p>
-                <div>
-                    <p>Ultime valutazioni con commento:</p>
-                    <ul>
-                        {product.reviews.map((item, index) => (
-                            <li key={index}>
-                                Rating: {item.rating} — {item.comment}
-                            </li>
-                        ))}
-                    </ul>
+                <div className='p-4'>
+                    <div className='d-flex'>
+                        <div className='card image-container mb-4'>
+                            <img src={product.thumbnail} alt="" />
+                        </div>
+                        <div className='ms-3 card-title d-block'>
+                            <h5 className='mb-3'>{product.title}</h5>
+                            <div className='mb-5 bg-primary-subtle w-25 align-items-center'><span className='text-primary'>{product.category}</span></div>
+                            <div className='card-topbar d-flex gap-5'>
+                                <div className='id-product-container'>
+                                    <span className='text-secondary '>ID prodotto<p className='text-dark'><b>{product.id}</b></p></span>
+                                </div>
+                                <div className='rating-product-container'>
+                                    <span className='text-secondary '>Valutazione <p className='text-dark'><b>{product.rating}</b></p></span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div className='container-card'>
+                        <div>
+                            <p>Policy rimborso: {product.returnPolicy}</p>
+                            <p>Garaniza: {product.warrantyInformation}</p>
+                            <p>Descrizione: {product.description}</p>
+                            <p>Categoria: {product.category}</p>
+                            <p>Ultime valutazioni con commento:</p>
+                            <ul>
+                                {product.reviews.map((item, index) => (
+                                    <li key={index}>
+                                        Rating: {item.rating} — {item.comment}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onHide}>
+                <Button variant="primary" onClick={onHide}>
                     Chiudi
                 </Button>
             </Modal.Footer>
