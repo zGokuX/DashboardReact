@@ -10,11 +10,11 @@ function UserModal({ show, onHide, user, title, isNew, onUserChange }) {
     function saveHandler() {
         onHide()
         onUserChange(localUser, isNew)
-        
     }
 
     return (
         <>
+        
             <Modal show={show} onHide={onHide}>
                 <Modal.Header closeButton>
                     <Modal.Title>{title}</Modal.Title>
@@ -43,13 +43,18 @@ function UserModal({ show, onHide, user, title, isNew, onUserChange }) {
                         </Form.Group>
 
                         <Form.Group className="mb-3">
-                            <Form.Label>Numero</Form.Label>
+                            <Form.Label>Numero di telefono</Form.Label>
                             <Form.Control type="text" defaultValue={localUser.phone} placeholder='Inserisci il tuo numero di telefono...' onChange={(e) => setLocalUser({ ...localUser, phone: e.target.value })} />
                         </Form.Group>
 
                         <Form.Group className="mb-3">
+                            <Form.Label>Luogo di nascità</Form.Label>
+                            <Form.Control type="text" defaultValue={localUser.address?.city} placeholder='Inserisci il tuo luogo di nascita...' onChange={(e) => setLocalUser({ ...localUser, address: {city: e.target.value}})} />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
                             <Form.Label>Università</Form.Label>
-                            <Form.Control type="text" defaultValue={localUser.university} placeholder='Inserisci la tua università...' onChange={(e) => setLocalUser({ ...localUser, username: e.target.value })} />
+                            <Form.Control type="text" defaultValue={localUser.university} placeholder='Inserisci la tua università...' onChange={(e) => setLocalUser({ ...localUser, university: e.target.value })} />
                         </Form.Group>
 
                         <Form.Group className="mb-3">

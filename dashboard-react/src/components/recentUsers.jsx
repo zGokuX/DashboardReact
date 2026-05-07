@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import fetchUser, { fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
+import fetchUser, { addUser, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
 import UserModal from "./UserModal"
 import { Button, Form, InputGroup, Toast, ToastContainer } from "react-bootstrap"
 import { Link } from "react-router-dom"
@@ -111,8 +111,8 @@ export default function RecentUsers(props) {
 
               <td className='client-info'>
                 <span>
-                  {item.address.state} {item.addresscity}{' '}
-                  {item.address.address}
+                  {item.address?.state} {item.address?.city}{' '}
+                  {item.address?.address}
                 </span>
               </td>
               <td className='client-info'>
@@ -121,7 +121,7 @@ export default function RecentUsers(props) {
             </>
           }
 
-          <td className='client-actions'>
+          <td className='client-actions d-flex gap-3 h-25'>
             {props.inPage &&
               <Button
                 variant='outline-primary'
@@ -164,7 +164,8 @@ export default function RecentUsers(props) {
             console.log('UTENTE: ', user)
             if (isNewUser) {
               setUserList([...userList, user])
-              /* addUser(user.id, user).then((res) => console.log(res)) */
+               addUser(user).then((res) => console.log(res))
+               setShowToast(true)
             } else {
               setUserList(
                 userList.map(item => {
@@ -320,7 +321,8 @@ export default function RecentUsers(props) {
             <strong className="me-auto">Bootstrap</strong>
             <small>11 mins ago</small>
           </Toast.Header>
-          <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
+          
+          <Toast.Body>Dati aggiornati per l'utente!</Toast.Body>
         </Toast>
       </ToastContainer>
     </>

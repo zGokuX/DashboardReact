@@ -4,7 +4,7 @@ import CardTitle from "../components/cardTitle";
 import Carts from "./Carts";
 import Graphic from "../layouts/Graphic";
 import Products from "./Products";
-import RecentUsers from "./recentUsers";
+import RecentUsers from "./RecentUsers";
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -19,10 +19,6 @@ export default function Dashboard(props) {
     return (
         <>
             <main>
-                
-                <Col xs={6}>
-                    <Button onClick={() => setShow(true)}>Show Toast</Button>
-                </Col>
                 <div className="welcome-container">
                     <h1>Benvenuto Marco!</h1>
                     <h3>Ecco una paronamica del tuo business</h3>
@@ -31,6 +27,7 @@ export default function Dashboard(props) {
                 <div className="clienti container-full-width">
                     <div className="card">
                         <CardTitle />
+
                         <BigGraphic />
 
                     </div>
