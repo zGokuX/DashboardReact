@@ -103,7 +103,9 @@ export default function Carts(props) {
                                     Sconto totale
                                 </th>
                                 <th className="col stato"></th>
+                                {props.inPage &&
                                 <th className="col stato"></th>
+                                }
                             </tr>
                         </thead>
 
@@ -140,7 +142,7 @@ export default function Carts(props) {
                                                     details
                                                 </Button>
                                             </td>
-
+                                          {props.inPage &&
                                             <td>
                                                 <Button
                                                     variant="outline-danger"
@@ -154,6 +156,7 @@ export default function Carts(props) {
                                                     Delete
                                                 </Button>
                                             </td>
+                                            }
                                         </tr>
                                     );
                                 })}

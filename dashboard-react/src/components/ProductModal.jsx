@@ -71,7 +71,7 @@ function ProductModal({ show, onHide, product }) {
 
 
                         </div>
-                        <div className='card p-3 w-75'>
+                        <div className='card p-3 w-50 h-25'>
                             <ul className='p-0 '>
                                 <h5>Ultime valutazioni con commento</h5>
                                 {product.reviews.map((item, index) => (
