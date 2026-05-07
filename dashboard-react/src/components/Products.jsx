@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { fetchProducts, fetchProductsCategory } from "../services/requests"
+import { use, useEffect, useState } from "react"
+import { fetchAllCategories, fetchProducts, fetchProductsCategory } from "../services/requests"
 import ProductsTable from "./ProductTable"
 import { Link } from "react-router-dom"
 import { Form } from "react-bootstrap"
@@ -7,10 +7,23 @@ export default function Products(props) {
 
     const [productList, setProductList] = useState([])
     const [filterCategory, setFilterCategory] = useState('default')
+    const [categoryList, setCategoryList] = useState([])
     const [userLength, setUserLength] = useState(0)
     useEffect(() => {
         getProduct(1)
+        fetchAllCategories().then(res => {
+            setCategoryList(res)
+
+            console.log(res)
+        })
     }, [])
+    function titleProcess(text) {
+        const result =
+            text.charAt(0).toUpperCase() +
+            text.slice(1);
+
+        return result
+    }
 
     async function getProduct(userId) {
         const product = await fetchProducts(userId, props.maxViewProduct)
@@ -23,7 +36,7 @@ export default function Products(props) {
 
     function filterProductsCategory(value) {
         fetchProductsCategory(value).then((res) => {
-            if(value === 'default'){
+            if (value === 'default') {
                 return getProduct(1)
             }
             setProductList(res)
@@ -52,10 +65,9 @@ export default function Products(props) {
                                     filterProductsCategory(value)
                                 }}>
                                 <option value="default">Categoria</option>
-                                <option value="beauty">bellezza</option>
-                                <option value="fragrances">fragranze</option>
-                                <option value="furniture">mobilia</option>
-                                <option value="groceries">generi alimentari</option>
+                                {categoryList.map((item,index) => {
+                                    return <option key={index} value={item}>{titleProcess(item.replace('-', ' '))}</option>
+                                })}
                             </Form.Select>
                         }
                     </div>

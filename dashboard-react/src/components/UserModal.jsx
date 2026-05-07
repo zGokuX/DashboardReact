@@ -10,6 +10,7 @@ function UserModal({ show, onHide, user, title, isNew, onUserChange }) {
     function saveHandler() {
         onHide()
         onUserChange(localUser, isNew)
+        
     }
 
     return (

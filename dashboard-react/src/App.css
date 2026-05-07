@@ -456,6 +456,11 @@ main {
     transition: background-color 0.3s ease;
 }
 
+.clienti.container-full-width.in-page .card.client-card .custom-btn {
+
+    padding: 6px 12px;
+}
+
 .clienti.container-full-width .card.client-card .client-list .row-list .client-price::after {
     content: "\f054";
     font-family: "Font Awesome 6 Free";
@@ -534,9 +539,10 @@ main {
 
 .clienti.container-full-width .card.client-card .card-title .card-actions .card-action-list {
     background-color: #F0F3FB;
-    display: flex;
     color: #24427A;
     align-items: center;
+    font-size: 16px;
+    padding: 0 !important;
 }
 
 .clienti.container-full-width .card.client-card .card-title .card-actions .card-action-list::after {
@@ -545,8 +551,6 @@ main {
     margin-left: 5px;
     font-size: 12px;
     font-weight: 900;
-    display: flex;
-    flex-direction: row;
 }
 
 .line {

@@ -5,15 +5,24 @@ import Carts from "./Carts";
 import Graphic from "../layouts/Graphic";
 import Products from "./Products";
 import RecentUsers from "./recentUsers";
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Toast from 'react-bootstrap/Toast';
 import { fetchSingleUser } from "../services/requests";
+import { ToastContainer } from "react-bootstrap";
 
 export default function Dashboard(props) {
     const [selectUser, setSelectUser] = useState(null)
     const [selectProduct, setSelectProduct] = useState(null)
-    
+
     return (
         <>
             <main>
+                
+                <Col xs={6}>
+                    <Button onClick={() => setShow(true)}>Show Toast</Button>
+                </Col>
                 <div className="welcome-container">
                     <h1>Benvenuto Marco!</h1>
                     <h3>Ecco una paronamica del tuo business</h3>
@@ -25,12 +34,13 @@ export default function Dashboard(props) {
                         <BigGraphic />
 
                     </div>
-                    <RecentUsers onSelectUser={(user) => setSelectUser(user)}/>
+                    <RecentUsers onSelectUser={(user) => setSelectUser(user)} />
                 </div>
                 <div className="container-full-width">
-                    <Carts userId={selectUser?.id} productItem={selectProduct} inPage={false}/>
-                    <Products  onSelectProduct={(product) => setSelectProduct(product)}/>
+                    <Carts userId={selectUser?.id} productItem={selectProduct} inPage={false} />
+                    <Products onSelectProduct={(product) => setSelectProduct(product)} />
                 </div>
+               
             </main>
         </>
     )

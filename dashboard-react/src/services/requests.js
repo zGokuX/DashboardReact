@@ -22,6 +22,15 @@ export function fetchFilterNames(value) {
   })
 }
 
+export function updateUser(userId, userData) {
+  return fetch(`https://dummyjson.com/users/${userId}`, {
+    method: 'PUT', /* or PATCH */
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData)
+  })
+    .then(res => res.json())
+}
+
 export function fetchProductsCategory(value) {
   return fetch(`https://dummyjson.com/products/category/${value}`)
     .then(res => res.json())
@@ -36,6 +45,10 @@ export function fetchUserFilter(key, value) {
       return userResponse.users
 
     })
+}
+
+export function fetchAllCategories() {
+  return fetch('https://dummyjson.com/products/category-list').then(res => res.json());
 }
 
 export function fetchProducts(userId = null, maxProducts) {

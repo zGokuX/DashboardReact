@@ -25,6 +25,7 @@ export default function ProductsTable(props) {
                 <thead>
                     <tr className="table-header">
                         <th>Id prodotto</th>
+                        <th>Immagine prodotto</th>
                         <th>Nome prodotto</th>
                         <th>{props.modalMode && props.isCarts ? 'Quantità' : 'Categoria'}</th>
                         <th>Prezzo</th>
@@ -53,7 +54,8 @@ export default function ProductsTable(props) {
 
                             <tr key={item.id}>
                                 <td>{item.id}</td>
-                                <td><img style={{ display: "flex" }} width="50px" src={item.thumbnail} alt="Products Avatar" />{item.title}</td>
+                                <td><img style={{ display: "flex" }} width="50px" src={item.thumbnail} alt="Products Avatar" /></td>
+                                <td>{item.title}</td>
                                 <td>{props.modalMode && props.isCarts ? item.quantity : item.category}</td>
                                 <td>€ {Math.round(item.price)}</td>
                                  {!props.isCarts &&
