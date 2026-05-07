@@ -49,7 +49,7 @@ export default function Products(props) {
             <div className="clienti container-full-width">
                 <div className="card client-card">
                     <div className="card-title">
-                        <span>Products<i className="fa-solid fa-list"></i></span>
+                        <span><i className="fa-solid fa-list"></i>Products</span>
                         {!props.inPage &&
                             <div className="card-actions" id="btn-card-actions">
                                 <nav>

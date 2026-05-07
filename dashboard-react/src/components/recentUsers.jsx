@@ -4,6 +4,8 @@ import UserModal from "./UserModal"
 import { Button, Form, InputGroup, Toast, ToastContainer } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
+const ITEM_PER_PAGE = 25
+
 export default function RecentUsers(props) {
   const [userList, setUserList] = useState([])
   const [selectedUser, setSelectedUser] = useState(null)
@@ -11,16 +13,19 @@ export default function RecentUsers(props) {
   const [allUsers, setAllUsers] = useState([])
   const [filterInput, setFilterInput] = useState('')
   const [filterAge, setFilterAge] = useState(0)
+  const [pagination, setPagination] = useState(0)
   const [filterGender, setFilterGender] = useState('default')
   const [filterRole, setFilterRole] = useState('default')
+  const [totalUsers, setTotalUsers] = useState(0)
   const [showToast, setShowToast] = useState(false);
   const [message, setMessage] = useState('')
   const [isNew, setIsNew] = useState(false) //isNew
 
   async function getUser(maxUser) {
-    const user = await fetchUser(maxUser)
-    setUserList(user)
-    setAllUsers(user)
+    const userListResponse = await fetchUser(maxUser)
+    setTotalUsers(userListResponse.total)
+    setUserList(userListResponse.users)
+    setAllUsers(userListResponse.users)
   }
 
   useEffect(() => {
@@ -28,6 +33,14 @@ export default function RecentUsers(props) {
     getUser(props.maxViewUser)
 
   }, [])
+
+  useEffect(() => {
+
+    fetchUser(ITEM_PER_PAGE, pagination).then((res) => {
+      setUserList(res.users)
+    })
+  }, [pagination])
+
 
   function editButton(user) {
     setSelectedUser(user)
@@ -164,8 +177,8 @@ export default function RecentUsers(props) {
             console.log('UTENTE: ', user)
             if (isNewUser) {
               setUserList([...userList, user])
-               addUser(user).then((res) => console.log(res))
-               setShowToast(true)
+              addUser(user).then((res) => console.log(res))
+              setShowToast(true)
             } else {
               setUserList(
                 userList.map(item => {
@@ -174,7 +187,7 @@ export default function RecentUsers(props) {
                   }
                   return item
                 }),
-              ) 
+              )
               updateUser(user.id, user).then((res) => console.log(res))
               setShowToast(true)
             }
@@ -300,12 +313,71 @@ export default function RecentUsers(props) {
                 </div>
               </>
             )}
+
             <table>
-              <tbody>{renderUser()}</tbody>
+              <tbody>{renderUser()}
+
+              </tbody>
+
             </table>
+            {props.inPage &&
+              <ul className="pagination">
+                <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
+                  e.preventDefault()
+                  setPagination(currentValue => {
+                    if (currentValue <= 0) {
+                      return 0
+                    } else {
+                      return currentValue - 1
+                    }
+                  })
+
+                }}>Previous</a></li>
+
+                {pagination > 0 &&
+                  <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
+                    e.preventDefault()
+                    setPagination(currentValue => {
+                      return currentValue - 1
+                    })
+
+                  }}>{pagination}</a></li>
+                }
+
+                <li className="page-item"><a className="page-link" href="#">{pagination + 1}</a></li>
+
+
+                {pagination < (Math.ceil(totalUsers / ITEM_PER_PAGE) - 1) &&
+                  <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
+                    e.preventDefault()
+                    setPagination(currentValue => {
+
+                      return currentValue + 1
+
+                    })
+
+                  }}>{pagination + 2}</a></li>
+                }
+                <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
+                  e.preventDefault()
+
+                  setPagination(currentValue => {
+                    if (currentValue == Math.ceil(totalUsers / ITEM_PER_PAGE) - 1) {
+                      return currentValue
+                    } else {
+                      return currentValue + 1
+                    }
+                  })
+
+
+
+                }}>Next</a></li>
+              </ul>
+            }
           </div>
         </div>
-      </div>
+
+      </div >
       <ToastContainer
         className="p-3"
         position="bottom-end"
@@ -321,7 +393,7 @@ export default function RecentUsers(props) {
             <strong className="me-auto">Bootstrap</strong>
             <small>11 mins ago</small>
           </Toast.Header>
-          
+
           <Toast.Body>Dati aggiornati per l'utente!</Toast.Body>
         </Toast>
       </ToastContainer>

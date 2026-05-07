@@ -1,6 +1,6 @@
-export default function fetchUser(maxUser) {
-  return fetch(`https://dummyjson.com/users?limit=${maxUser ? maxUser : 10}`).then(res => res.json()).then(userResponse => {
-    return userResponse.users
+export default function fetchUser(pageSize = 25 , page = 0) {
+  return fetch(`https://dummyjson.com/users?limit=${pageSize ? pageSize : 10}&skip=${page * pageSize}`).then(res => res.json()).then(userResponse => {
+    return userResponse
 
   })
 }
@@ -9,9 +9,9 @@ export function fetchSingleUser(userId) {
   return fetch(`https://dummyjson.com/users/${userId ? userId : 1}`).then(res => res.json());
 }
 
-export function fetchCarts(userId = null, maxCarts) {
-  return fetch(`https://dummyjson.com/carts?limit=${maxCarts ? maxCarts : 10}&userId=${userId}`).then(res => res.json()).then(cartResponse => {
-    return cartResponse.carts
+export function fetchCarts(userId = null, pageSize = 25 , page = 0) {
+  return fetch(`https://dummyjson.com/carts?limit=${pageSize ? pageSize : 10}&skip=${page * pageSize}&userId=${userId}`).then(res => res.json()).then(cartResponse => {
+    return cartResponse
 
   })
 }
@@ -22,13 +22,13 @@ export function fetchFilterNames(value) {
   })
 }
 
-export function addUser(userData){
+export function addUser(userData) {
   return fetch('https://dummyjson.com/users/add', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(userData)
-})
-.then(res => res.json())
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData)
+  })
+    .then(res => res.json())
 }
 
 export function updateUser(userId, userData) {

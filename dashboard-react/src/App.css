@@ -545,6 +545,10 @@ main {
     padding: 0 !important;
 }
 
+nav{
+    height: 0 !important;
+}
+
 .clienti.container-full-width .card.client-card .card-title .card-actions .card-action-list::after {
     content: "\f054";
     font-family: "Font Awesome 6 Free";

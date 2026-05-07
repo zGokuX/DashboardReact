@@ -36,10 +36,10 @@ export default function Layout() {
                         </nav>
                     </aside>
                     <Routes>
-                        <Route path="/*" element={<DashboardView maxViewProduct={10} maxViewCarts={10} maxViewUser={10}/>} />
-                        <Route path="/users/*" element={<RecentUsersView  maxViewUser={40} />} />
-                        <Route path="/cards/*" element={<CartsView maxViewCarts={20}/>} />
-                        <Route path="/products/*" element={<ProductsView maxViewProduct={40}/>} />
+                        <Route path="/*" element={<DashboardView/>} />
+                        <Route path="/users/*" element={<RecentUsersView />} />
+                        <Route path="/cards/*" element={<CartsView/>} />
+                        <Route path="/products/*" element={<ProductsView/>} />
                         <Route path="/user/:userid" element={<UserView/>} />
                     </Routes>
                     
