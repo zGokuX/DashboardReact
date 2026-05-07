@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { fetchAllCategories, fetchProducts, fetchProductsCategory } from "../services/requests"
 import ProductsTable from "./ProductTable"
 import { Link } from "react-router-dom"
@@ -8,7 +8,6 @@ export default function Products(props) {
     const [productList, setProductList] = useState([])
     const [filterCategory, setFilterCategory] = useState('default')
     const [categoryList, setCategoryList] = useState([])
-    const [userLength, setUserLength] = useState(0)
     useEffect(() => {
         getProduct(1)
         fetchAllCategories().then(res => {

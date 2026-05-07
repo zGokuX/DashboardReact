@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { fetchSingleUser } from "../services/requests"
 
-export default function UserView(props) {
+export default function UserView() {
     const {userid} = useParams()
     const [user,setUser] = useState('')
 

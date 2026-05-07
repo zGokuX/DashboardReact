@@ -811,3 +811,25 @@ nav{
     white-space: nowrap;
     gap: 20px;
 }
+
+
+.notification-user{
+    position: relative
+}
+
+.notification-user .notification-count {
+position: absolute;
+    top: -5px;
+    right: -6px;
+    background: red;
+    color: white;
+    width: 12px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+    
