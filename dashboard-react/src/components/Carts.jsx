@@ -1,176 +1,263 @@
-import { useEffect, useState } from "react"
-import { fetchCarts } from "../services/requests"
-import CartsModal from "./CartsModal"
-import Button from 'react-bootstrap/Button';
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import CartsView from "../views/CartsView";
+// Carts.jsx
 
-const ITEM_PER_PAGE = 25
+import { useEffect, useState } from "react";
+import { fetchCarts } from "../services/requests";
+import CartsModal from "./CartsModal";
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
+import ConfirmModal from "./ConfirmModal";
+
+const ITEM_PER_PAGE = 25;
 
 export default function Carts(props) {
-    const [cartList, setCartList] = useState([])
-    const [showModal, setShowModal] = useState(false)
-    const [cartLength, setCartLength] = useState(0)
-    const [totalCarts, setTotalCarts] = useState(0)
-    const [selectSingleCart, setSelectSingleCart] = useState(null)
-    const [pagination, setPagination] = useState(0)
+    const [cartList, setCartList] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [totalCarts, setTotalCarts] = useState(0);
+    const [selectSingleCart, setSelectSingleCart] = useState(null);
+    const [pagination, setPagination] = useState(0);
+
+    const [selectCart, setSelectCart] = useState(null);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+
     useEffect(() => {
-        getCart(1)
-    }, [])
+        getCart(1);
+    }, []);
 
     async function getCart(userId) {
-        const cart = await fetchCarts(userId, props.maxViewCarts)
-        setCartList(cart.carts)
-        setTotalCarts(cart.total)
+        const cart = await fetchCarts(userId, props.maxViewCarts);
+
+        setCartList(cart.carts);
+        setTotalCarts(cart.total);
     }
 
     useEffect(() => {
-    
-        fetchCarts(1,ITEM_PER_PAGE, pagination).then((res) => {
-          setCartList(res.carts)
-        })
-      }, [pagination])
+        fetchCarts(1, ITEM_PER_PAGE, pagination).then((res) => {
+            setCartList(res.carts);
+        });
+    }, [pagination]);
 
     function detailsButton(cart) {
-        setSelectSingleCart(cart)
-        setShowModal(true)
+        setSelectSingleCart(cart);
+        setShowModal(true);
+    }
+
+    function removeCart(cartId) {
+        setCartList((currentList) =>
+            currentList.filter((item) => item.id !== cartId)
+        );
     }
 
     return (
         <>
-            {showModal &&
-                <>
-                    <CartsModal
-                        show={showModal}
-                        onHide={() => setShowModal(false)}
-                        cart={selectSingleCart}
-                    />
-                </>
-            }
+            {showConfirmModal && selectCart && (
+                <ConfirmModal
+                    show={showConfirmModal}
+                    onHide={() => setShowConfirmModal(false)}
+                    cart={selectCart}
+                    onCartDelete={removeCart}
+                />
+            )}
+
+            {showModal && selectSingleCart && (
+                <CartsModal
+                    show={showModal}
+                    onHide={() => setShowModal(false)}
+                    cart={selectSingleCart}
+                />
+            )}
+
             <div className="clienti container-full-width">
                 <div className="card client-card">
                     <div className="card-title">
-                        <span><i className="fa-solid fa-cart-shopping"></i>Carts</span>
+                        <span>
+                            <i className="fa-solid fa-cart-shopping"></i>
+                            Carts
+                        </span>
 
-                        {!props.inPage &&
-                            <div className="card-actions" id="btn-card-actions">
+                        {!props.inPage && (
+                            <div
+                                className="card-actions"
+                                id="btn-card-actions"
+                            >
                                 <nav>
-                                    <Link to="/cards"><span className="card-action-list">Vedi Tutti</span></Link>
+                                    <Link to="/cards">
+                                        <span className="card-action-list">
+                                            Vedi Tutti
+                                        </span>
+                                    </Link>
                                 </nav>
                             </div>
-                        }
-
+                        )}
                     </div>
+
                     <table className="card-table">
                         <thead>
                             <tr className="table-header">
                                 <th className="col nome">Utente id</th>
-                                <th className="col nome">Prodotti Totali</th>
+                                <th className="col nome">
+                                    Prodotti Totali
+                                </th>
                                 <th className="col cliente">Quantità</th>
                                 <th className="col stato">Totale</th>
-                                <th className="col stato">Sconto totale</th>
+                                <th className="col stato">
+                                    Sconto totale
+                                </th>
+                                <th className="col stato"></th>
                                 <th className="col stato"></th>
                             </tr>
                         </thead>
 
                         <tbody id="bodyTable2">
+                            {cartList
+                                .filter((item) => {
+                                    if (!props.userId) return true;
 
-                            {cartList.filter(item => {
-                                if (!props.userId) {
-                                    return true
-                                }
+                                    return props.userId === item.userId;
+                                })
+                                .map((item) => {
+                                    return (
+                                        <tr key={item.id}>
+                                            <td>{item.userId}</td>
+                                            <td>{item.totalProducts}</td>
+                                            <td>{item.totalQuantity}</td>
+                                            <td>
+                                                € {Math.round(item.total)}
+                                            </td>
+                                            <td>
+                                                €
+                                                {Math.round(
+                                                    item.discountedTotal
+                                                )}
+                                            </td>
 
-                                if (props.userId === item.userId) {
+                                            <td>
+                                                <Button
+                                                    variant="outline-primary"
+                                                    onClick={() =>
+                                                        detailsButton(item)
+                                                    }
+                                                >
+                                                    details
+                                                </Button>
+                                            </td>
 
-                                    return true
-                                }
-                                return false
-                            }).map(item => {
-                                return (
-
-                                    <tr key={item.id}>
-                                        <td>{item.userId}</td>
-                                        <td>{item.totalProducts}</td>
-                                        <td>{item.totalQuantity}</td>
-                                        <td>€ {Math.round(item.total)}</td>
-                                        <td>€ {Math.round(item.discountedTotal)}</td>
-                                        {/* <td><Button variant="outline-primary" onClick={() => {
-                                            props.productItem
-                                                .filter(product => product.id === item.id)
-                                                .forEach(product => {
-                                                    setSelectSingleProduct(product)
-                                                    setShowModal(true)
-                                                })
-                                        }}>
-                                            details
-                                        </Button></td> */}
-                                        <td><Button variant="outline-primary" onClick={() => detailsButton(item)}>
-                                            details
-                                        </Button></td>
-                                    </tr>
-
-                                )
-                            })}
+                                            <td>
+                                                <Button
+                                                    variant="outline-danger"
+                                                    onClick={() => {
+                                                        setSelectCart(item);
+                                                        setShowConfirmModal(
+                                                            true
+                                                        );
+                                                    }}
+                                                >
+                                                    Delete
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                         </tbody>
                     </table>
-                    {props.inPage &&
+
+                    {props.inPage && (
                         <ul className="pagination">
-                            <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
-                                e.preventDefault()
-                                setPagination(currentValue => {
-                                    if (currentValue <= 0) {
-                                        return 0
-                                    } else {
-                                        return currentValue - 1
-                                    }
-                                })
+                            <li className="page-item">
+                                <a
+                                    className="page-link"
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
 
-                            }}>Previous</a></li>
+                                        setPagination((currentValue) => {
+                                            if (currentValue <= 0) {
+                                                return 0;
+                                            }
 
-                            {pagination > 0 &&
-                                <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
-                                    e.preventDefault()
-                                    setPagination(currentValue => {
-                                        return currentValue - 1
-                                    })
+                                            return currentValue - 1;
+                                        });
+                                    }}
+                                >
+                                    Previous
+                                </a>
+                            </li>
 
-                                }}>{pagination}</a></li>
-                            }
+                            {pagination > 0 && (
+                                <li className="page-item">
+                                    <a
+                                        className="page-link"
+                                        href="#"
+                                        onClick={(e) => {
+                                            e.preventDefault();
 
-                            <li className="page-item"><a className="page-link" href="#">{pagination + 1}</a></li>
+                                            setPagination(
+                                                (currentValue) =>
+                                                    currentValue - 1
+                                            );
+                                        }}
+                                    >
+                                        {pagination}
+                                    </a>
+                                </li>
+                            )}
 
+                            <li className="page-item">
+                                <a className="page-link" href="#">
+                                    {pagination + 1}
+                                </a>
+                            </li>
 
-                            {pagination < (Math.ceil(totalCarts / ITEM_PER_PAGE) - 1) &&
-                                <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
-                                    e.preventDefault()
-                                    setPagination(currentValue => {
+                            {pagination <
+                                Math.ceil(totalCarts / ITEM_PER_PAGE) -
+                                1 && (
+                                    <li className="page-item">
+                                        <a
+                                            className="page-link"
+                                            href="#"
+                                            onClick={(e) => {
+                                                e.preventDefault();
 
-                                        return currentValue + 1
+                                                setPagination(
+                                                    (currentValue) =>
+                                                        currentValue + 1
+                                                );
+                                            }}
+                                        >
+                                            {pagination + 2}
+                                        </a>
+                                    </li>
+                                )}
 
-                                    })
+                            <li className="page-item">
+                                <a
+                                    className="page-link"
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
 
-                                }}>{pagination + 2}</a></li>
-                            }
-                            <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
-                                e.preventDefault()
+                                        setPagination((currentValue) => {
+                                            if (
+                                                currentValue ===
+                                                Math.ceil(
+                                                    totalCarts /
+                                                    ITEM_PER_PAGE
+                                                ) -
+                                                1
+                                            ) {
+                                                return currentValue;
+                                            }
 
-                                setPagination(currentValue => {
-                                    if (currentValue == Math.ceil(totalCarts / ITEM_PER_PAGE) - 1) {
-                                        return currentValue
-                                    } else {
-                                        return currentValue + 1
-                                    }
-                                })
-
-
-
-                            }}>Next</a></li>
+                                            return currentValue + 1;
+                                        });
+                                    }}
+                                >
+                                    Next
+                                </a>
+                            </li>
                         </ul>
-                    }
+                    )}
                 </div>
-
-            </div >
-
+            </div>
         </>
-    )
+    );
 }
