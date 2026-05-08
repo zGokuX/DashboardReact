@@ -1,11 +1,11 @@
-// Carts.jsx
-
 import { useEffect, useState } from "react";
 import { fetchCarts } from "../services/requests";
 import CartsModal from "./CartsModal";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import ConfirmModal from "./ConfirmModal";
+import UserDetail from "./UserDetailModal";
+import { TrashFill } from "react-bootstrap-icons";
 
 const ITEM_PER_PAGE = 25;
 
@@ -15,9 +15,10 @@ export default function Carts(props) {
     const [totalCarts, setTotalCarts] = useState(0);
     const [selectSingleCart, setSelectSingleCart] = useState(null);
     const [pagination, setPagination] = useState(0);
-
+    const [userDetailModalShow, setUserDetailModalShow] = useState(false)
     const [selectCart, setSelectCart] = useState(null);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [selectUserByIdCart, setSelectUserByIdCart] = useState(null)
 
     useEffect(() => {
         getCart(1);
@@ -47,6 +48,12 @@ export default function Carts(props) {
         );
     }
 
+    function openModalDetail(e, cart) {
+        e.preventDefault()
+        setSelectUserByIdCart(cart)
+        setUserDetailModalShow(true)
+    }
+
     return (
         <>
             {showConfirmModal && selectCart && (
@@ -65,6 +72,15 @@ export default function Carts(props) {
                     cart={selectSingleCart}
                 />
             )}
+
+            {userDetailModalShow &&
+                <UserDetail
+                    show={userDetailModalShow}
+                    onHide={() => setUserDetailModalShow(false)}
+                    userId={selectUserByIdCart}
+                />
+
+            }
 
             <div className="clienti container-full-width">
                 <div className="card client-card">
@@ -103,9 +119,6 @@ export default function Carts(props) {
                                     Sconto totale
                                 </th>
                                 <th className="col stato"></th>
-                                {props.inPage &&
-                                <th className="col stato"></th>
-                                }
                             </tr>
                         </thead>
 
@@ -119,7 +132,7 @@ export default function Carts(props) {
                                 .map((item) => {
                                     return (
                                         <tr key={item.id}>
-                                            <td>{item.userId}</td>
+                                            <td onClick={(e) => openModalDetail(e, item.userId)}>{item.userId}</td>
                                             <td>{item.totalProducts}</td>
                                             <td>{item.totalQuantity}</td>
                                             <td>
@@ -132,7 +145,7 @@ export default function Carts(props) {
                                                 )}
                                             </td>
 
-                                            <td>
+                                            <td className="d-flex gap-3">
                                                 <Button
                                                     variant="outline-primary"
                                                     onClick={() =>
@@ -141,22 +154,23 @@ export default function Carts(props) {
                                                 >
                                                     details
                                                 </Button>
+                                                {props.inPage &&
+                                                    <Button variant="danger">
+                                                        <TrashFill
+                                                            size={20}
+                                                            onClick={() => {
+                                                                setSelectCart(item);
+                                                                setShowConfirmModal(
+                                                                    true
+                                                                );
+                                                            }}
+                                                        >
+                                                            Delete
+                                                        </TrashFill>
+                                                    </Button>
+                                                }
                                             </td>
-                                          {props.inPage &&
-                                            <td>
-                                                <Button
-                                                    variant="outline-danger"
-                                                    onClick={() => {
-                                                        setSelectCart(item);
-                                                        setShowConfirmModal(
-                                                            true
-                                                        );
-                                                    }}
-                                                >
-                                                    Delete
-                                                </Button>
-                                            </td>
-                                            }
+
                                         </tr>
                                     );
                                 })}

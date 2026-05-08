@@ -49,7 +49,10 @@ export default function Products(props) {
 
     return (
         <>
-        <Graphic productsList={productList} />
+        {props.inPage &&
+            <Graphic productsList={productList} />
+        }
+        
             <div className="clienti container-full-width">
                 <div className="card client-card">
                     <div className="card-title">

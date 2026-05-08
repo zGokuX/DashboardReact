@@ -28,19 +28,9 @@ export default function Graphic(props) {
     <>
       <div className='statistica container-full-width'>
         <div className='card'>
-          <div className='card-title'>
-            <div className='card-actions'>
-              <button className='card-action-button project-btn'>
-                <i className='fa-solid fa-folder'></i>
-              </button>
-            </div>
-          </div>
 
           <div className='card-content'>
             <div className='card-graphic'>
-              <div className='text-in-card'>
-                <span id='number-expires'>5</span>
-              </div>
               <Chart highcharts={Highcharts}>
                 <Title>Media costo categoria</Title>
 
@@ -52,7 +42,7 @@ export default function Graphic(props) {
 
                 <Series
                   type='column'
-                  name='2026'
+                  name="Media calcolata nell'arco del 2026"
                   data={Object.values(categories).map(item => item.reduce((acc, price) => acc + price, 0) / item.length)}
                 />
               </Chart>
@@ -60,20 +50,9 @@ export default function Graphic(props) {
           </div>
         </div>
         <div className='card'>
-          <div className='card-title'>
-            <div className='card-actions'>
-              <button className='card-action-button revenue-per-month'>
-                <i className='fa-solid fa-arrow-up'></i>
-                <span></span>18.5%
-              </button>
-            </div>
-          </div>
 
           <div className='card-content'>
             <div className='card-graphic'>
-              <div className='text-in-card'>
-                <span className='big'>€12.750</span>
-              </div>
               <Chart highcharts={Highcharts}>
                 <Title>Somma dei costi per categoria</Title>
 
