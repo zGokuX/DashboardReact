@@ -13,16 +13,14 @@ export default function Products(props) {
         fetchAllCategories().then(res => {
             setCategoryList(res)
 
-            console.log(res)
-        })
-    }, [])
-    function titleProcess(text) {
-        const result =
-            text.charAt(0).toUpperCase() +
-            text.slice(1);
+      console.log(res)
+    })
+  }, [])
+  function titleProcess(text) {
+    const result = text.charAt(0).toUpperCase() + text.slice(1)
 
-        return result
-    }
+    return result
+  }
 
     async function getProduct(userId) {
         const product = await fetchProducts(userId, props.maxViewProduct)
@@ -33,15 +31,20 @@ export default function Products(props) {
         setProductList(product.products)
     }
 
-    function filterProductsCategory(value) {
-        fetchProductsCategory(value).then((res) => {
-            if (value === 'default') {
-                return getProduct(1)
-            }
-            setProductList(res)
-        })
-    }
+  function filterProductsCategory(value) {
+    fetchProductsCategory(value).then(res => {
+      if (value === 'default') {
+        return getProduct(1)
+      }
+      setProductList(res)
+    })
+  }
 
+  useEffect(() => {
+    if (props.onProductsListChange) {
+      props.onProductsListChange(productList)
+    }
+  }, [props, productList])
 
     return (
         <>
