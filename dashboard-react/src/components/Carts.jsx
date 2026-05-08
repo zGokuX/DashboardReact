@@ -23,15 +23,16 @@ export default function Carts(props) {
     const [selectUserByIdCart, setSelectUserByIdCart] = useState(null)
 
     useEffect(() => {
+        async function getCart(userId) {
+            const cart = await fetchCarts(userId, props.maxViewCarts);
+
+            setCartList(cart.carts);
+            setTotalCarts(cart.total);
+        }
         getCart(1);
     }, []);
 
-    async function getCart(userId) {
-        const cart = await fetchCarts(userId, props.maxViewCarts);
 
-        setCartList(cart.carts);
-        setTotalCarts(cart.total);
-    }
 
     useEffect(() => {
         fetchCarts(1, ITEM_PER_PAGE, pagination).then((res) => {

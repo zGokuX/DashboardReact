@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import fetchUser, { addUser, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
-import UserModal from "./UserModal"
+import UserFormModal from "./UserFormModal"
 import { Button, Form, InputGroup, Toast, ToastContainer } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
@@ -21,15 +21,15 @@ export default function RecentUsers(props) {
   const [message, setMessage] = useState('')
   const [isNew, setIsNew] = useState(false) //isNew
 
-  async function getUser(maxUser) {
-    const userListResponse = await fetchUser(maxUser)
-    setTotalUsers(userListResponse.total)
-    setUserList(userListResponse.users)
-    setAllUsers(userListResponse.users)
-  }
+
 
   useEffect(() => {
-
+    async function getUser(maxUser) {
+      const userListResponse = await fetchUser(maxUser)
+      setTotalUsers(userListResponse.total)
+      setUserList(userListResponse.users)
+      setAllUsers(userListResponse.users)
+    }
     getUser(props.maxViewUser)
 
   }, [])
@@ -169,7 +169,7 @@ export default function RecentUsers(props) {
   return (
     <>
       {showModal && (
-        <UserModal
+        <UserFormModal
           show={showModal}
           onHide={() => setShowModal(false)}
           onUserChange={(user, isNewUser) => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
-import ProductModal from "./ProductModal"
 import { fetchProducts } from "../services/requests"
+import ProductModal from "./ProductModal"
 const ITEM_PER_PAGE = 25
 export default function ProductsTable(props) {
     const [selectProduct, setSelectProduct] = useState(null)
@@ -14,7 +14,10 @@ export default function ProductsTable(props) {
 
     useEffect(() => {
         fetchProducts(1, ITEM_PER_PAGE, pagination).then((res) => {
-            props.setProductList(res.products)
+            if (props.setProductList) {
+                props.setProductList(res.products)
+            }
+
         });
     }, [pagination]);
 
@@ -147,20 +150,20 @@ export default function ProductsTable(props) {
                     </li>
 
                     {pagination < 7 - 1 && (
-                            <li className="page-item">
-                                <a
-                                    className="page-link"
-                                    href="#"
-                                    onClick={(e) => {
-                                        e.preventDefault();
+                        <li className="page-item">
+                            <a
+                                className="page-link"
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
 
-                                        setPagination((currentValue) => currentValue + 1);
-                                    }}
-                                >
-                                    {pagination + 2}
-                                </a>
-                            </li>
-                        )}
+                                    setPagination((currentValue) => currentValue + 1);
+                                }}
+                            >
+                                {pagination + 2}
+                            </a>
+                        </li>
+                    )}
 
                     <li className="page-item">
                         <a
@@ -170,7 +173,7 @@ export default function ProductsTable(props) {
                                 e.preventDefault();
 
                                 setPagination((currentValue) => {
-                                    if (currentValue >= 7 ) {
+                                    if (currentValue >= 7) {
                                         return currentValue;
                                     }
                                     return currentValue + 1;

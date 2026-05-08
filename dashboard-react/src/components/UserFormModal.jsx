@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function UserModal({ show, onHide, user, title, isNew, onUserChange }) {
+function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
 
     const [localUser, setLocalUser] = useState(isNew ? { firstName: '', lastName: '', company: '' } : { ...user })
 
@@ -81,4 +81,4 @@ function UserModal({ show, onHide, user, title, isNew, onUserChange }) {
     );
 }
 
-export default UserModal;
+export default UserFormModal;

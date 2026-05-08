@@ -5,6 +5,7 @@ import Carts from "./Carts";
 import Graphic from "../layouts/Graphic";
 import Products from "./Products";
 import RecentUsers from "./RecentUsers";
+import { Counter } from "./counter";
 
 
 
@@ -16,6 +17,7 @@ export default function Dashboard() {
     return (
       <>
         <main>
+          <Counter/>
           <div className='welcome-container'>
             <h1>Benvenuto Marco!</h1>
             <h3>Ecco una paronamica del tuo business</h3>
