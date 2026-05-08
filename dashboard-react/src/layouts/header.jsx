@@ -1,3 +1,4 @@
+import { CartFill } from "react-bootstrap-icons";
 
 export default function Header() {
     return (
@@ -18,6 +19,10 @@ export default function Header() {
                         <div className="notification-user">
                             <i className="fa-solid fa-bell"></i>
                             <span className="notification-count">3</span>
+                        </div>
+
+                        <div className="cart-icon ms-3">
+                            <CartFill size={25}/>
                         </div>
                         <div className="user-profile" id="user-profile-id">
                             <div className="user-avatar">

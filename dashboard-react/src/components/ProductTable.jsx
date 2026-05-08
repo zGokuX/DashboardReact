@@ -1,14 +1,22 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
 import ProductModal from "./ProductModal"
-
+import { fetchProducts } from "../services/requests"
+const ITEM_PER_PAGE = 25
 export default function ProductsTable(props) {
     const [selectProduct, setSelectProduct] = useState(null)
     const [showModal, setShowModal] = useState(false)
+    const [pagination, setPagination] = useState(0);
     function detailsProductButton(product) {
         setSelectProduct(product)
         setShowModal(true)
     }
+
+    useEffect(() => {
+        fetchProducts(1, ITEM_PER_PAGE, pagination).then((res) => {
+            props.setProductList(res.products)
+        });
+    }, [pagination]);
 
     return (
         <>
@@ -49,7 +57,7 @@ export default function ProductsTable(props) {
                     </tr>
                 </thead>
                 <tbody id="bodyTable">
-                    {props.productList.map((item, index) => {
+                    {props.productList.map((item) => {
                         return (
 
                             <tr key={item.id}>
@@ -58,10 +66,10 @@ export default function ProductsTable(props) {
                                 <td>{item.title}</td>
                                 <td>{props.modalMode && props.isCarts ? item.quantity : item.category}</td>
                                 <td>€ {Math.round(item.price)}</td>
-                                 {!props.isCarts &&
-                                 <td>{item.availabilityStatus}</td>
-                                 }
-                                
+                                {!props.isCarts &&
+                                    <td>{item.availabilityStatus}</td>
+                                }
+
                                 <td>{item.discountPercentage}%</td>
 
                                 {
@@ -91,6 +99,89 @@ export default function ProductsTable(props) {
                     })}
                 </tbody>
             </table>
+            {props.inPage && (
+                <ul className="pagination">
+                    <li className="page-item">
+                        <a
+                            className="page-link"
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault();
+
+                                setPagination((currentValue) => {
+                                    if (currentValue <= 0) {
+                                        return 0;
+                                    }
+
+                                    return currentValue - 1;
+                                });
+                            }}
+                        >
+                            Previous
+                        </a>
+                    </li>
+
+                    {pagination > 0 && (
+                        <li className="page-item">
+                            <a
+                                className="page-link"
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+
+                                    setPagination(
+                                        (currentValue) =>
+                                            currentValue - 1
+                                    );
+                                }}
+                            >
+                                {pagination}
+                            </a>
+                        </li>
+                    )}
+
+                    <li className="page-item">
+                        <a className="page-link" href="#">
+                            {pagination + 1}
+                        </a>
+                    </li>
+
+                    {pagination < 7 - 1 && (
+                            <li className="page-item">
+                                <a
+                                    className="page-link"
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+
+                                        setPagination((currentValue) => currentValue + 1);
+                                    }}
+                                >
+                                    {pagination + 2}
+                                </a>
+                            </li>
+                        )}
+
+                    <li className="page-item">
+                        <a
+                            className="page-link"
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault();
+
+                                setPagination((currentValue) => {
+                                    if (currentValue >= 7 ) {
+                                        return currentValue;
+                                    }
+                                    return currentValue + 1;
+                                });
+                            }}
+                        >
+                            Next
+                        </a>
+                    </li>
+                </ul>
+            )}
         </>
     )
 }

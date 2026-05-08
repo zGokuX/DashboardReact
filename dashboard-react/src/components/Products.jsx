@@ -27,10 +27,10 @@ export default function Products(props) {
     async function getProduct(userId) {
         const product = await fetchProducts(userId, props.maxViewProduct)
         if (props.onSelectProduct) {
-            props.onSelectProduct(product)
+            props.onSelectProduct(product.products)
         }
-
-        setProductList(product)
+       
+        setProductList(product.products)
     }
 
     function filterProductsCategory(value) {
@@ -64,13 +64,17 @@ export default function Products(props) {
                                     filterProductsCategory(value)
                                 }}>
                                 <option value="default">Categoria</option>
-                                {categoryList.map((item,index) => {
+                                {categoryList.map((item, index) => {
                                     return <option key={index} value={item}>{titleProcess(item.replace('-', ' '))}</option>
                                 })}
                             </Form.Select>
                         }
                     </div>
-                    <ProductsTable productList={productList} />
+                    <ProductsTable
+                        productList={productList}
+                        setProductList={setProductList}
+                        inPage = {props.inPage}
+                    />
                 </div>
             </div>
         </>
