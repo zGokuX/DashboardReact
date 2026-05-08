@@ -12,7 +12,7 @@ import {
 import { fetchSingleUser } from "../services/requests"
 import { useState } from "react"
 
-export default function UserDetail({ show , onHide , userId }) {
+export default function UserDetail({ show , onHide , userId}) {
 
     const [user,setUser] = useState([])
 

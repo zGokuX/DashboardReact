@@ -6,10 +6,12 @@ import { Link } from "react-router-dom";
 import ConfirmModal from "./ConfirmModal";
 import UserDetail from "./UserDetailModal";
 import { TrashFill } from "react-bootstrap-icons";
+import { Toast, ToastContainer } from "react-bootstrap";
 
 const ITEM_PER_PAGE = 25;
 
 export default function Carts(props) {
+    const [showToast, setShowToast] = useState(null)
     const [cartList, setCartList] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [totalCarts, setTotalCarts] = useState(0);
@@ -46,6 +48,7 @@ export default function Carts(props) {
         setCartList((currentList) =>
             currentList.filter((item) => item.id !== cartId)
         );
+        setShowToast(true)
     }
 
     function openModalDetail(e, cart) {
@@ -62,6 +65,12 @@ export default function Carts(props) {
                     onHide={() => setShowConfirmModal(false)}
                     cart={selectCart}
                     onCartDelete={removeCart}
+                    showNotification={(showNotificationVar) => {
+                        if (showNotificationVar) {
+                            console.log("ciao")
+                            setShowToast(true)
+                        }
+                    }}
                 />
             )}
 
@@ -79,6 +88,7 @@ export default function Carts(props) {
                     onHide={() => setUserDetailModalShow(false)}
                     userId={selectUserByIdCart}
                 />
+
 
             }
 
@@ -118,7 +128,7 @@ export default function Carts(props) {
                                 <th className="col stato">
                                     Sconto totale
                                 </th>
-                                <th className="col stato"></th>
+                                <th style={{ "width": "150px" }} className="col stato"></th>
                             </tr>
                         </thead>
 
@@ -132,7 +142,7 @@ export default function Carts(props) {
                                 .map((item) => {
                                     return (
                                         <tr key={item.id}>
-                                            <td onClick={(e) => openModalDetail(e, item.userId)}>{item.userId}</td>
+                                            <td><a href="#" onClick={(e) => openModalDetail(e, item.userId)}>Utente {item.userId}</a></td>
                                             <td>{item.totalProducts}</td>
                                             <td>{item.totalQuantity}</td>
                                             <td>
@@ -274,6 +284,25 @@ export default function Carts(props) {
                         </ul>
                     )}
                 </div>
+                <ToastContainer
+                    className="p-3"
+                    position="bottom-end"
+                    style={{ zIndex: 1, position: "fixed" }}
+                >
+                    <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
+                        <Toast.Header>
+                            <img
+                                src="holder.js/20x20?text=%20"
+                                className="rounded me-2"
+                                alt=""
+                            />
+                            <strong className="me-auto">Eliminazione Cart</strong>
+                            <small>11 mins ago</small>
+                        </Toast.Header>
+
+                        <Toast.Body>Dati del cart eliminati!</Toast.Body>
+                    </Toast>
+                </ToastContainer>
             </div>
         </>
     );

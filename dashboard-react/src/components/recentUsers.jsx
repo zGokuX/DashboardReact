@@ -213,7 +213,7 @@ export default function RecentUsers(props) {
             )}</h4>
 
             <button
-              className='custom-btn add-client-btn btn btn-primary'
+              className='custom-btn add-client-btn btn btn-primary p-2'
               id='add-clients'
               onClick={addButton}
               style={{ item: '10px' }}
