@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { fetchAllCategories, fetchProducts, fetchProductsCategory } from "../services/requests"
 import ProductsTable from "./ProductTable"
+import Graphic from "../layouts/Graphic"
 import { Link } from "react-router-dom"
 import { Form } from "react-bootstrap"
 export default function Products(props) {
@@ -48,6 +49,7 @@ export default function Products(props) {
 
     return (
         <>
+        <Graphic productsList={productList} />
             <div className="clienti container-full-width">
                 <div className="card client-card">
                     <div className="card-title">
