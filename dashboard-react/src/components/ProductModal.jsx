@@ -1,6 +1,5 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import ProductsTable from './ProductTable';
 import { ArrowClockwise, FileEarmarkText, PersonVcard, ShieldCheck, StarFill } from 'react-bootstrap-icons';
 
 function ProductModal({ show, onHide, product }) {

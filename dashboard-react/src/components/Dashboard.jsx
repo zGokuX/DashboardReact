@@ -1,18 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BigGraphic from "../layouts/BigGraphic";
 import CardTitle from "../components/cardTitle";
 import Carts from "./Carts";
 import Graphic from "../layouts/Graphic";
 import Products from "./Products";
 import RecentUsers from "./RecentUsers";
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Toast from 'react-bootstrap/Toast';
-import { fetchSingleUser } from "../services/requests";
-import { ToastContainer } from "react-bootstrap";
 
-export default function Dashboard(props) {
+
+
+export default function Dashboard() {
     const [selectUser, setSelectUser] = useState(null)
     const [selectProduct, setSelectProduct] = useState(null)
 

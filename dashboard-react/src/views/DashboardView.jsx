@@ -1,6 +1,6 @@
 import Dashboard from "../components/Dashboard";
 
-export default function DashboardView(props) {
+export default function DashboardView() {
    return (
     <>
     <Dashboard/>

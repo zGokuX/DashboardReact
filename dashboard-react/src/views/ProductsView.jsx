@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react"
-import { fetchProducts } from "../services/requests"
 import Products from "../components/Products"
 export default function ProductsView() {
     return (

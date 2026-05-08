@@ -1,4 +1,3 @@
-
 import RecentUsers from "../components/recentUsers"
 
 export default function RecentUsersView() {
