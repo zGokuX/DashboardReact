@@ -6,6 +6,7 @@ import Graphic from "../layouts/Graphic";
 import Products from "./Products";
 import RecentUsers from "./RecentUsers";
 import { Counter } from "./counter";
+import { InputName } from "./inputName";
 
 
 
@@ -17,6 +18,8 @@ export default function Dashboard() {
     return (
       <>
         <main>
+        <InputName/>
+
           <Counter/>
           <div className='welcome-container'>
             <h1>Benvenuto Marco!</h1>

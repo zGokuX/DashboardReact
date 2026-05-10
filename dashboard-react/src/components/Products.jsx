@@ -4,6 +4,7 @@ import ProductsTable from "./ProductTable"
 import Graphic from "../layouts/Graphic"
 import { Link } from "react-router-dom"
 import { Form } from "react-bootstrap"
+import OutputName from "./OutputName"
 export default function Products(props) {
 
     const [productList, setProductList] = useState([])
@@ -49,6 +50,7 @@ export default function Products(props) {
 
     return (
         <>
+        <OutputName/>
         {props.inPage &&
             <Graphic productsList={productList} />
         }
