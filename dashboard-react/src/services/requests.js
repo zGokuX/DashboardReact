@@ -16,6 +16,14 @@ export function fetchCarts(userId = null, pageSize = 25, page = 0) {
   })
 }
 
+export function fetchCartsByUserId(userId = null) {
+  return fetch(`https://dummyjson.com/carts/user/${userId}?limit=25`).then(res => res.json()).then(cartResponse => {
+    return cartResponse.carts
+
+  })
+}
+
+
 export function deleteCart(cartId) {
   return fetch(`https://dummyjson.com/carts/${cartId}`, {
     method: 'DELETE',

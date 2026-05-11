@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
-import fetchUser, { addUser, fetchCarts, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
+import React, { useEffect, useState } from "react"
+import fetchUser, { addUser, fetchCarts, fetchCartsByUserId, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
 import UserFormModal from "./UserFormModal"
-import { Button, Form, InputGroup, Toast, ToastContainer } from "react-bootstrap"
+import { Button, Toast, ToastContainer } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { CaretDownFill, CaretUpFill } from "react-bootstrap-icons"
+import CartTable from "./CartTable"
+import UserFilters from "./UserFilters"
 
 const ITEM_PER_PAGE = 25
 
@@ -23,12 +25,13 @@ export default function RecentUsers(props) {
   const [isNew, setIsNew] = useState(false) //isNew
   const [openedUserId, setOpenedUserId] = useState(false)
   const [cart, setCart] = useState([])
-  useEffect(() => {
-    async function getCart(userId) {
-      const cart = await fetchCarts(userId, props.maxViewCarts);
+  async function getCart(userId) {
+    const cart = await fetchCarts(userId, props.maxViewCarts);
 
-      setCart(cart.carts);
-    }
+    setCart(cart.carts);
+  }
+  useEffect(() => {
+
 
     async function getUser(maxUser) {
       const userListResponse = await fetchUser(maxUser)
@@ -37,7 +40,7 @@ export default function RecentUsers(props) {
       setAllUsers(userListResponse.users)
     }
     getUser(props.maxViewUser)
-    getCart(1)
+
   }, [])
 
   useEffect(() => {
@@ -90,6 +93,25 @@ export default function RecentUsers(props) {
       setUserList(res)
     })
   }
+
+  function setPage(currentValue, goOn) {
+    console.log(currentValue, goOn)
+    if (goOn && currentValue <= 7) {
+      setPagination(currentValue + 1)
+      return currentValue + 1
+    } else if (!goOn) {
+      setPagination(currentValue - 1)
+      currentValue = currentValue - 1
+    }
+    if (currentValue > Math.ceil(totalUsers / ITEM_PER_PAGE) - 1) {
+      setPagination(currentValue)
+    }
+    if (currentValue <= 0) {
+      setPagination(0)
+      return 0
+    }
+    return currentValue
+  }
   function filterNames(value) {
     setFilterGender('default')
     setFilterRole('default')
@@ -111,7 +133,7 @@ export default function RecentUsers(props) {
     return (userList.map(item => {
       // console.log(item)
       return (
-        <>
+        <React.Fragment key={item.id + item.firstName}>
           <tr className='row-list' key={item.id + item.firstName}>
             <td className='client-avatar'>
               <img src={item.image} alt='Client Avatar' />
@@ -161,6 +183,18 @@ export default function RecentUsers(props) {
                       } else {
                         setOpenedUserId(item.id)
                       }
+                      if (!item.carts) {
+                        fetchCartsByUserId(item.id).then(cart => {
+                          setUserList(userList.map(user => {
+
+                            if (user.id === item.id) {
+                              user.carts = cart
+                            }
+                            return user
+                          }))
+                        })
+                      }
+
                     }}
                   >
                     Mostra carrelli {openedUserId === item.id ? <CaretUpFill /> : <CaretDownFill />}
@@ -185,29 +219,18 @@ export default function RecentUsers(props) {
               </Link>
             </td>
           </tr>
-          {openedUserId == item.id && (
+          {openedUserId == item.id && item.carts && (
             <tr>
-              <td>
-                <table>
-                  <h4>Carrello di {item.firstName}</h4>
-                  <tbody>
-                    {cart
-                      .filter(cartItem => cartItem.userId === openedUserId)
-                      .map(cartItem => (
-                        <tr key={cartItem.id}>
-                          <td>
-                            {cartItem.products?.map((product, index) => (
-                              <p key={product.id ?? index}>{product.title}</p>
-                            ))}
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
+              <td colSpan="6">
+                <CartTable
+                  cartList={item.carts}
+                  userId={props.userId}
+                  inPage={props.inPage}
+                />
               </td>
             </tr>
           )}
-        </>
+        </React.Fragment>
       )
     }))
   }
@@ -268,123 +291,35 @@ export default function RecentUsers(props) {
           </div>
 
           <div className='client-list' id='client-list-id'>
-            {props.inPage && (
-              <>
-                <form action='' onSubmit={e => e.preventDefault()}>
-                  <div className='container'>
-                    <div className='row'>
-                      <div className='col'>
-                        <InputGroup className='mb-3'>
-                          <InputGroup.Text id='basic-addon1'>
-                            <i
-                              className='fa fa-search'
-                              aria-hidden='true'
-                            ></i>
-                          </InputGroup.Text>
-                          <Form.Control
-                            placeholder="Cerca nome dell'utente"
-                            value={filterInput}
-                            aria-label='Username'
-                            aria-describedby='basic-addon1'
-                            onChange={e => {
-                              const value = e.target.value
-                              setFilterInput(value)
-                            }}
-                          />
-                        </InputGroup>
-                      </div>
-                      <div className='col'>
-                        <Button
-                          variant='outline-primary'
-                          type='submit'
-                          onClick={() => {
-                            if (filterInput != '') {
-                              filterNames(filterInput)
-                            }
-                          }}
-                        >
-                          Cerca
-                        </Button>
-                      </div>
-                      <div className='col'>
-                        {' '}
-                        <Form.Select
-                          aria-label='Default select example'
-                          value={filterGender}
-                          onChange={e => {
-                            const value = e.target.value
-                            setFilterGender(value)
-                            filterPlus('gender', value)
-                          }}
-                        >
-                          <option value='default'>Genere</option>
-                          <option value='male'>Maschio</option>
-                          <option value='female'>Femmina</option>
-                        </Form.Select>
-                      </div>
-                      <div className='col'>
-                        {' '}
-                        <Form.Select
-                          aria-label='Default select example'
-                          value={filterRole}
-                          onChange={e => {
-                            const value = e.target.value
-                            setFilterRole(value)
-                            filterPlus('role', value)
-                          }}
-                        >
-                          <option value='default'>Ruolo</option>
-                          <option value='admin'>admin</option>
-                          <option value='moderator'>moderatore</option>
-                          <option value='user'>utente</option>
-                        </Form.Select>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-                <div className='d-flex p-2 gap-3 ps-4'>
-                  <Form.Group className='mb-3'>
-                    <Form.Label>Età - {filterAge}</Form.Label>
-                    <Form.Range
-                      max={140}
-                      value={filterAge}
-                      onChange={e => {
-                        const value = e.target.value
-                        setFilterAge(value)
-                        filterPlus('age', value)
-                      }}
-                    />
-                  </Form.Group>
-                </div>
-              </>
-            )}
+            <UserFilters
+            filterInput={filterInput}
+            setFilterInput={setFilterInput}
+            filterNames={filterNames}
+            filterGender={filterGender}
+            setFilterGender={setFilterGender}
+            filterRole={filterRole}
+            setFilterRole={setFilterRole}
+            filterPlus={filterPlus}
+            filterAge={filterAge}
+            setFilterAge={setFilterAge}
+            inPage={props.inPage}
+            />
 
             <table>
-              <tbody>{renderUser()}
-
-              </tbody>
-
+              <tbody>{renderUser()}</tbody>
             </table>
             {props.inPage &&
               <ul className="pagination">
                 <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
                   e.preventDefault()
-                  setPagination(currentValue => {
-                    if (currentValue <= 0) {
-                      return 0
-                    } else {
-                      return currentValue - 1
-                    }
-                  })
+                  setPage(pagination, false)
 
                 }}>Previous</a></li>
 
                 {pagination > 0 &&
                   <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
                     e.preventDefault()
-                    setPagination(currentValue => {
-                      return currentValue - 1
-                    })
+                    setPage(pagination, false)
 
                   }}>{pagination}</a></li>
                 }
@@ -395,25 +330,13 @@ export default function RecentUsers(props) {
                 {pagination < (Math.ceil(totalUsers / ITEM_PER_PAGE) - 1) &&
                   <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
                     e.preventDefault()
-                    setPagination(currentValue => {
-
-                      return currentValue + 1
-
-                    })
+                    setPage(pagination, true)
 
                   }}>{pagination + 2}</a></li>
                 }
                 <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
                   e.preventDefault()
-
-                  setPagination(currentValue => {
-                    if (currentValue == Math.ceil(totalUsers / ITEM_PER_PAGE) - 1) {
-                      return currentValue
-                    } else {
-                      return currentValue + 1
-                    }
-                  })
-
+                  setPage(pagination, true)
 
 
                 }}>Next</a></li>

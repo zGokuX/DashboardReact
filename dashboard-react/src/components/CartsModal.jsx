@@ -12,7 +12,7 @@ function CartsModal({ show, onHide, cart }) {
             setCartUser(res)
         }))
 
-    }, [cart.userId])
+    }, [])
     return (
         <Modal show={show} onHide={onHide} size='lg'>
             <Modal.Header closeButton>
@@ -27,7 +27,7 @@ function CartsModal({ show, onHide, cart }) {
                         </>
                         }
 
-                        <ProductsTable productList={cart.products} modalMode={true} isCarts={true} showMoreOption={false} />
+                        <ProductsTable productList={cart.products ? cart.products : cart} modalMode={true} isCarts={true} showMoreOption={false} />
                     </div>
                 </div>
 
