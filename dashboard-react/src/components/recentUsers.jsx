@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
-import fetchUser, { addUser, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
+import fetchUser, { addUser, fetchCarts, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
 import UserFormModal from "./UserFormModal"
 import { Button, Form, InputGroup, Toast, ToastContainer } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { CaretDownFill, CaretUpFill } from "react-bootstrap-icons"
 
 const ITEM_PER_PAGE = 25
 
@@ -20,10 +21,15 @@ export default function RecentUsers(props) {
   const [showToast, setShowToast] = useState(false);
   const [message, setMessage] = useState('')
   const [isNew, setIsNew] = useState(false) //isNew
-
-
-
+  const [openedUserId, setOpenedUserId] = useState(false)
+  const [cart, setCart] = useState([])
   useEffect(() => {
+    async function getCart(userId) {
+      const cart = await fetchCarts(userId, props.maxViewCarts);
+
+      setCart(cart.carts);
+    }
+
     async function getUser(maxUser) {
       const userListResponse = await fetchUser(maxUser)
       setTotalUsers(userListResponse.total)
@@ -31,11 +37,11 @@ export default function RecentUsers(props) {
       setAllUsers(userListResponse.users)
     }
     getUser(props.maxViewUser)
-
+    getCart(1)
   }, [])
 
   useEffect(() => {
-
+    console.log(props.selectCart)
     fetchUser(ITEM_PER_PAGE, pagination).then((res) => {
       setUserList(res.users)
     })
@@ -105,64 +111,103 @@ export default function RecentUsers(props) {
     return (userList.map(item => {
       // console.log(item)
       return (
-        <tr className='row-list' key={item.id + item.firstName}>
-          <td className='client-avatar'>
-            <img src={item.image} alt='Client Avatar' />
-          </td>
-          <td className='client-info'>
-            <h5>{item.firstName + ' ' + item.lastName}</h5>
-            <h6>{item.company.department}</h6>
-          </td>
-          {/*                     <td className='client-info'>
+        <>
+          <tr className='row-list' key={item.id + item.firstName}>
+            <td className='client-avatar'>
+              <img src={item.image} alt='Client Avatar' />
+            </td>
+            <td className='client-info'>
+              <h5>{item.firstName + ' ' + item.lastName}</h5>
+              <h6>{item.company.department}</h6>
+            </td>
+            {/*                     <td className='client-info'>
                         <span>{item.age}</span>
                     </td> */}
-          {props.inPage &&
-            <>
-              <td className='client-info'>
-                <span>{item.email}</span>
-              </td>
-
-              <td className='client-info'>
-                <span>
-                  {item.address?.state} {item.address?.city}{' '}
-                  {item.address?.address}
-                </span>
-              </td>
-              <td className='client-info'>
-                <span>{item.phone}</span>
-              </td>
-            </>
-          }
-
-          <td className='client-actions d-flex gap-3 h-25'>
             {props.inPage &&
-              <Button
-                variant='outline-primary'
-                className='modify-btn'
-                onClick={() => editButton(item)}
-              >
-                Modifica
-              </Button>
+              <>
+                <td className='client-info'>
+                  <span>{item.email}</span>
+                </td>
 
+                <td className='client-info'>
+                  <span>
+                    {item.address?.state} {item.address?.city}{' '}
+                    {item.address?.address}
+                  </span>
+                </td>
+                <td className='client-info'>
+                  <span>{item.phone}</span>
+                </td>
+              </>
             }
-            {'  '}
-            {!props.inPage && (
-              <Button
-                variant='outline-primary'
-                className='filter-btn '
-                onClick={() => props.onSelectUser(item)}
-              >
-                Filtra
-              </Button>
-            )}
 
-            <Link to={`/user/${item.id}`}>
-              <Button variant='outline-primary' className='filter-btn '>
-                Details
-              </Button>
-            </Link>
-          </td>
-        </tr>
+            <td className='client-actions d-flex gap-3 h-25'>
+              {props.inPage &&
+                <>
+                  <Button
+                    variant='outline-primary'
+                    className='modify-btn'
+                    onClick={() => editButton(item)}
+                  >
+                    Modifica
+                  </Button>
+
+                  <Button
+                    variant='outline-primary'
+                    className='modify-btn'
+                    onClick={() => {
+                      if (openedUserId === item.id) {
+                        setOpenedUserId(null)
+                      } else {
+                        setOpenedUserId(item.id)
+                      }
+                    }}
+                  >
+                    Mostra carrelli {openedUserId === item.id ? <CaretUpFill /> : <CaretDownFill />}
+                  </Button>
+                </>
+              }
+              {'  '}
+              {!props.inPage && (
+                <Button
+                  variant='outline-primary'
+                  className='filter-btn '
+                  onClick={() => props.onSelectUser(item)}
+                >
+                  Filtra
+                </Button>
+              )}
+
+              <Link to={`/user/${item.id}`}>
+                <Button variant='outline-primary' className='filter-btn '>
+                  Details
+                </Button>
+              </Link>
+            </td>
+          </tr>
+          {openedUserId == item.id && (
+            <tr>
+              <td>
+                <table>
+                  <h4>Carrello di {item.firstName}</h4>
+                  <tbody>
+                    {cart
+                      .filter(cartItem => cartItem.userId === openedUserId)
+                      .map(cartItem => (
+                        <tr key={cartItem.id}>
+                          <td>
+                            {cartItem.products?.map((product, index) => (
+                              <p key={product.id ?? index}>{product.title}</p>
+                            ))}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          )}
+        </>
       )
     }))
   }
