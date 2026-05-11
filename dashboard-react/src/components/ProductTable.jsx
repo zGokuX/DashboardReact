@@ -2,11 +2,13 @@ import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
 import { fetchProducts } from "../services/requests"
 import ProductModal from "./ProductModal"
+import PaginationPage from "./PaginationPage"
 const ITEM_PER_PAGE = 25
 export default function ProductsTable(props) {
     const [selectProduct, setSelectProduct] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const [pagination, setPagination] = useState(0);
+    const [totalProducts, setTotalProduct] = useState(null)
     function detailsProductButton(product) {
         setSelectProduct(product)
         setShowModal(true)
@@ -16,11 +18,30 @@ export default function ProductsTable(props) {
         fetchProducts(1, ITEM_PER_PAGE, pagination).then((res) => {
             if (props.setProductList) {
                 props.setProductList(res.products)
+                setTotalProduct(res.total)
             }
 
         });
     }, [pagination]);
 
+    function setPage(currentValue, goOn) {
+        console.log(currentValue, goOn)
+        if (goOn && currentValue <= 7) {
+            setPagination(currentValue + 1)
+            return currentValue + 1
+        } else if (!goOn) {
+            setPagination(currentValue - 1)
+            currentValue = currentValue - 1
+        }
+        if (currentValue > Math.ceil(totalProducts / ITEM_PER_PAGE) - 1) {
+            setPagination(currentValue)
+        }
+        if (currentValue <= 0) {
+            setPagination(0)
+            return 0
+        }
+        return currentValue
+    }
     return (
         <>
             {showModal &&
@@ -103,87 +124,12 @@ export default function ProductsTable(props) {
                 </tbody>
             </table>
             {props.inPage && (
-                <ul className="pagination">
-                    <li className="page-item">
-                        <a
-                            className="page-link"
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-
-                                setPagination((currentValue) => {
-                                    if (currentValue <= 0) {
-                                        return 0;
-                                    }
-
-                                    return currentValue - 1;
-                                });
-                            }}
-                        >
-                            Previous
-                        </a>
-                    </li>
-
-                    {pagination > 0 && (
-                        <li className="page-item">
-                            <a
-                                className="page-link"
-                                href="#"
-                                onClick={(e) => {
-                                    e.preventDefault();
-
-                                    setPagination(
-                                        (currentValue) =>
-                                            currentValue - 1
-                                    );
-                                }}
-                            >
-                                {pagination}
-                            </a>
-                        </li>
-                    )}
-
-                    <li className="page-item">
-                        <a className="page-link" href="#">
-                            {pagination + 1}
-                        </a>
-                    </li>
-
-                    {pagination < 7 - 1 && (
-                        <li className="page-item">
-                            <a
-                                className="page-link"
-                                href="#"
-                                onClick={(e) => {
-                                    e.preventDefault();
-
-                                    setPagination((currentValue) => currentValue + 1);
-                                }}
-                            >
-                                {pagination + 2}
-                            </a>
-                        </li>
-                    )}
-
-                    <li className="page-item">
-                        <a
-                            className="page-link"
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-
-                                setPagination((currentValue) => {
-                                    if (currentValue >= 7) {
-                                        return currentValue;
-                                    }
-                                    return currentValue + 1;
-                                });
-                            }}
-                        >
-                            Next
-                        </a>
-                    </li>
-                </ul>
+                <PaginationPage
+                    setPage={setPage}
+                    pagination={pagination}
+                    totalUsers={totalProducts}
+                    ITEM_PER_PAGE={ITEM_PER_PAGE}
+                />
             )}
         </>
     )

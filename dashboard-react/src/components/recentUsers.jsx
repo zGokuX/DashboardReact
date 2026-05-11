@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
 import fetchUser, { addUser, fetchCarts, fetchCartsByUserId, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
 import UserFormModal from "./UserFormModal"
-import { Button, Toast, ToastContainer } from "react-bootstrap"
+import { Button} from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { CaretDownFill, CaretUpFill } from "react-bootstrap-icons"
 import CartTable from "./CartTable"
 import UserFilters from "./UserFilters"
+import NotificationUserForm from "./NotificationUserForm"
+import PaginationPage from "./PaginationPage"
 
 const ITEM_PER_PAGE = 25
 
@@ -128,6 +130,25 @@ export default function RecentUsers(props) {
     setIsNew(true)
   }
 
+  function showCart(item){
+  if (openedUserId === item.id) {
+                        setOpenedUserId(null)
+                      } else {
+                        setOpenedUserId(item.id)
+                      }
+                      if (!item.carts) {
+                        fetchCartsByUserId(item.id).then(cart => {
+                          setUserList(userList.map(user => {
+
+                            if (user.id === item.id) {
+                              user.carts = cart
+                            }
+                            return user
+                          }))
+                        })
+                      }
+  }
+
   function renderUser() {
 
     return (userList.map(item => {
@@ -177,25 +198,7 @@ export default function RecentUsers(props) {
                   <Button
                     variant='outline-primary'
                     className='modify-btn'
-                    onClick={() => {
-                      if (openedUserId === item.id) {
-                        setOpenedUserId(null)
-                      } else {
-                        setOpenedUserId(item.id)
-                      }
-                      if (!item.carts) {
-                        fetchCartsByUserId(item.id).then(cart => {
-                          setUserList(userList.map(user => {
-
-                            if (user.id === item.id) {
-                              user.carts = cart
-                            }
-                            return user
-                          }))
-                        })
-                      }
-
-                    }}
+                    onClick={() => showCart(item)}
                   >
                     Mostra carrelli {openedUserId === item.id ? <CaretUpFill /> : <CaretDownFill />}
                   </Button>
@@ -309,62 +312,21 @@ export default function RecentUsers(props) {
               <tbody>{renderUser()}</tbody>
             </table>
             {props.inPage &&
-              <ul className="pagination">
-                <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
-                  e.preventDefault()
-                  setPage(pagination, false)
-
-                }}>Previous</a></li>
-
-                {pagination > 0 &&
-                  <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
-                    e.preventDefault()
-                    setPage(pagination, false)
-
-                  }}>{pagination}</a></li>
-                }
-
-                <li className="page-item"><a className="page-link" href="#">{pagination + 1}</a></li>
-
-
-                {pagination < (Math.ceil(totalUsers / ITEM_PER_PAGE) - 1) &&
-                  <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
-                    e.preventDefault()
-                    setPage(pagination, true)
-
-                  }}>{pagination + 2}</a></li>
-                }
-                <li className="page-item"><a className="page-link" href="#" onClick={(e) => {
-                  e.preventDefault()
-                  setPage(pagination, true)
-
-
-                }}>Next</a></li>
-              </ul>
+              <PaginationPage
+              setPage={setPage}
+              pagination={pagination}
+              totalUsers={totalUsers}
+              ITEM_PER_PAGE={ITEM_PER_PAGE}
+              />
             }
           </div>
         </div>
 
       </div >
-      <ToastContainer
-        className="p-3"
-        position="bottom-end"
-        style={{ zIndex: 1, position: "fixed" }}
-      >
-        <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
-          <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Bootstrap</strong>
-            <small>11 mins ago</small>
-          </Toast.Header>
-
-          <Toast.Body>Dati aggiornati per l'utente!</Toast.Body>
-        </Toast>
-      </ToastContainer>
+        <NotificationUserForm
+        setShowToast={setShowToast}
+        showToast={showToast}
+        />
     </>
   )
 }

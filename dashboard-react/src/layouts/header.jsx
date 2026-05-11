@@ -1,6 +1,9 @@
 import { CartFill } from "react-bootstrap-icons";
+import { useSelector } from "react-redux";
+import { selectName } from "../slices/NameSlice";
 
 export default function Header() {
+    const nome = useSelector(selectName).value;
     return (
         <>
             <header>
@@ -29,7 +32,7 @@ export default function Header() {
                                 <img src="assets/avatars/2.png" alt="User Avatar" />
                             </div>
                             <div className="user-menu">
-                                <span className="user-name">Marco Rossi</span>
+                                <span className="user-name">{nome == '' ? "Marco" : nome} Rossi</span>
                                 <ul id="appear-ul">
                                     <li><a href="#">Profile</a></li>
                                     <li><a href="#">Settings</a></li>
