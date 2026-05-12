@@ -195,8 +195,9 @@ export default function RecentUsers(props) {
                   </Button>
 
                   <Button
+                  
                     variant='outline-primary'
-                    className='modify-btn'
+                    className='modify-btn text-nowrap'
                     onClick={() => showCart(item)}
                   >
                     Mostra carrelli {openedUserId === item.id ? <CaretUpFill /> : <CaretDownFill />}
@@ -225,6 +226,7 @@ export default function RecentUsers(props) {
             <tr>
               <td colSpan="6" style={{"paddingLeft":"30px","paddingRight":"20px"}}>
                 <CartTable
+                  inUser={true}
                   cartList={item.carts}
                   userId={props.userId}
                   inPage={props.inPage}

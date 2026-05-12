@@ -110,7 +110,7 @@ export default function ProductsTable(props) {
                                         </>
                                     )
                                 }
-                                {!props.isCarts && !props.modalMode &&
+                                {!props.isCarts && !props.modalMode && !props.inUser &&
                                     <td>
                                         <Button variant="outline-primary" onClick={() => detailsProductButton(item)}>
                                             See more
