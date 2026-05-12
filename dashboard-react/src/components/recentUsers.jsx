@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react"
-import fetchUser, { addUser, fetchCarts, fetchCartsByUserId, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
+import { useDispatch, useSelector } from 'react-redux'
+import { addUser, fetchCartsByUserId, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
+import { fetchUsers } from "../slices/UserActions"
+import { selectUsers, selectUsersTotal } from "../slices/usersSlice"
 import UserFormModal from "./UserFormModal"
 import { Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
@@ -9,50 +12,44 @@ import UserFilters from "./UserFilters"
 import NotificationUserForm from "./NotificationUserForm"
 import PaginationPage from "./PaginationPage"
 
+// Importiamo useDispatch e useSelector da react-redux per leggere e scrivere nel store globale.
+// useSelector prende i dati dallo stato Redux, mentre useDispatch serve per inviare azioni.
+
 const ITEM_PER_PAGE = 25
 
 export default function RecentUsers(props) {
-  const [userList, setUserList] = useState([])
+  const dispatch = useDispatch()
+  // Qui leggiamo gli utenti da Redux.
+  // Questa è la fonte di verità per i dati utenti, non lo stato locale.
+  const users = useSelector(selectUsers)
+  const totalUsers = useSelector(selectUsersTotal)
+  // filteredUsers viene usato solo per memorizzare il risultato di un filtro locale.
+  // Se non c'è alcun filtro, displayedUsers mostra direttamente i dati dal Redux store.
+  const [filteredUsers, setFilteredUsers] = useState(null)
   const [selectedUser, setSelectedUser] = useState(null)
   const [showModal, setShowModal] = useState(false)
-  const [allUsers, setAllUsers] = useState([])
   const [filterInput, setFilterInput] = useState('')
   const [filterAge, setFilterAge] = useState(0)
   const [pagination, setPagination] = useState(0)
   const [filterGender, setFilterGender] = useState('default')
   const [filterRole, setFilterRole] = useState('default')
-  const [totalUsers, setTotalUsers] = useState(0)
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState(false)
   const [message, setMessage] = useState('')
-  const [isNew, setIsNew] = useState(false) //isNew
+  const [isNew, setIsNew] = useState(false)
   const [openedUserId, setOpenedUserId] = useState(false)
-  const [cart, setCart] = useState([])
-  async function getCart(userId) {
-    const cart = await fetchCarts(userId, props.maxViewCarts);
 
-    setCart(cart.carts);
-  }
+  // displayedUsers rappresenta la lista visibile.
+  // Se c'è un filtro applicato, usiamo filteredUsers, altrimenti la lista completa dal Redux store.
+  const displayedUsers = filteredUsers ?? users
+
+  // Effettuiamo il dispatch dell'azione fetchUsers quando il componente viene montato
+  // o quando cambia la pagina. Questo aggiorna il Redux store con i nuovi utenti.
   useEffect(() => {
+    dispatch(fetchUsers({ pageSize: props.maxViewUser || ITEM_PER_PAGE, page: pagination }))
+  }, [dispatch, props.maxViewUser, pagination])
 
-
-    async function getUser(maxUser) {
-      const userListResponse = await fetchUser(maxUser)
-      setTotalUsers(userListResponse.total)
-      setUserList(userListResponse.users)
-      setAllUsers(userListResponse.users)
-    }
-    getUser(props.maxViewUser)
-
-  }, [])
-
-  useEffect(() => {
-    console.log(props.selectCart)
-    fetchUser(ITEM_PER_PAGE, pagination).then((res) => {
-      setUserList(res.users)
-    })
-  }, [pagination])
-
-
+  // Per il view, manteniamo altri stati locali (esempio: modale, filtro),
+  // ma la lista reale degli utenti viene presa da Redux.
   function editButton(user) {
     setSelectedUser(user)
     setShowModal(true)
@@ -76,23 +73,18 @@ export default function RecentUsers(props) {
       setFilterInput('')
     }
     if (value === 'default') {
-      setUserList(allUsers)
+      setFilteredUsers(null)
       return
     }
 
     if (filterName === 'age') {
-      const filtered = allUsers.filter(user => user.age == value) /* user.age > value da rivedere */
-
-      if (filtered.length === 0) {
-        setUserList(allUsers)
-      } else {
-        setUserList(filtered)
-      }
+      const filtered = users.filter((user) => user.age == value)
+      setFilteredUsers(filtered.length === 0 ? null : filtered)
       return
     }
 
     fetchUserFilter(filterName, value).then((res) => {
-      setUserList(res)
+      setFilteredUsers(res)
     })
   }
 
@@ -118,9 +110,8 @@ export default function RecentUsers(props) {
     setFilterGender('default')
     setFilterRole('default')
     setFilterAge(0)
-    console.log(value)
     fetchFilterNames(value).then((res) => {
-      setUserList(res)
+      setFilteredUsers(res)
     })
   }
 
@@ -136,22 +127,20 @@ export default function RecentUsers(props) {
     } else {
       setOpenedUserId(item.id)
     }
-    if (!item.carts) {
-      fetchCartsByUserId(item.id).then(cart => {
-        setUserList(userList.map(user => {
 
-          if (user.id === item.id) {
-            user.carts = cart
-          }
-          return user
-        }))
+    if (!item.carts) {
+      fetchCartsByUserId(item.id).then((cartResponse) => {
+        setFilteredUsers((prev) =>
+          (prev ?? users).map((user) =>
+            user.id === item.id ? { ...user, carts: cartResponse } : user,
+          ),
+        )
       })
     }
   }
 
   function renderUser() {
-
-    return (userList.map(item => {
+    return displayedUsers.map((item) => {
       return (
         <React.Fragment key={item.id + item.firstName}>
           <tr className='row-list' key={item.id + item.firstName}>
@@ -234,7 +223,7 @@ export default function RecentUsers(props) {
           )}
         </React.Fragment>
       )
-    }))
+    })
   }
   return (
     <>
@@ -243,20 +232,13 @@ export default function RecentUsers(props) {
           show={showModal}
           onHide={() => setShowModal(false)}
           onUserChange={(user, isNewUser) => {
-            console.log('E UN NUOVO UTENTE: ', isNewUser)
-            console.log('UTENTE: ', user)
             if (isNewUser) {
-              setUserList([...userList, user])
+              setFilteredUsers((prev) => [...(prev ?? users), user])
               addUser(user).then((res) => console.log(res))
               setShowToast(true)
             } else {
-              setUserList(
-                userList.map(item => {
-                  if (user.id === item.id) {
-                    return { ...item, ...user }
-                  }
-                  return item
-                }),
+              setFilteredUsers((prev) =>
+                (prev ?? users).map((item) => (item.id === user.id ? { ...item, ...user } : item)),
               )
               updateUser(user.id, user).then((res) => console.log(res))
               setShowToast(true)
