@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react"
-import { fetchAllCategories, fetchProducts, fetchProductsCategory } from "../services/requests"
+import { fetchAllCategories } from "../services/requests"
 import ProductsTable from "./ProductTable"
 import Graphic from "../layouts/Graphic"
 import { Link } from "react-router-dom"
 import { Form } from "react-bootstrap"
 import OutputName from "./OutputName"
+import { useDispatch, useSelector } from "react-redux"
+import { loadFilteredProducts, loadProducts, selectProducts } from "../slices/productsSlice"
 export default function Products(props) {
-
-    const [productList, setProductList] = useState([])
+    const productList = useSelector(selectProducts)
+    const dispatch = useDispatch()
     const [filterCategory, setFilterCategory] = useState('default')
     const [categoryList, setCategoryList] = useState([])
     useEffect(() => {
-        getProduct(1)
+        dispatch(loadProducts(1,props.maxViewProduct))
         fetchAllCategories().then(res => {
             setCategoryList(res)
 
@@ -24,22 +26,12 @@ export default function Products(props) {
     return result
   }
 
-    async function getProduct(userId) {
-        const product = await fetchProducts(userId, props.maxViewProduct)
-        if (props.onSelectProduct) {
-            props.onSelectProduct(product.products)
-        }
-       
-        setProductList(product.products)
-    }
-
   function filterProductsCategory(value) {
-    fetchProductsCategory(value).then(res => {
-      if (value === 'default') {
-        return getProduct(1)
-      }
-      setProductList(res)
-    })
+    console.log(value)
+    if(!value){
+        return
+    }
+    (value === "default" ?    dispatch(loadProducts({pageSize: 25,page:0,userId:1})) : dispatch(loadFilteredProducts({categoryId:value})))
   }
 
   useEffect(() => {
@@ -82,7 +74,6 @@ export default function Products(props) {
                     </div>
                     <ProductsTable
                         productList={productList}
-                        setProductList={setProductList}
                         inPage = {props.inPage}
                     />
                 </div>

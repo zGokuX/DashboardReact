@@ -9,8 +9,8 @@ export function fetchSingleUser(userId) {
   return fetch(`https://dummyjson.com/users/${userId ? userId : 1}`).then(res => res.json());
 }
 
-export function fetchCarts(userId = null, pageSize = 25, page = 0) {
-  return fetch(`https://dummyjson.com/carts?limit=${pageSize ? pageSize : 10}&skip=${page * pageSize}&userId=${userId}`).then(res => res.json()).then(cartResponse => {
+export function fetchCarts(pageSize = 25, page = 0) {
+  return fetch(`https://dummyjson.com/carts?limit=${pageSize ? pageSize : 10}&skip=${page * pageSize}`).then(res => res.json()).then(cartResponse => {
     return cartResponse
 
   })

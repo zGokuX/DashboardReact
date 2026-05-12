@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { fetchCarts } from "../services/requests";
 import CartsModal from "./CartsModal";
 import { Link } from "react-router-dom";
 import ConfirmModal from "./ConfirmModal";
@@ -7,21 +6,24 @@ import UserDetail from "./UserDetailModal";
 import { Toast, ToastContainer } from "react-bootstrap";
 import CartTable from "./CartTable";
 import PaginationPage from "./PaginationPage";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCartsRequest, selectCarts } from "../slices/cartsSlice";
+import { deleteCart } from "../services/requests";
 
 const ITEM_PER_PAGE = 25;
 
 export default function Carts(props) {
+    const dispatch = useDispatch()
     const [showToast, setShowToast] = useState(null)
-    const [cartList, setCartList] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [totalCarts, setTotalCarts] = useState(0);
     const [selectSingleCart, setSelectSingleCart] = useState(null);
     const [pagination, setPagination] = useState(0);
     const [userDetailModalShow, setUserDetailModalShow] = useState(false)
     const [selectCart, setSelectCart] = useState(null);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [selectUserByIdCart, setSelectUserByIdCart] = useState(null)
-
+    const totalCarts = 200 //useSelector(selectCartsTotal())
+    const cartList = useSelector(selectCarts)
 function setPage(currentValue, goOn) {
     console.log(currentValue, goOn)
     if (goOn && currentValue <= 7) {
@@ -42,22 +44,8 @@ function setPage(currentValue, goOn) {
   }
 
     useEffect(() => {
-        async function getCart(userId) {
-            const cart = await fetchCarts(userId, props.maxViewCarts);
-
-            setCartList(cart.carts);
-            setTotalCarts(cart.total);
-        }
-        getCart(1);
-    }, []);
-
-
-
-    useEffect(() => {
-        fetchCarts(1, ITEM_PER_PAGE, pagination).then((res) => {
-            setCartList(res.carts);
-        });
-    }, [pagination]);
+        dispatch(fetchCartsRequest(props.maxViewCarts,pagination))
+    }, [dispatch,pagination]);
 
     function detailsButton(cart) {
         setSelectSingleCart(cart);
@@ -65,9 +53,7 @@ function setPage(currentValue, goOn) {
     }
 
     function removeCart(cartId) {
-        setCartList((currentList) =>
-            currentList.filter((item) => item.id !== cartId)
-        );
+        deleteCart(cartId)
         setShowToast(true)
     }
 

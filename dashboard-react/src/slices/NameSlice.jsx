@@ -4,15 +4,23 @@ export const inputSlice = createSlice({
   name: 'userName',
   initialState: {
     value: '',
+    userList: [],
   },
   reducers: {
     addName: (state, action) => {
       state.value = action.payload
     },
+    setUser: (state, action) => {
+      state.userList = action.payload
+    },
+    setUserList: (state, action) => {
+      state.userList = action.payload
+    }
   },
 })
 
-export const { addName } = inputSlice.actions
+
+export const { addName, setUser, setUserList } = inputSlice.actions
 
 
 // The function below is called a selector and allows us to select a value from

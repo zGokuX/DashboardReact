@@ -5,12 +5,10 @@ import { useMemo } from 'react'
 export default function Graphic(props) {
 
   const categories = useMemo(() => {
-    console.log(props);
     if (!props.productsList || props.productsList.length === 0) {
       return []
     }
     return props.productsList.reduce((acc, item) => {
-        console.log(item);
       if (acc[item.category] === undefined) {
         acc[item.category] = []
         acc[item.category].push(item.price)
@@ -22,7 +20,6 @@ export default function Graphic(props) {
   }, [props.productsList])
 
 
-  console.log(categories )
 
   return (
     <>
