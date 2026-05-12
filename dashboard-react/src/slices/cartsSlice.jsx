@@ -44,6 +44,9 @@ const cartsSlice = createSlice({
       state.status = 'idle'
       state.error = null
     },
+    deleteCart: (state,action) => {
+      state.carts = state.carts.filter((item) => item.id !== action.payload.id)
+    }
   },
 })
 
@@ -53,12 +56,13 @@ export const {
   fetchCartsFailure,
   setCartsPage,
   clearCarts,
+  deleteCart,
 } = cartsSlice.actions
 
 // Selector per ottenere i dati dei carrelli dal root state.
 export const selectCarts = (state) => state.carts.carts
-export const selectCartsStatus = (state) => state.carts.status
-export const selectCartsTotal = (state) => state.carts.total
-export const selectCartsPage = (state) => state.carts.page
+export const selectCartsStatus = (state) => state.status
+export const selectCartsTotal = (state) => state.total
+export const selectCartsPage = (state) => state.page
 
 export default cartsSlice.reducer

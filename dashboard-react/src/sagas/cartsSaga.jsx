@@ -6,9 +6,9 @@ import { fetchCartsRequest, fetchCartsSuccess, fetchCartsFailure } from '../slic
 // Usiamo redux-saga qui per dimostrare un altro approccio rispetto a thunk.
 function* handleFetchCarts(action) {
   try {
-    const { userId = null, pageSize = 25, page = 0 } = action.payload || {}
+    const { pageSize = 25, page = 0 } = action.payload || {}
     // call è un effetto di redux-saga che chiama la funzione API in modo testabile.
-    const response = yield call(fetchCarts, userId, pageSize, page)
+    const response = yield call(fetchCarts, pageSize, page)
     // put invia l'azione di successo con i dati ricevuti.
     yield put(
       fetchCartsSuccess({
