@@ -1,14 +1,18 @@
 import Highcharts from 'highcharts'
 import { Chart, Title, XAxis, YAxis, Series } from '@highcharts/react'
-import { useMemo } from 'react'
+import {  useMemo } from 'react'
+import {  useSelector } from 'react-redux'
+import { selectProducts } from '../slices/productsSlice'
+export default function Graphic() {
+//sostituire product list con redux
+const productList = useSelector(selectProducts)
 
-export default function Graphic(props) {
 
   const categories = useMemo(() => {
-    if (!props.productsList || props.productsList.length === 0) {
+    if (!productList || productList.length === 0) {
       return []
     }
-    return props.productsList.reduce((acc, item) => {
+    return productList.reduce((acc, item) => {
       if (acc[item.category] === undefined) {
         acc[item.category] = []
         acc[item.category].push(item.price)
@@ -17,7 +21,7 @@ export default function Graphic(props) {
       }
       return acc
     }, {})
-  }, [props.productsList])
+  }, [productList])
 
 
 

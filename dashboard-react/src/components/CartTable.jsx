@@ -7,7 +7,6 @@ import ProductsTable from "./ProductTable";
 export default function CartTable({ cartList, ...props }) {
     const [showModal, setShowModal] = useState(false)
     const [selectCart, setSelectCart] = useState([])
-    const [cart, setCart] = useState(cartList)
     const [selectProduct, setSelectProduct] = useState([])
     const [openedUserId, setOpenedUserId] = useState(null)
 

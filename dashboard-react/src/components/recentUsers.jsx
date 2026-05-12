@@ -11,6 +11,7 @@ import CartTable from "./CartTable"
 import UserFilters from "./UserFilters"
 import NotificationUserForm from "./NotificationUserForm"
 import PaginationPage from "./PaginationPage"
+import RenderUser from "./renderUser"
 
 // Importiamo useDispatch e useSelector da react-redux per leggere e scrivere nel store globale.
 // useSelector prende i dati dallo stato Redux, mentre useDispatch serve per inviare azioni.
@@ -139,94 +140,7 @@ export default function RecentUsers(props) {
     }
   }
 
-  function renderUser() {
-    return displayedUsers.map((item) => {
-      return (
-        <React.Fragment key={item.id + item.firstName}>
-          <tr className='row-list' key={item.id + item.firstName}>
-            <td className='client-avatar'>
-              <img src={item.image} alt='Client Avatar' />
-            </td>
-            <td className='client-info'>
-              <h5>{item.firstName + ' ' + item.lastName}</h5>
-              <h6>{item.company.department}</h6>
-            </td>
-            {/*                     <td className='client-info'>
-                        <span>{item.age}</span>
-                    </td> */}
-            {props.inPage &&
-              <>
-                <td className='client-info'>
-                  <span>{item.email}</span>
-                </td>
 
-                <td className='client-info'>
-                  <span>
-                    {item.address?.state} {item.address?.city}{' '}
-                    {item.address?.address}
-                  </span>
-                </td>
-                <td className='client-info'>
-                  <span>{item.phone}</span>
-                </td>
-              </>
-            }
-
-            <td className='client-actions d-flex gap-3 h-25'>
-              {props.inPage &&
-                <>
-                  <Button
-                    variant='outline-primary'
-                    className='modify-btn'
-                    onClick={() => editButton(item)}
-                  >
-                    Modifica
-                  </Button>
-
-                  <Button
-                  
-                    variant='outline-primary'
-                    className='modify-btn text-nowrap'
-                    onClick={() => showCart(item)}
-                  >
-                    Mostra carrelli {openedUserId === item.id ? <CaretUpFill /> : <CaretDownFill />}
-                  </Button>
-                </>
-              }
-              {'  '}
-              {!props.inPage && (
-                <Button
-                  variant='outline-primary'
-                  className='filter-btn '
-                  onClick={() => props.onSelectUser(item)}
-                >
-                  Filtra
-                </Button>
-              )}
-
-              <Link to={`/user/${item.id}`}>
-                <Button variant='outline-primary' className='filter-btn '>
-                  Details
-                </Button>
-              </Link>
-            </td>
-          </tr>
-          {openedUserId == item.id && item.carts && (
-            <tr>
-              <td colSpan="6" style={{"paddingLeft":"30px","paddingRight":"20px"}}>
-                <CartTable
-                  inUser={true}
-                  cartList={item.carts}
-                  userId={props.userId}
-                  inPage={props.inPage}
-                />
-              </td>
-            </tr>
-          )}
-        </React.Fragment>
-      )
-    })
-  }
   return (
     <>
       {showModal && (
@@ -292,7 +206,15 @@ export default function RecentUsers(props) {
             />
 
             <table>
-              <tbody>{renderUser()}</tbody>
+              <tbody><RenderUser
+              displayedUsers={displayedUsers}
+              openedUserId={openedUserId}
+              onSelectUser={props.onSelectUser}
+              inPage={props.inPage}
+              editButton={editButton}
+              showCart={showCart}
+              />
+              </tbody>
             </table>
             {props.inPage &&
               <PaginationPage

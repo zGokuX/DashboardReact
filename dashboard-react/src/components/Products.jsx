@@ -34,11 +34,11 @@ export default function Products(props) {
     (value === "default" ?    dispatch(loadProducts({pageSize: 25,page:0,userId:1})) : dispatch(loadFilteredProducts({categoryId:value})))
   }
 
-  useEffect(() => {
-    if (props.onProductsListChange) {
-      props.onProductsListChange(productList)
-    }
-  }, [props, productList])
+//   useEffect(() => {
+//     if (props.onProductsListChange) {
+//       props.onProductsListChange(productList)
+//     }
+//   }, [props, productList])
 
     return (
         <>
