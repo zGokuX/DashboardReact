@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import fetchUser, { addUser, fetchCarts, fetchCartsByUserId, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
 import UserFormModal from "./UserFormModal"
-import { Button} from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { CaretDownFill, CaretUpFill } from "react-bootstrap-icons"
 import CartTable from "./CartTable"
@@ -130,29 +130,28 @@ export default function RecentUsers(props) {
     setIsNew(true)
   }
 
-  function showCart(item){
-  if (openedUserId === item.id) {
-                        setOpenedUserId(null)
-                      } else {
-                        setOpenedUserId(item.id)
-                      }
-                      if (!item.carts) {
-                        fetchCartsByUserId(item.id).then(cart => {
-                          setUserList(userList.map(user => {
+  function showCart(item) {
+    if (openedUserId === item.id) {
+      setOpenedUserId(null)
+    } else {
+      setOpenedUserId(item.id)
+    }
+    if (!item.carts) {
+      fetchCartsByUserId(item.id).then(cart => {
+        setUserList(userList.map(user => {
 
-                            if (user.id === item.id) {
-                              user.carts = cart
-                            }
-                            return user
-                          }))
-                        })
-                      }
+          if (user.id === item.id) {
+            user.carts = cart
+          }
+          return user
+        }))
+      })
+    }
   }
 
   function renderUser() {
 
     return (userList.map(item => {
-      // console.log(item)
       return (
         <React.Fragment key={item.id + item.firstName}>
           <tr className='row-list' key={item.id + item.firstName}>
@@ -224,7 +223,7 @@ export default function RecentUsers(props) {
           </tr>
           {openedUserId == item.id && item.carts && (
             <tr>
-              <td colSpan="6">
+              <td colSpan="6" style={{"paddingLeft":"30px","paddingRight":"20px"}}>
                 <CartTable
                   cartList={item.carts}
                   userId={props.userId}
@@ -295,17 +294,17 @@ export default function RecentUsers(props) {
 
           <div className='client-list' id='client-list-id'>
             <UserFilters
-            filterInput={filterInput}
-            setFilterInput={setFilterInput}
-            filterNames={filterNames}
-            filterGender={filterGender}
-            setFilterGender={setFilterGender}
-            filterRole={filterRole}
-            setFilterRole={setFilterRole}
-            filterPlus={filterPlus}
-            filterAge={filterAge}
-            setFilterAge={setFilterAge}
-            inPage={props.inPage}
+              filterInput={filterInput}
+              setFilterInput={setFilterInput}
+              filterNames={filterNames}
+              filterGender={filterGender}
+              setFilterGender={setFilterGender}
+              filterRole={filterRole}
+              setFilterRole={setFilterRole}
+              filterPlus={filterPlus}
+              filterAge={filterAge}
+              setFilterAge={setFilterAge}
+              inPage={props.inPage}
             />
 
             <table>
@@ -313,20 +312,20 @@ export default function RecentUsers(props) {
             </table>
             {props.inPage &&
               <PaginationPage
-              setPage={setPage}
-              pagination={pagination}
-              totalUsers={totalUsers}
-              ITEM_PER_PAGE={ITEM_PER_PAGE}
+                setPage={setPage}
+                pagination={pagination}
+                totalUsers={totalUsers}
+                ITEM_PER_PAGE={ITEM_PER_PAGE}
               />
             }
           </div>
         </div>
 
       </div >
-        <NotificationUserForm
+      <NotificationUserForm
         setShowToast={setShowToast}
         showToast={showToast}
-        />
+      />
     </>
   )
 }
