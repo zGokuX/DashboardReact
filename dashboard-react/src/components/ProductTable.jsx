@@ -1,28 +1,27 @@
 import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
-import { fetchProducts } from "../services/requests"
 import ProductModal from "./ProductModal"
 import PaginationPage from "./PaginationPage"
+import { useDispatch, useSelector } from "react-redux"
+import { loadProducts, selectProducts, selectProductsTotal } from "../slices/productsSlice"
 const ITEM_PER_PAGE = 25
 export default function ProductsTable(props) {
     const [selectProduct, setSelectProduct] = useState(null)
+    const productList = useSelector(selectProducts)
     const [showModal, setShowModal] = useState(false)
     const [pagination, setPagination] = useState(0);
-    const [totalProducts, setTotalProduct] = useState(null)
+    const totalProducts = useSelector(selectProductsTotal)
+    const dispatch = useDispatch()
     function detailsProductButton(product) {
         setSelectProduct(product)
         setShowModal(true)
     }
 
     useEffect(() => {
-        fetchProducts(1, ITEM_PER_PAGE, pagination).then((res) => {
-            if (props.setProductList) {
-                props.setProductList(res.products)
-                setTotalProduct(res.total)
-            }
+     dispatch(loadProducts({pageSize: 25,page:pagination,userId:1}))
 
-        });
     }, [pagination]);
+
 
     function setPage(currentValue, goOn) {
         console.log(currentValue, goOn)
@@ -81,7 +80,7 @@ export default function ProductsTable(props) {
                     </tr>
                 </thead>
                 <tbody id="bodyTable">
-                    {props.productList.map((item) => {
+                    {productList.map((item) => {
                         return (
 
                             <tr key={item.id}>

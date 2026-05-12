@@ -1,17 +1,29 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { fetchProducts } from '../services/requests'
+import { fetchProducts, fetchProductsCategory } from '../services/requests'
 
 // createAsyncThunk è usato qui per gestire automaticamente tre stati di richieste asincrone:
 // pending, fulfilled e rejected. Questo semplifica molto la logica rispetto al thunk manuale.
 export const loadProducts = createAsyncThunk(
   'products/loadProducts',
-  async ({ pageSize = 25, page = 0, userId = null } = {}) => {
+  async ({ pageSize, page , userId  } = {}) => {
+    console.log(pageSize,page,userId)
     // Qui effettuiamo la chiamata API usando la funzione condivisa dal file requests.
     const response = await fetchProducts(userId, pageSize, page)
+
     return { ...response, page, pageSize }
   },
 )
 
+export const loadFilteredProducts = createAsyncThunk(
+  'products/loadFilteredProducts',
+  async ({ categoryId  } = {}) => {
+    console.log(categoryId)
+    // Qui effettuiamo la chiamata API usando la funzione condivisa dal file requests.
+    const response = await fetchProductsCategory(categoryId)
+
+    return response 
+  },
+)
 const initialState = {
   products: [],
   total: 0,
@@ -59,6 +71,22 @@ const productsSlice = createSlice({
       })
       // In caso di errore salviamo il messaggio per visualizzarlo all'utente.
       .addCase(loadProducts.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
+        .addCase(loadFilteredProducts.pending, (state) => {
+        state.status = 'loading'
+        state.error = null
+      })
+      // Quando la richiesta ha successo memorizziamo i prodotti nel store.
+      .addCase(loadFilteredProducts.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.products = action.payload || []
+        console.log(action.payload)
+        // La categoria selezionata non viene ridefinita qui per mantenere il filtro attuale.
+      })
+      // In caso di errore salviamo il messaggio per visualizzarlo all'utente.
+      .addCase(loadFilteredProducts.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
