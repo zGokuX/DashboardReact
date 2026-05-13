@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser, fetchCartsByUserId, fetchFilterNames, fetchUserFilter, updateUser } from "@/services/requests"
-import { fetchUsers } from "@/slices/UserActions"
-import { selectUsers, selectUsersTotal } from "@/slices/usersSlice"
+import { fetchUsers } from "@/store/slices/UserActions"
+import { selectUsers, selectUsersTotal } from "@/store/slices/usersSlice"
 import UserFormModal from "./UserFormModal"
 import { Link } from "react-router-dom"
 import UserFilters from "./UserFilters"
 import NotificationUserForm from "./NotificationUserForm"
-import PaginationPage from "../PaginationPage"
+import PaginationPage from "../Common/PaginationPage"
 import { ITEM_PER_PAGE } from "../Constants/Constants"
 import { RenderUser } from "./RenderUser"
+import { UnknownAction } from "@reduxjs/toolkit"
+import { User } from "./user.type"
 
 // Importiamo useDispatch e useSelector da react-redux per leggere e scrivere nel store globale.
 // useSelector prende i dati dallo stato Redux, mentre useDispatch serve per inviare azioni.
@@ -18,7 +20,7 @@ export default function RecentUsers(props : any) {
   const dispatch = useDispatch()
   // Qui leggiamo gli utenti da Redux.
   // Questa è la fonte di verità per i dati utenti, non lo stato locale.
-  const users = useSelector(selectUsers)
+  const users : null | User[] = useSelector(selectUsers) 
   const totalUsers = useSelector(selectUsersTotal)
   // filteredUsers viene usato solo per memorizzare il risultato di un filtro locale.
   // Se non c'è alcun filtro, displayedUsers mostra direttamente i dati dal Redux store.
@@ -42,7 +44,7 @@ export default function RecentUsers(props : any) {
   // Effettuiamo il dispatch dell'azione fetchUsers quando il componente viene montato
   // o quando cambia la pagina. Questo aggiorna il Redux store con i nuovi utenti.
   useEffect(() => {
-    dispatch(fetchUsers({ pageSize: props.maxViewUser || ITEM_PER_PAGE, page: pagination }))
+    dispatch(fetchUsers({ pageSize: props.maxViewUser || ITEM_PER_PAGE, page: pagination }) as unknown as UnknownAction)
   }, [dispatch, props.maxViewUser, pagination])
 
   // Per il view, manteniamo altri stati locali (esempio: modale, filtro),
@@ -160,7 +162,6 @@ export default function RecentUsers(props : any) {
               className='custom-btn add-client-btn btn btn-primary p-2'
               id='add-clients'
               onClick={addButton}
-              style={{ item: '10px' }}
             >
               Aggiungi cliente{' '}
             </button>

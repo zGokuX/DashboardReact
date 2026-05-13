@@ -1,4 +1,4 @@
-import fetchUser from '../services/requests'
+import fetchUser from '@/services/requests'
 import {
   fetchUsersRequest,
   fetchUsersSuccess,

@@ -2,7 +2,7 @@ import Highcharts from 'highcharts'
 import { Chart, Title, XAxis, YAxis, Series } from '@highcharts/react'
 import {  useMemo } from 'react'
 import {  useSelector } from 'react-redux'
-import { selectProducts } from '../slices/productsSlice'
+import { selectProducts } from '@/store/slices/productsSlice'
 export default function Graphic() {
 //sostituire product list con redux
 const productList = useSelector(selectProducts)

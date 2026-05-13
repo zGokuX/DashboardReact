@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { fetchProducts, fetchProductsCategory } from '../services/requests'
+import { fetchProducts, fetchProductsCategory } from '@/services/requests'
 
 // createAsyncThunk è usato qui per gestire automaticamente tre stati di richieste asincrone:
 // pending, fulfilled e rejected. Questo semplifica molto la logica rispetto al thunk manuale.
 export const loadProducts = createAsyncThunk(
   'products/loadProducts',
-  async ({ pageSize, page , userId  } = {}) => {
+  async ({ pageSize, page , userId  }) => {
     console.log(pageSize,page,userId)
     // Qui effettuiamo la chiamata API usando la funzione condivisa dal file requests.
     const response = await fetchProducts(userId, pageSize, page)
@@ -16,7 +16,7 @@ export const loadProducts = createAsyncThunk(
 
 export const loadFilteredProducts = createAsyncThunk(
   'products/loadFilteredProducts',
-  async ({ categoryId  } = {}) => {
+  async ({ categoryId }) => {
     console.log(categoryId)
     // Qui effettuiamo la chiamata API usando la funzione condivisa dal file requests.
     const response = await fetchProductsCategory(categoryId)

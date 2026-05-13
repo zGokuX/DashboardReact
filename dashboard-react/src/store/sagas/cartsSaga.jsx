@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { fetchCarts } from '../services/requests'
-import { fetchCartsRequest, fetchCartsSuccess, fetchCartsFailure } from '../slices/cartsSlice'
+import { fetchCarts } from '../../services/requests'
+import { fetchCartsRequest, fetchCartsSuccess, fetchCartsFailure } from '@/store/slices/cartsSlice'
 
 // Questo saga gestisce il side effect di caricamento dei carrelli.
 // Usiamo redux-saga qui per dimostrare un altro approccio rispetto a thunk.

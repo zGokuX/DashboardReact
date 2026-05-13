@@ -1,16 +1,17 @@
 import { useState } from "react";
 import BigGraphic from "../layouts/BigGraphic";
-import CardTitle from "./Cart/cardTitle";
-import Carts from "./Cart/Carts";
+import CardTitle from "@/components/Cart/cardTitle";
+import Carts from "@/components/Cart/Carts";
 import Graphic from "../layouts/Graphic";
-import Products from "./Product/Products";
-import RecentUsers from "./User/UserList";
+import Products from "@/components/Product/Products";
+import RecentUsers from "@/components/User/UserList";
 import { useDispatch, useSelector } from "react-redux";
-import { addName, selectName } from "@/store/slices/NameSlice";
+import { addName, selectName } from "@/store/slices/NameSlice"
 import { Button } from "react-bootstrap";
 import { Opencollective } from "react-bootstrap-icons";
-import { User } from "./User/user.type"
-export default function Dashboard() {
+import { User } from "@/components/User/user.type";
+
+export default function DashboardView() {
     const dispatch = useDispatch()
     
     const nome = useSelector(selectName).value;

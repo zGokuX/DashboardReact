@@ -9,7 +9,8 @@ import {
   loadFilteredProducts,
   loadProducts,
   selectProducts,
-} from '../../slices/productsSlice'
+} from '@/store/slices/productsSlice'
+import { UnknownAction } from '@reduxjs/toolkit'
 
 export default function Products(props : any) {
   const productList = useSelector(selectProducts)
@@ -18,7 +19,7 @@ export default function Products(props : any) {
   const [categoryList, setCategoryList] = useState([])
 
   useEffect(() => {
-    dispatch(loadProducts(1, props.maxViewProduct))
+    dispatch(loadProducts({pageSize: 25, page: 0, userId: 1}) as unknown as UnknownAction)
     fetchAllCategories().then(res => {
       setCategoryList(res)
 
@@ -44,13 +45,13 @@ export default function Products(props : any) {
       return
     }
     value === 'default'
-      ? dispatch(loadProducts({ pageSize: 25, page: 0, userId: 1 }))
-      : dispatch(loadFilteredProducts({ categoryId: value }))
+      ? dispatch(loadProducts({ pageSize: 25, page: 0, userId: 1 }) as unknown as UnknownAction)
+      : dispatch(loadFilteredProducts({ categoryId: value }) as unknown as UnknownAction)
   }
 
   return (
     <>
-      {props.inPage && <Graphic productsList={productList} />}
+      {props.inPage && <Graphic />}
 
       <div className='clienti container-full-width'>
         <div className='card client-card'>

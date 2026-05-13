@@ -1,6 +1,6 @@
 import { CartFill } from "react-bootstrap-icons";
 import { useSelector } from "react-redux";
-import { selectName } from "../slices/NameSlice";
+import { selectName } from "@/store/slices/NameSlice";
 
 export default function Header() {
     const nome = useSelector(selectName).value;

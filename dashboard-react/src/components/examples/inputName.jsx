@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {addName ,selectName } from '../slices/NameSlice';
+import {addName ,selectName } from '@/store/slices/NameSlice';
 
 export function InputName() {
   const dispatch = useDispatch()

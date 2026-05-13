@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
 import ProductModal from "./ProductModal"
-import PaginationPage from "../PaginationPage"
+import PaginationPage from "../Common/PaginationPage"
 import { useDispatch, useSelector } from "react-redux"
-import { loadProducts, selectProducts, selectProductsTotal } from "../../slices/productsSlice"
+import { loadProducts, selectProductsTotal } from "@/store/slices/productsSlice"
 export default function ProductsTable(props) {
     const [selectProduct, setSelectProduct] = useState(null)
-    const productList = useSelector(selectProducts)
     const [showModal, setShowModal] = useState(false)
     const [pagination, setPagination] = useState(0);
     const totalProducts = useSelector(selectProductsTotal)
@@ -17,8 +16,6 @@ export default function ProductsTable(props) {
     }
 
     useEffect(() => {
-     dispatch(loadProducts({pageSize: 25,page:pagination,userId:1}))
-
      dispatch(loadProducts({pageSize: 25,page:pagination,userId:1}))
 
     }, [pagination]);
