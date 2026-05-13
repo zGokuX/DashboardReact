@@ -1,10 +1,22 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";;
-import { TrashFill } from "react-bootstrap-icons";
+import { CaretDownFill, CaretUpFill, TrashFill } from "react-bootstrap-icons";
+import ProductsTable from "../Product/ProductTable";
 
 export default function CartTable({ cartList, ...props }) {
+    // eslint-disable-next-line no-unused-vars
     const [showModal, setShowModal] = useState(false)
-
+    const [openedUserId, setOpenedUserId] = useState(null)
+    const [selectProduct, setSelectProduct] = useState([])
+    function showProduct(item) {
+        if (openedUserId === item.id) {
+            setOpenedUserId(null)
+            setSelectProduct([])
+        } else {
+            setOpenedUserId(item.id)
+            setSelectProduct(item.products)
+        }
+    }
     return (
         <>
             <table className="card-table">
@@ -50,6 +62,9 @@ export default function CartTable({ cartList, ...props }) {
                                     </td>
 
                                     <td className="d-flex gap-3">
+                                        {!props.inUser
+
+                                        }
                                         <Button
                                             variant="outline-primary"
                                             onClick={() => {
@@ -60,6 +75,18 @@ export default function CartTable({ cartList, ...props }) {
                                         >
                                             details
                                         </Button>
+                                        {props.inUser &&
+                                            <Button
+                                                className="text-nowrap"
+                                                variant="outline-primary"
+                                                onClick={() => {
+                                                    showProduct(item)
+                                                }}
+                                            >
+                                                Mostra Prodotti {openedUserId === item.id ? <CaretUpFill /> : <CaretDownFill />}
+                                            </Button>
+                                        }
+
                                         {props.inPage &&
                                             <Button variant="danger">
                                                 <TrashFill
@@ -81,6 +108,20 @@ export default function CartTable({ cartList, ...props }) {
                                 </tr>
                             );
                         })}
+                        {
+                        selectProduct.length > 0 &&
+                        <tr>
+                            <td colSpan="5">
+                                <ProductsTable
+                                    productList={selectProduct}
+                                    modalMode={false}
+                                    isCarts={false}
+                                    inUser={true}
+                                    showMoreOption={false}
+                                />
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </>
