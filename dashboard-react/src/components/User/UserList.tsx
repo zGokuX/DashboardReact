@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser, fetchCartsByUserId, fetchFilterNames, fetchUserFilter, updateUser } from "@/services/requests"
 import { fetchUsers } from "@/store/slices/UserActions"
-import { selectUsers, selectUsersTotal } from "@/store/slices/usersSlice"
 import UserFormModal from "./UserFormModal"
 import { Link } from "react-router-dom"
 import UserFilters from "./UserFilters"
@@ -12,6 +11,8 @@ import { ITEM_PER_PAGE } from "@/Constants"
 import { RenderUser } from "./RenderUser"
 import { UnknownAction } from "@reduxjs/toolkit"
 import { User } from "./user.type"
+import { selectUsers, selectUsersTotal } from "@/store/slices/usersSlice"
+
 
 // Importiamo useDispatch e useSelector da react-redux per leggere e scrivere nel store globale.
 // useSelector prende i dati dallo stato Redux, mentre useDispatch serve per inviare azioni.
