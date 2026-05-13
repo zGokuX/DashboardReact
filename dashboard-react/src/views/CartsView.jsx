@@ -6,7 +6,7 @@ export default function CartsView() {
         <>
             <div className="adjustment-layout-product">
                 <h2>Lista carelli</h2>
-                <Carts maxViewCarts={25} // non serve tiralo da constant 
+                <Carts  
                 
                 inPage={true} />
             </div>

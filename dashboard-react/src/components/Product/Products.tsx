@@ -11,6 +11,7 @@ import {
   selectProducts,
 } from '@/store/slices/productsSlice'
 import { UnknownAction } from '@reduxjs/toolkit'
+import { ITEM_PER_PAGE } from '@/Constants'
 
 export default function Products(props : any) {
   const productList = useSelector(selectProducts)
@@ -21,7 +22,7 @@ export default function Products(props : any) {
 
 
   useEffect(() => {
-    dispatch(loadProducts({pageSize: 25, page: 0, userId: 1}) as unknown as UnknownAction)
+    dispatch(loadProducts({pageSize: ITEM_PER_PAGE, page: 0, userId: 1}) as unknown as UnknownAction)
     fetchAllCategories().then(res => {
       setCategoryList(res)
       console.log(res)
@@ -45,7 +46,7 @@ export default function Products(props : any) {
       return
     }
     value === 'default'
-      ? dispatch(loadProducts({ pageSize: 25, page: 0, userId: 1 }) as unknown as UnknownAction)
+      ? dispatch(loadProducts({ pageSize: ITEM_PER_PAGE, page: 0, userId: 1 }) as unknown as UnknownAction)
       : dispatch(loadFilteredProducts({ categoryId: value }) as unknown as UnknownAction)
   }
 

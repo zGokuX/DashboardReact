@@ -4,7 +4,7 @@ export default function ProductsView() {
         <>
             <div className="adjustment-layout-product">
                 <h2>Lista prodotti</h2>
-                <Products  maxViewProduct={25} inPage={true}/>
+                <Products inPage={true}/>
             </div>
         </>
     )

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import { ITEM_PER_PAGE } from "@/components/Constants/Constants"
+import { ITEM_PER_PAGE } from "@/Constants"
 import { selectProductsTotal } from "@/store/slices/productsSlice"
 export default function PaginationPage({setPagination,pagination,totalUsers}) {
     const totalProducts = useSelector(selectProductsTotal)

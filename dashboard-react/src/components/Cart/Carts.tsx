@@ -10,7 +10,7 @@ import { deleteCart } from '@/services/requests'
 import { Cart } from './carts.type'
 import CartHeader from './cartHeader'
 import NotificationCartDelete from './NotificationCartDelete'
-import { ITEM_PER_PAGE } from '@/components/Constants/Constants'
+import { ITEM_PER_PAGE } from '@/Constants'
 
 
 export default function Carts(props : any) {
@@ -28,7 +28,7 @@ export default function Carts(props : any) {
 
 
   useEffect(() => {
-    dispatch(fetchCartsRequest({pageSize: props.maxViewCarts,page:pagination}))
+    dispatch(fetchCartsRequest({pageSize: ITEM_PER_PAGE,page:pagination}))
   }, [dispatch, pagination])
 
   function detailsButton(cart : any) {
