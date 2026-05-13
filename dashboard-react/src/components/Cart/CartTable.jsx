@@ -22,9 +22,12 @@ export default function CartTable({ cartList, ...props }) {
             <table className="card-table">
                 <thead>
                     <tr className="table-header">
-                        <th className="col nome">
-                            Utente id
-                        </th>
+                        {!props.inUser &&
+                            <th className="col nome">
+                                Utente id
+                            </th>
+                        }
+
 
                         <th className="col nome">
                             Prodotti Totali
@@ -48,7 +51,11 @@ export default function CartTable({ cartList, ...props }) {
                         .map((item) => {
                             return (
                                 <tr key={item.id}>
-                                    <td><a href="#" onClick={(e) => props.openModalDetail(e, item.userId)}>Utente {item.id}</a></td>
+                                    {!props.inUser &&
+                                        <td><a href="#" onClick={(e) => props.openModalDetail(e, item.userId)}>Utente {item.id}</a></td>
+
+                                    }
+
                                     <td>{item.totalProducts}</td>
                                     <td>{item.totalQuantity}</td>
                                     <td>
