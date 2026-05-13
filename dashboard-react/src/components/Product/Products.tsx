@@ -17,16 +17,16 @@ export default function Products(props : any) {
   const dispatch = useDispatch()
   const [filterCategory, setFilterCategory] = useState('default')
   const [categoryList, setCategoryList] = useState([])
+  
+
 
   useEffect(() => {
     dispatch(loadProducts({pageSize: 25, page: 0, userId: 1}) as unknown as UnknownAction)
     fetchAllCategories().then(res => {
       setCategoryList(res)
-
       console.log(res)
     })
   }, [])
-
   useEffect(() => {
     if (props.onProductsListChange) {
       props.onProductsListChange(productList)

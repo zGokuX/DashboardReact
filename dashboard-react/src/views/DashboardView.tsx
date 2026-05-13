@@ -11,6 +11,8 @@ import { Button } from "react-bootstrap";
 import { Opencollective } from "react-bootstrap-icons";
 import { User } from "@/components/User/user.type";
 
+import "@/components/styles/Dashboard.css"
+
 export default function DashboardView() {
     const dispatch = useDispatch()
     
@@ -42,7 +44,7 @@ export default function DashboardView() {
               {!isDisbaled &&
               <Button onClick={() => confirmData()}>Salva nome</Button>
               }
-              <Button className="modify-name-btn" onClick={() => hanldeButtonModify()} style={{"fontSize":"25px", "border":"none","backgroundColor":"transparent", "color":"blue"}} ><Opencollective/></Button>
+              <Button className="modify-name-btn" onClick={() => hanldeButtonModify()}><Opencollective/></Button>
             </div>
             
             <h3>Ecco una paronamica del tuo business</h3>

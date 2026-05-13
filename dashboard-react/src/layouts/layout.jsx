@@ -6,11 +6,11 @@ import DashboardView from "../views/DashboardView";
 import CartsView from "../views/CartsView";
 import RecentUsersView from "../views/RecentUsersView";
 import UserView from "../views/UserView";
+import CartCheckoutView from "@/views/CartCheckoutView";
 
 export default function Layout() {
     return (
         <>
-            <BrowserRouter>
                 <div className="layout container-full-width">
                     <aside>
                         <nav id="move-nav">
@@ -40,11 +40,11 @@ export default function Layout() {
                         <Route path="/users/*" element={<RecentUsersView />} />
                         <Route path="/cards/*" element={<CartsView/>} />
                         <Route path="/products/*" element={<ProductsView/>} />
+                        <Route path="/cartCheckout/*" element={<CartCheckoutView/>} />
                         <Route path="/user/:userid" element={<UserView/>} />
                     </Routes>
                     
                 </div>
-            </BrowserRouter>
         </>
     )
 }

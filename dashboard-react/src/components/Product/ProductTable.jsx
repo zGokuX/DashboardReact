@@ -3,7 +3,8 @@ import { Button } from "react-bootstrap"
 import ProductModal from "./ProductModal"
 import PaginationPage from "../Common/PaginationPage"
 import { useDispatch, useSelector } from "react-redux"
-import { loadProducts, selectProductsTotal } from "@/store/slices/productsSlice"
+import { addToCart, loadProducts, selectProductsTotal } from "@/store/slices/productsSlice"
+import { BagPlusFill } from "react-bootstrap-icons"
 export default function ProductsTable(props) {
     const [selectProduct, setSelectProduct] = useState(null)
     const [showModal, setShowModal] = useState(false)
@@ -16,7 +17,7 @@ export default function ProductsTable(props) {
     }
 
     useEffect(() => {
-     dispatch(loadProducts({pageSize: 25,page:pagination,userId:1}))
+        dispatch(loadProducts({ pageSize: 25, page: pagination, userId: 1 }))
 
     }, [pagination]);
 
@@ -90,25 +91,33 @@ export default function ProductsTable(props) {
                                     )
                                 }
                                 {!props.isCarts && !props.modalMode && !props.inUser &&
-                                    <td>
+                                    <td className="d-flex gap-2">
                                         <Button variant="outline-primary" onClick={() => detailsProductButton(item)}>
                                             See more
                                         </Button>
-                                    </td>
+                                        {props.inPage &&
+                                            < Button variant="outline-primary" onClick={() => dispatch(addToCart({product: item.title,price: item.price}))}>
+                                        <BagPlusFill />
+                                    </Button>
+                                }
+
+                            </td>
                                 }
                             </tr>
 
-                        )
+                )
                     })}
-                </tbody>
-            </table>
-            {props.inPage && (
+            </tbody>
+        </table >
+        {
+            props.inPage && (
                 <PaginationPage
                     setPagination={setPagination}
                     pagination={pagination}
                     totalUsers={totalProducts}
                 />
-            )}
+            )
+        }
         </>
     )
 }

@@ -10,7 +10,7 @@ import { deleteCart } from '@/services/requests'
 import { Cart } from './carts.type'
 import CartHeader from './cartHeader'
 import NotificationCartDelete from './NotificationCartDelete'
-import { ITEM_PER_PAGE } from '@/constants'
+import { ITEM_PER_PAGE } from '@/components/Constants/Constants'
 
 
 export default function Carts(props : any) {

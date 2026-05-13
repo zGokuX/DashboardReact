@@ -5,8 +5,8 @@ import { fetchProducts, fetchProductsCategory } from '@/services/requests'
 // pending, fulfilled e rejected. Questo semplifica molto la logica rispetto al thunk manuale.
 export const loadProducts = createAsyncThunk(
   'products/loadProducts',
-  async ({ pageSize, page , userId  }) => {
-    console.log(pageSize,page,userId)
+  async ({ pageSize, page, userId }) => {
+    console.log(pageSize, page, userId)
     // Qui effettuiamo la chiamata API usando la funzione condivisa dal file requests.
     const response = await fetchProducts(userId, pageSize, page)
 
@@ -21,11 +21,12 @@ export const loadFilteredProducts = createAsyncThunk(
     // Qui effettuiamo la chiamata API usando la funzione condivisa dal file requests.
     const response = await fetchProductsCategory(categoryId)
 
-    return response 
+    return response
   },
 )
 const initialState = {
   products: [],
+  userProducts: [],
   total: 0,
   categories: [],
   selectedCategory: null,
@@ -44,6 +45,14 @@ const productsSlice = createSlice({
     // Azione per selezionare una categoria, utile per il filtro locale.
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload
+    },
+    addToCart(state, action) {
+      const { product, price } = action.payload
+
+      state.userProducts.push({
+        product,
+        price,
+      })
     },
     // Resetta il dominio products allo stato iniziale.
     clearProducts: (state) => {
@@ -74,7 +83,7 @@ const productsSlice = createSlice({
         state.status = 'failed'
         state.error = action.error.message
       })
-        .addCase(loadFilteredProducts.pending, (state) => {
+      .addCase(loadFilteredProducts.pending, (state) => {
         state.status = 'loading'
         state.error = null
       })
@@ -97,6 +106,7 @@ export const {
   setProductCategories,
   setSelectedCategory,
   clearProducts,
+  addToCart,
 } = productsSlice.actions
 
 // Selector per prendere i dati dei prodotti dal root state.
@@ -105,5 +115,5 @@ export const selectProductsTotal = (state) => state.products.total
 export const selectProductCategories = (state) => state.products.categories
 export const selectSelectedCategory = (state) => state.products.selectedCategory
 export const selectProductsStatus = (state) => state.products.status
-
+export const selectUserProduct = (state) => state.products.userProducts
 export default productsSlice.reducer
