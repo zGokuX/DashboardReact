@@ -62,19 +62,19 @@ export default function CartTable({ cartList, ...props }) {
                                     </td>
 
                                     <td className="d-flex gap-3">
-                                        {!props.inUser
-
+                                        {!props.inUser &&
+                                            < Button
+                                                variant="outline-primary"
+                                                onClick={() => {
+                                                    setShowModal(true)
+                                                    props.setSelectCart(item)
+                                                    props.detailsButton(item)
+                                                }}
+                                            >
+                                                details
+                                            </Button>
                                         }
-                                        <Button
-                                            variant="outline-primary"
-                                            onClick={() => {
-                                                setShowModal(true)
-                                                props.setSelectCart(item)
-                                                props.detailsButton(item)
-                                            }}
-                                        >
-                                            details
-                                        </Button>
+
                                         {props.inUser &&
                                             <Button
                                                 className="text-nowrap"
@@ -87,7 +87,7 @@ export default function CartTable({ cartList, ...props }) {
                                             </Button>
                                         }
 
-                                        {props.inPage &&
+                                        {props.inPage && !props.inUser &&
                                             <Button variant="danger">
                                                 <TrashFill
                                                     size={20}
@@ -108,7 +108,7 @@ export default function CartTable({ cartList, ...props }) {
                                 </tr>
                             );
                         })}
-                        {
+                    {
                         selectProduct.length > 0 &&
                         <tr>
                             <td colSpan="5">
@@ -123,7 +123,7 @@ export default function CartTable({ cartList, ...props }) {
                         </tr>
                     }
                 </tbody>
-            </table>
+            </table >
         </>
     )
 }

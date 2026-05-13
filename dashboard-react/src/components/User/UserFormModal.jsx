@@ -69,7 +69,7 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={onHide}>
+                    <Button variant="danger" onClick={onHide}>
                         Chiudi
                     </Button>
                     <Button variant="primary" onClick={saveHandler}>

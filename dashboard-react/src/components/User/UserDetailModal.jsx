@@ -86,7 +86,7 @@ export default function UserDetail({ show , onHide , userId}) {
 
             <Modal.Footer>
                 <Button
-                    variant="secondary"
+                    variant="danger"
                     onClick={onHide}
                 >
                     Chiudi

@@ -47,9 +47,9 @@ const productsSlice = createSlice({
       state.selectedCategory = action.payload
     },
     addToCart(state, action) {
-      const { product, price } = action.payload
-
+      const {image, product, price } = action.payload
       state.userProducts.push({
+        image,
         product,
         price,
       })

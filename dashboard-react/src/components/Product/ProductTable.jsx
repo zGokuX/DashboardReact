@@ -5,11 +5,13 @@ import PaginationPage from "../Common/PaginationPage"
 import { useDispatch, useSelector } from "react-redux"
 import { addToCart, loadProducts, selectProductsTotal } from "@/store/slices/productsSlice"
 import { BagPlusFill } from "react-bootstrap-icons"
+import NotificationAddToCart from "./NotificationAddToCart"
 export default function ProductsTable(props) {
     const [selectProduct, setSelectProduct] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const [pagination, setPagination] = useState(0);
     const totalProducts = useSelector(selectProductsTotal)
+    const [showToast, setShowToast] = useState(false)
     const dispatch = useDispatch()
     function detailsProductButton(product) {
         setSelectProduct(product)
@@ -30,6 +32,7 @@ export default function ProductsTable(props) {
                         show={showModal}
                         onHide={() => setShowModal(false)}
                         product={selectProduct}
+                        inPage={props.inPage}
                     />
                 </>
             }
@@ -39,13 +42,18 @@ export default function ProductsTable(props) {
                         <th>Id prodotto</th>
                         <th>Immagine prodotto</th>
                         <th>Nome prodotto</th>
-                        <th>{props.modalMode && props.isCarts ? 'Quantità' : 'Categoria'}</th>
                         <th>Prezzo</th>
-                        {!props.isCarts &&
+                        <th>Sconto</th>
+                        {!props.inUser &&
+                            <th>{props.modalMode && props.isCarts ? 'Quantità' : 'Categoria'}</th>
+                        }
+
+
+                        {!props.isCarts && !props.inUser &&
                             <th>Disponibilità</th>
                         }
 
-                        <th>Sconto</th>
+
                         {!props.isCarts && !props.modalMode &&
 
                             <th></th>
@@ -68,13 +76,15 @@ export default function ProductsTable(props) {
                                 <td>{item.id}</td>
                                 <td><img style={{ display: "flex" }} width="50px" src={item.thumbnail} alt="Products Avatar" /></td>
                                 <td>{item.title}</td>
-                                <td>{props.modalMode && props.isCarts ? item.quantity : item.category}</td>
                                 <td>€ {Math.round(item.price)}</td>
+                                <td>{item.discountPercentage}%</td>
+                                <td>{props.modalMode && props.isCarts ? item.quantity : item.category}</td>
+                               
                                 {!props.isCarts &&
                                     <td>{item.availabilityStatus}</td>
                                 }
 
-                                <td>{item.discountPercentage}%</td>
+                                
 
                                 {
                                     !props.isCarts && props.showMoreOption ? (
@@ -96,28 +106,42 @@ export default function ProductsTable(props) {
                                             See more
                                         </Button>
                                         {props.inPage &&
-                                            < Button variant="outline-primary" onClick={() => dispatch(addToCart({product: item.title,price: item.price}))}>
-                                        <BagPlusFill />
-                                    </Button>
-                                }
+                                            < Button variant="outline-primary" onClick={() => {
+                                                dispatch(
+                                                    addToCart({
+                                                        image: item.thumbnail,
+                                                        product: item.title,
+                                                        price: item.price
+                                                    })
+                                                );
 
-                            </td>
+                                                setShowToast(true);
+                                            }}>
+                                                <BagPlusFill />
+                                            </Button>
+                                        }
+
+                                    </td>
                                 }
                             </tr>
 
-                )
+                        )
                     })}
-            </tbody>
-        </table >
-        {
-            props.inPage && (
-                <PaginationPage
-                    setPagination={setPagination}
-                    pagination={pagination}
-                    totalUsers={totalProducts}
-                />
-            )
-        }
+                </tbody>
+            </table >
+            <NotificationAddToCart
+                setShowToast={setShowToast}
+                showToast={showToast}
+            />
+            {
+                props.inPage && (
+                    <PaginationPage
+                        setPagination={setPagination}
+                        pagination={pagination}
+                        totalUsers={totalProducts}
+                    />
+                )
+            }
         </>
     )
 }

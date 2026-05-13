@@ -32,7 +32,7 @@ function CartsModal({ show, onHide, products }) {
 
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onHide}>
+                <Button variant="danger" onClick={onHide}>
                     Chiudi
                 </Button>
             </Modal.Footer>
