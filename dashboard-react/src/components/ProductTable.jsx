@@ -23,6 +23,7 @@ export default function ProductsTable(props) {
     }, [pagination]);
 
 
+    // todo tutta la logica di paginazione dentro pagination component 
     function setPage(currentValue, goOn) {
         console.log(currentValue, goOn)
         if (goOn && currentValue <= 7) {

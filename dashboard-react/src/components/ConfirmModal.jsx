@@ -12,7 +12,7 @@ function ConfirmModal({
     cart,
     onCartDelete,
 }) {
-    const [cartUser, setCartUser] = useState(null);
+    const [cartUser, setCartUser] = useState(null); // todo eliminare non usato 
 
     useEffect(() => {
         if (cart?.userId) {

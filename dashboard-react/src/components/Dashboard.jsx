@@ -36,7 +36,7 @@ export default function Dashboard() {
       <>
         <main>
         <InputName/>
-
+          {/* todo style spostare nel css */}
           <Counter/>
           <div className='welcome-container'>
             <div className="d-flex">

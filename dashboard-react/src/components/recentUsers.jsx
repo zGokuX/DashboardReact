@@ -88,6 +88,7 @@ export default function RecentUsers(props) {
     })
   }
 
+  // todo tutto deve essere dentro pagination 
   function setPage(currentValue, goOn) {
     console.log(currentValue, goOn)
     if (goOn && currentValue <= 7) {
@@ -138,6 +139,8 @@ export default function RecentUsers(props) {
       })
     }
   }
+
+  // TODO rebder user componente a parte 
 
   function renderUser() {
     return displayedUsers.map((item) => {
