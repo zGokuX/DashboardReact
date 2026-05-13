@@ -51,7 +51,7 @@ export default function CartCheckout() {
                 }
                 <table>
                     <thead>
-                        {groupedCart > 0 &&
+                        {groupedCart.length > 0 &&
                             <tr>
                                 <th></th>
                                 <th></th>
