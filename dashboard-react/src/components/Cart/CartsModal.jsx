@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ProductsTable from '../Product/ProductTable';
 import { useEffect, useState } from 'react';
-import { fetchSingleUser } from '../../services/requests';
+import { fetchSingleUser } from '@/services/requests';
 
 function CartsModal({ show, onHide, products }) {
     const [cartUser, setCartUser] = useState(null)

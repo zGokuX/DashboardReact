@@ -6,7 +6,7 @@ import {
   incrementByAmount,
   incrementAsync,
   selectCount,
-} from '../@/store/slices/CounterSlice';
+} from '@/store/slices/CounterSlice';
 
 // TODO spostare questo componente di esempio in una cartela a parte 
 

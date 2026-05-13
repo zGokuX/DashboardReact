@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { fetchCarts } from '../../services/requests'
+import { fetchCarts } from '@/services/requests'
 import { fetchCartsRequest, fetchCartsSuccess, fetchCartsFailure } from '@/store/slices/cartsSlice'
 
 // Questo saga gestisce il side effect di caricamento dei carrelli.

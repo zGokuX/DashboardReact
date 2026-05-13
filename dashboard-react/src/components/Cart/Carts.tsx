@@ -6,11 +6,11 @@ import CartTable from './CartTable'
 import PaginationPage from '../Common/PaginationPage'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCartsRequest, selectCarts, selectCartsTotal } from "@/store/slices/cartsSlice"
-import { deleteCart } from '../../services/requests'
+import { deleteCart } from '@/services/requests'
 import { Cart } from './carts.type'
 import CartHeader from './cartHeader'
 import NotificationCartDelete from './NotificationCartDelete'
-import { ITEM_PER_PAGE } from '../Constants/Constants'
+import { ITEM_PER_PAGE } from '@/constants'
 
 
 export default function Carts(props : any) {

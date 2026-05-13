@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import { useEffect, useState } from "react";
 import {
     fetchSingleUser,
-} from "../../services/requests";
+} from "@/services/requests";
 
 function ConfirmModal({
     show,
