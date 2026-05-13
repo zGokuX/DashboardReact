@@ -1,4 +1,4 @@
-import Products from "../components/Products"
+import Products from "@/components/Product/Products"
 export default function ProductsView() {
     return (
         <>

@@ -2,9 +2,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useEffect, useState } from "react";
 import {
-    deleteCart,
     fetchSingleUser,
-} from "../services/requests";
+} from "../../services/requests";
 
 function ConfirmModal({
     show,
@@ -12,7 +11,7 @@ function ConfirmModal({
     cart,
     onCartDelete,
 }) {
-    const [cartUser, setCartUser] = useState(null);
+    const [cartUser, setCartUser] = useState(null); // todo eliminare non usato 
 
     useEffect(() => {
         if (cart?.userId) {
@@ -24,7 +23,6 @@ function ConfirmModal({
 
     async function handleDelete() {
         try {
-            await deleteCart(cart.id);
 
             onCartDelete(cart.id);
 

@@ -1,4 +1,4 @@
-import Carts from "../components/Carts";
+import Carts from "@/components/Cart/Carts";
 
 
 export default function CartsView() {
@@ -6,7 +6,9 @@ export default function CartsView() {
         <>
             <div className="adjustment-layout-product">
                 <h2>Lista carelli</h2>
-                <Carts maxViewCarts={25} inPage={true} />
+                <Carts maxViewCarts={25} // non serve tiralo da constant 
+                
+                inPage={true} />
             </div>
 
         </>

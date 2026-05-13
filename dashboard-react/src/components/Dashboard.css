@@ -1,0 +1,13 @@
+.input-text {
+    font-size: 25px;
+    border: none;
+    width: 12rem;
+    background-color: transparent
+}
+
+.modify-name-btn {
+    font-size:25px; 
+    border:none;
+    background-color:transparent;
+    color:blue;
+}

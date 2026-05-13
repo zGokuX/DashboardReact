@@ -1,36 +1,19 @@
 import { useState } from "react";
-import { Button } from "react-bootstrap";
-import CartsModal from "./CartsModal";
-import { CaretDownFill, CaretUpFill } from "react-bootstrap-icons";
-import ProductsTable from "./ProductTable";
+import { Button } from "react-bootstrap";;
+import { TrashFill } from "react-bootstrap-icons";
 
 export default function CartTable({ cartList, ...props }) {
     const [showModal, setShowModal] = useState(false)
-    const [selectCart, setSelectCart] = useState([])
-    const [selectProduct, setSelectProduct] = useState([])
-    const [openedUserId, setOpenedUserId] = useState(null)
 
-    function showProduct(item) {
-        if (openedUserId === item.id) {
-            setOpenedUserId(null)
-            setSelectProduct([])
-        } else {
-            setOpenedUserId(item.id)
-            setSelectProduct(item.products)
-        }
-    }
     return (
         <>
-            {showModal &&
-                <CartsModal
-                    cart={selectCart}
-                    show={showModal}
-                    onHide={() => setShowModal(false)}
-                />
-            }
             <table className="card-table">
                 <thead>
                     <tr className="table-header">
+                        <th className="col nome">
+                            Utente id
+                        </th>
+
                         <th className="col nome">
                             Prodotti Totali
                         </th>
@@ -53,6 +36,7 @@ export default function CartTable({ cartList, ...props }) {
                         .map((item) => {
                             return (
                                 <tr key={item.id}>
+                                    <td><a href="#" onClick={(e) => props.openModalDetail(e, item.userId)}>Utente {item.id}</a></td>
                                     <td>{item.totalProducts}</td>
                                     <td>{item.totalQuantity}</td>
                                     <td>
@@ -70,43 +54,33 @@ export default function CartTable({ cartList, ...props }) {
                                             variant="outline-primary"
                                             onClick={() => {
                                                 setShowModal(true)
-                                                setSelectCart(item)
+                                                props.setSelectCart(item)
+                                                props.detailsButton(item)
                                             }}
                                         >
                                             details
                                         </Button>
-                                        {props.inUser &&
-                                            <Button
-                                                className="text-nowrap"
-                                                variant="outline-primary"
-                                                onClick={() => {
-                                                    showProduct(item)
-                                                }}
-                                            >
-                                                Mostra Prodotti {openedUserId === item.id ? <CaretUpFill /> : <CaretDownFill />}
+                                        {props.inPage &&
+                                            <Button variant="danger">
+                                                <TrashFill
+                                                    size={20}
+                                                    onClick={() => {
+                                                        props.setSelectCart(item);
+                                                        props.setShowConfirmModal(
+                                                            true
+                                                        );
+
+                                                    }}
+                                                >
+                                                    Delete
+                                                </TrashFill>
                                             </Button>
                                         }
                                     </td>
 
                                 </tr>
-
-
                             );
                         })}
-                    {
-                        selectProduct.length > 0 &&
-                        <tr>
-                            <td colSpan="5">
-                                <ProductsTable
-                                    productList={selectProduct}
-                                    modalMode={false}
-                                    isCarts={false}
-                                    inUser={true}
-                                    showMoreOption={false}
-                                />
-                            </td>
-                        </tr>
-                    }
                 </tbody>
             </table>
         </>

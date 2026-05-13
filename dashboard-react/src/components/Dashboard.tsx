@@ -1,25 +1,27 @@
 import { useState } from "react";
 import BigGraphic from "../layouts/BigGraphic";
-import CardTitle from "../components/cardTitle";
-import Carts from "./Carts";
+import CardTitle from "./Cart/cardTitle";
+import Carts from "./Cart/Carts";
 import Graphic from "../layouts/Graphic";
-import Products from "./Products";
-import RecentUsers from "./RecentUsers";
+import Products from "./Product/Products";
+import RecentUsers from "./User/UserList";
 import { useDispatch, useSelector } from "react-redux";
 import { addName, selectName } from "../slices/NameSlice";
 import { Button } from "react-bootstrap";
 import { Opencollective } from "react-bootstrap-icons";
-
-
+import { User } from "./User/user.type"
 
 export default function Dashboard() {
-    const [selectUser, setSelectUser] = useState(null)
-    const [selectProduct, setSelectProduct] = useState(null)
-    // const [productsList, setProductsList] = useState([])
-    const nome = useSelector(selectName).value;
-    const [isDisbaled,setIsDisabled] = useState(true)
-    const [selectNameInput,setSelectNameInput] = useState(null)
     const dispatch = useDispatch()
+    
+    const nome = useSelector(selectName).value;
+
+    const [selectUser, setSelectUser] = useState<User | null>(null)
+    const [selectProduct, setSelectProduct] = useState(null)
+    const [productsList, setProductsList] = useState([])
+    const [isDisbaled,setIsDisabled] = useState(true)
+    const [selectNameInput,setSelectNameInput] = useState("")
+
     function hanldeButtonModify(){
       setIsDisabled(!isDisbaled)
       
@@ -33,13 +35,14 @@ export default function Dashboard() {
     return (
       <>
         <main>
+          {/* todo style spostare nel css */}
           <div className='welcome-container'>
             <div className="d-flex">
-              <h1>Benvenuto <input maxLength={13} style={{"fontSize":"25px","border":"none", "width":"12rem","backgroundColor":"transparent"}} type="text" disabled={isDisbaled} defaultValue={nome == '' ? "Marco" : nome} onChange={(e) => setSelectNameInput(e.target.value)}/></h1>
+              <h1>Benvenuto <input maxLength={13} className="input-text" type="text" disabled={isDisbaled} defaultValue={nome == '' ? "Marco" : nome} onChange={(e) => setSelectNameInput(e.target.value)}/></h1>
               {!isDisbaled &&
               <Button onClick={() => confirmData()}>Salva nome</Button>
               }
-              <Button onClick={() => hanldeButtonModify()} style={{"fontSize":"25px", "border":"none","backgroundColor":"transparent", "color":"blue"}} ><Opencollective/></Button>
+              <Button className="modify-name-btn" onClick={() => hanldeButtonModify()} style={{"fontSize":"25px", "border":"none","backgroundColor":"transparent", "color":"blue"}} ><Opencollective/></Button>
             </div>
             
             <h3>Ecco una paronamica del tuo business</h3>
@@ -51,7 +54,7 @@ export default function Dashboard() {
 
               <BigGraphic />
             </div>
-            <RecentUsers onSelectUser={user => setSelectUser(user)} />
+            <RecentUsers onSelectUser={(user : any) => setSelectUser(user)} />
           </div>
           <div className='container-full-width'>
             <Carts
@@ -60,8 +63,8 @@ export default function Dashboard() {
               inPage={false}
             />
             <Products
-              onSelectProduct={product => setSelectProduct(product)}
-              // onProductsListChange={products => setProductsList(products)}
+              onSelectProduct={(product : any) => setSelectProduct(product)}
+              onProductsListChange={(products : any) => setProductsList(products)}
             />
           </div>
         </main>

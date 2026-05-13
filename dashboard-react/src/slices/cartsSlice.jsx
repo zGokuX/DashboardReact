@@ -16,7 +16,8 @@ const cartsSlice = createSlice({
   initialState,
   reducers: {
     // Azione inviata per segnalare l'inizio della richiesta di carrelli.
-    fetchCartsRequest: (state) => {
+    // eslint-disable-next-line no-unused-vars
+    fetchCartsRequest: (state,action) => {
       state.status = 'loading'
       state.error = null
     },
@@ -61,8 +62,8 @@ export const {
 
 // Selector per ottenere i dati dei carrelli dal root state.
 export const selectCarts = (state) => state.carts.carts
-export const selectCartsStatus = (state) => state.status
-export const selectCartsTotal = (state) => state.total
-export const selectCartsPage = (state) => state.page
+export const selectCartsStatus = (state) => state.carts.status
+export const selectCartsTotal = (state) => state.carts.total
+export const selectCartsPage = (state) => state.carts.page
 
 export default cartsSlice.reducer

@@ -1,21 +1,20 @@
-import  { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
-import { addUser, fetchCartsByUserId, fetchFilterNames, fetchUserFilter, updateUser } from "../services/requests"
-import { fetchUsers } from "../slices/UserActions"
-import { selectUsers, selectUsersTotal } from "../slices/usersSlice"
+import { addUser, fetchCartsByUserId, fetchFilterNames, fetchUserFilter, updateUser } from "@/services/requests"
+import { fetchUsers } from "@/slices/UserActions"
+import { selectUsers, selectUsersTotal } from "@/slices/usersSlice"
 import UserFormModal from "./UserFormModal"
 import { Link } from "react-router-dom"
 import UserFilters from "./UserFilters"
 import NotificationUserForm from "./NotificationUserForm"
-import PaginationPage from "./PaginationPage"
-import RenderUser from "./renderUser"
+import PaginationPage from "../PaginationPage"
+import { ITEM_PER_PAGE } from "../Constants/Constants"
+import { RenderUser } from "./RenderUser"
 
 // Importiamo useDispatch e useSelector da react-redux per leggere e scrivere nel store globale.
 // useSelector prende i dati dallo stato Redux, mentre useDispatch serve per inviare azioni.
 
-const ITEM_PER_PAGE = 25
-
-export default function RecentUsers(props) {
+export default function RecentUsers(props : any) {
   const dispatch = useDispatch()
   // Qui leggiamo gli utenti da Redux.
   // Questa è la fonte di verità per i dati utenti, non lo stato locale.
@@ -38,8 +37,8 @@ export default function RecentUsers(props) {
 
   // displayedUsers rappresenta la lista visibile.
   // Se c'è un filtro applicato, usiamo filteredUsers, altrimenti la lista completa dal Redux store.
-  const displayedUsers = filteredUsers ?? users
 
+  const displayedUsers = filteredUsers ?? users
   // Effettuiamo il dispatch dell'azione fetchUsers quando il componente viene montato
   // o quando cambia la pagina. Questo aggiorna il Redux store con i nuovi utenti.
   useEffect(() => {
@@ -48,7 +47,7 @@ export default function RecentUsers(props) {
 
   // Per il view, manteniamo altri stati locali (esempio: modale, filtro),
   // ma la lista reale degli utenti viene presa da Redux.
-  function editButton(user) {
+  function editButton(user : any) {
     setSelectedUser(user)
     setShowModal(true)
     setIsNew(false)
@@ -56,7 +55,7 @@ export default function RecentUsers(props) {
     console.log(user)
   }
 
-  function filterPlus(filterName, value) {
+  function filterPlus(filterName : string, value : string) {
     if (filterName === 'gender') {
       setFilterRole('default')
       setFilterAge(0)
@@ -71,12 +70,12 @@ export default function RecentUsers(props) {
       setFilterInput('')
     }
     if (value === 'default') {
-      setFilteredUsers(null)
+      setFilteredUsers([])
       return
     }
 
     if (filterName === 'age') {
-      const filtered = users.filter((user) => user.age == value)
+      const filtered = users.filter((user : any) => user.age == value)
       setFilteredUsers(filtered.length === 0 ? null : filtered)
       return
     }
@@ -86,25 +85,7 @@ export default function RecentUsers(props) {
     })
   }
 
-  function setPage(currentValue, goOn) {
-    console.log(currentValue, goOn)
-    if (goOn && currentValue <= 7) {
-      setPagination(currentValue + 1)
-      return currentValue + 1
-    } else if (!goOn) {
-      setPagination(currentValue - 1)
-      currentValue = currentValue - 1
-    }
-    if (currentValue > Math.ceil(totalUsers / ITEM_PER_PAGE) - 1) {
-      setPagination(currentValue)
-    }
-    if (currentValue <= 0) {
-      setPagination(0)
-      return 0
-    }
-    return currentValue
-  }
-  function filterNames(value) {
+  function filterNames(value : string) {
     setFilterGender('default')
     setFilterRole('default')
     setFilterAge(0)
@@ -119,39 +100,37 @@ export default function RecentUsers(props) {
     setIsNew(true)
   }
 
-  function showCart(item) {
+  function showCart(item : any) {
     if (openedUserId === item.id) {
-      setOpenedUserId(null)
+      setOpenedUserId(false)
     } else {
       setOpenedUserId(item.id)
     }
 
     if (!item.carts) {
       fetchCartsByUserId(item.id).then((cartResponse) => {
-        setFilteredUsers((prev) =>
-          (prev ?? users).map((user) =>
+        setFilteredUsers((prev : any) =>
+          (prev ?? users).map((user : any) =>
             user.id === item.id ? { ...user, carts: cartResponse } : user,
           ),
         )
       })
     }
   }
-
-
   return (
     <>
       {showModal && (
         <UserFormModal
           show={showModal}
           onHide={() => setShowModal(false)}
-          onUserChange={(user, isNewUser) => {
+          onUserChange={(user : any, isNewUser : any) => {
             if (isNewUser) {
               setFilteredUsers((prev) => [...(prev ?? users), user])
               addUser(user).then((res) => console.log(res))
               setShowToast(true)
             } else {
-              setFilteredUsers((prev) =>
-                (prev ?? users).map((item) => (item.id === user.id ? { ...item, ...user } : item)),
+              setFilteredUsers((prev : any) =>
+                (prev ?? users).map((item : any) => (item.id === user.id ? { ...item, ...user } : item)),
               )
               updateUser(user.id, user).then((res) => console.log(res))
               setShowToast(true)
@@ -203,22 +182,23 @@ export default function RecentUsers(props) {
             />
 
             <table>
-              <tbody><RenderUser
-              displayedUsers={displayedUsers}
-              openedUserId={openedUserId}
-              onSelectUser={props.onSelectUser}
-              inPage={props.inPage}
-              editButton={editButton}
-              showCart={showCart}
-              />
+              <tbody>
+                
+                <RenderUser
+                displayedUsers={displayedUsers}
+                inPage={props.inPage}
+                editButton={editButton}
+                showCart={showCart}
+                openedUserId={openedUserId}
+                onSelectUser={props.onSelectUser}
+                />
               </tbody>
             </table>
             {props.inPage &&
               <PaginationPage
-                setPage={setPage}
+                setPagination={setPagination}
                 pagination={pagination}
                 totalUsers={totalUsers}
-                ITEM_PER_PAGE={ITEM_PER_PAGE}
               />
             }
           </div>

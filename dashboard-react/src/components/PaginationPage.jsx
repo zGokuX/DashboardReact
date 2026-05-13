@@ -1,4 +1,27 @@
-export default function PaginationPage({setPage,pagination,totalUsers,ITEM_PER_PAGE}) {
+import { useSelector } from "react-redux"
+import { ITEM_PER_PAGE } from "./Constants/Constants"
+import { selectProductsTotal } from "@/slices/productsSlice"
+export default function PaginationPage({setPagination,pagination,totalUsers}) {
+    const totalProducts = useSelector(selectProductsTotal)
+
+        function setPage(currentValue, goOn) {
+        console.log(currentValue, goOn)
+        if (goOn && currentValue <= 7) {
+            setPagination(currentValue + 1)
+            return currentValue + 1
+        } else if (!goOn) {
+            setPagination(currentValue - 1)
+            currentValue = currentValue - 1
+        }
+        if (currentValue > Math.ceil(totalProducts / ITEM_PER_PAGE) - 1) {
+            setPagination(currentValue)
+        }
+        if (currentValue <= 0) {
+            setPagination(0)
+            return 0
+        }
+        return currentValue
+    }
     return (
         <>
             <ul className="pagination">

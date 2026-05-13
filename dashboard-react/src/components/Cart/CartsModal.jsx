@@ -1,14 +1,14 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import ProductsTable from './ProductTable';
+import ProductsTable from '../Product/ProductTable';
 import { useEffect, useState } from 'react';
-import { fetchSingleUser } from '../services/requests';
+import { fetchSingleUser } from '../../services/requests';
 
-function CartsModal({ show, onHide, cart }) {
+function CartsModal({ show, onHide, products }) {
     const [cartUser, setCartUser] = useState(null)
-
+    {console.log(products)}
     useEffect(() => {
-        fetchSingleUser(cart.userId).then((res => {
+        fetchSingleUser(products?.userId).then((res => {
             setCartUser(res)
         }))
 
@@ -26,8 +26,7 @@ function CartsModal({ show, onHide, cart }) {
                             <h3> {cartUser.firstName + " " + cartUser.lastName}</h3>
                         </>
                         }
-
-                        <ProductsTable productList={cart.products ? cart.products : cart} modalMode={true} isCarts={true} showMoreOption={false} />
+                        <ProductsTable productList={products} modalMode={true} isCarts={true} showMoreOption={false} />
                     </div>
                 </div>
 

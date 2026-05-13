@@ -1,4 +1,5 @@
-import RecentUsers from "../components/recentUsers"
+import RecentUsers from "@/components/User/UserList";
+
 
 export default function RecentUsersView() {
     return (

@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
 import ProductModal from "./ProductModal"
-import PaginationPage from "./PaginationPage"
+import PaginationPage from "../PaginationPage"
 import { useDispatch, useSelector } from "react-redux"
-import { loadProducts, selectProducts, selectProductsTotal } from "../slices/productsSlice"
-const ITEM_PER_PAGE = 25
+import { loadProducts, selectProductsTotal } from "../../slices/productsSlice"
 export default function ProductsTable(props) {
     const [selectProduct, setSelectProduct] = useState(null)
     const productList = useSelector(selectProducts)
     const [showModal, setShowModal] = useState(false)
     const [pagination, setPagination] = useState(0);
+    const totalProducts = useSelector(selectProductsTotal)
+    const dispatch = useDispatch()
     const totalProducts = useSelector(selectProductsTotal)
     const dispatch = useDispatch()
     function detailsProductButton(product) {
@@ -20,27 +21,11 @@ export default function ProductsTable(props) {
     useEffect(() => {
      dispatch(loadProducts({pageSize: 25,page:pagination,userId:1}))
 
+     dispatch(loadProducts({pageSize: 25,page:pagination,userId:1}))
+
     }, [pagination]);
 
 
-    function setPage(currentValue, goOn) {
-        console.log(currentValue, goOn)
-        if (goOn && currentValue <= 7) {
-            setPagination(currentValue + 1)
-            return currentValue + 1
-        } else if (!goOn) {
-            setPagination(currentValue - 1)
-            currentValue = currentValue - 1
-        }
-        if (currentValue > Math.ceil(totalProducts / ITEM_PER_PAGE) - 1) {
-            setPagination(currentValue)
-        }
-        if (currentValue <= 0) {
-            setPagination(0)
-            return 0
-        }
-        return currentValue
-    }
     return (
         <>
             {showModal &&
@@ -80,7 +65,7 @@ export default function ProductsTable(props) {
                     </tr>
                 </thead>
                 <tbody id="bodyTable">
-                    {productList.map((item) => {
+                    {props.productList?.map((item) => {
                         return (
 
                             <tr key={item.id}>
@@ -124,10 +109,9 @@ export default function ProductsTable(props) {
             </table>
             {props.inPage && (
                 <PaginationPage
-                    setPage={setPage}
+                    setPagination={setPagination}
                     pagination={pagination}
                     totalUsers={totalProducts}
-                    ITEM_PER_PAGE={ITEM_PER_PAGE}
                 />
             )}
         </>

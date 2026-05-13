@@ -9,7 +9,7 @@ import {
     Mortarboard,
     Person,
 } from "react-bootstrap-icons"
-import { fetchSingleUser } from "../services/requests"
+import { fetchSingleUser } from "@/services/requests"
 import { useState } from "react"
 
 export default function UserDetail({ show , onHide , userId}) {

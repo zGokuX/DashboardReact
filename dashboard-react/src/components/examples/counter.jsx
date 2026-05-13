@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   decrement,
@@ -6,7 +6,9 @@ import {
   incrementByAmount,
   incrementAsync,
   selectCount,
-} from '../slices/CounterSlice';
+} from '../../slices/CounterSlice';
+
+// TODO spostare questo componente di esempio in una cartela a parte 
 
 export function Counter() {
   const count = useSelector(selectCount);
