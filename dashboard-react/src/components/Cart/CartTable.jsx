@@ -33,9 +33,9 @@ export default function CartTable({ cartList, ...props }) {
                             Prodotti Totali
                         </th>
                         <th className="col cliente">Quantità</th>
-                        <th className="col stato">Totale</th>
+                        <th className="col stato">Somma totale</th>
                         <th className="col stato">
-                            Sconto totale
+                            Totale(scontato)
                         </th>
                         <th style={{ "width": "150px" }} className="col stato"></th>
                     </tr>

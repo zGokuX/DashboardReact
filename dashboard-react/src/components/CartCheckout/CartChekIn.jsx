@@ -144,16 +144,13 @@ export default function CartCheckin() {
             <div className="row g-3">
 
                 <div className="col-12 col-md-7">
-
                     <RiepilogoCart
                         groupedCart={groupedCart}
                         total={total}
                     />
                     <IndirizzoSpedizioneCart />
-
-
-
                 </div>
+                
                 <MetodoPagamento
                     setPaymentMethod={setPaymentMethod}
                     paymentMethod={paymentMethod}

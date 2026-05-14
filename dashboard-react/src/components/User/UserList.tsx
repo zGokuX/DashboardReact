@@ -17,11 +17,11 @@ import { fetchUsersRequest, selectUsers, selectUsersTotal } from "@/store/slices
 // Importiamo useDispatch e useSelector da react-redux per leggere e scrivere nel store globale.
 // useSelector prende i dati dallo stato Redux, mentre useDispatch serve per inviare azioni.
 
-export default function RecentUsers(props : any) {
+export default function RecentUsers(props: any) {
   const dispatch = useDispatch()
   // Qui leggiamo gli utenti da Redux.
   // Questa è la fonte di verità per i dati utenti, non lo stato locale.
-  const users : null | User[] = useSelector(selectUsers) 
+  const users: null | User[] = useSelector(selectUsers)
   const totalUsers = useSelector(selectUsersTotal)
   // filteredUsers viene usato solo per memorizzare il risultato di un filtro locale.
   // Se non c'è alcun filtro, displayedUsers mostra direttamente i dati dal Redux store.
@@ -44,13 +44,16 @@ export default function RecentUsers(props : any) {
   const displayedUsers = filteredUsers ?? users
   // Effettuiamo il dispatch dell'azione fetchUsers quando il componente viene montato
   // o quando cambia la pagina. Questo aggiorna il Redux store con i nuovi utenti.
-  useEffect(() => {
+  function userRequestData() {
     dispatch(fetchUsersRequest({ pageSize: props.maxViewUser || ITEM_PER_PAGE, page: pagination }) as unknown as UnknownAction)
+  }
+  useEffect(() => {
+    userRequestData()
   }, [dispatch, props.maxViewUser, pagination])
 
   // Per il view, manteniamo altri stati locali (esempio: modale, filtro),
   // ma la lista reale degli utenti viene presa da Redux.
-  function editButton(user : any) {
+  function editButton(user: any) {
     setSelectedUser(user)
     setShowModal(true)
     setIsNew(false)
@@ -58,11 +61,12 @@ export default function RecentUsers(props : any) {
     console.log(user)
   }
 
-  function filterPlus(filterName : string, value : string) {
+  function filterPlus(filterName: string, value: string) {
     if (filterName === 'gender') {
       setFilterRole('default')
       setFilterAge(0)
       setFilterInput('')
+
     } else if (filterName === 'role') {
       setFilterGender('default')
       setFilterAge(0)
@@ -73,12 +77,12 @@ export default function RecentUsers(props : any) {
       setFilterInput('')
     }
     if (value === 'default') {
-      setFilteredUsers([])
+      setFilteredUsers(null)
       return
     }
 
     if (filterName === 'age') {
-      const filtered = users.filter((user : any) => user.age == value)
+      const filtered = users.filter((user: any) => user.age == value)
       setFilteredUsers(filtered.length === 0 ? null : filtered)
       return
     }
@@ -88,7 +92,7 @@ export default function RecentUsers(props : any) {
     })
   }
 
-  function filterNames(value : string) {
+  function filterNames(value: string) {
     setFilterGender('default')
     setFilterRole('default')
     setFilterAge(0)
@@ -103,7 +107,7 @@ export default function RecentUsers(props : any) {
     setIsNew(true)
   }
 
-  function showCart(item : any) {
+  function showCart(item: any) {
     if (openedUserId === item.id) {
       setOpenedUserId(false)
     } else {
@@ -112,8 +116,8 @@ export default function RecentUsers(props : any) {
 
     if (!item.carts) {
       fetchCartsByUserId(item.id).then((cartResponse) => {
-        setFilteredUsers((prev : any) =>
-          (prev ?? users).map((user : any) =>
+        setFilteredUsers((prev: any) =>
+          (prev ?? users).map((user: any) =>
             user.id === item.id ? { ...user, carts: cartResponse } : user,
           ),
         )
@@ -126,14 +130,14 @@ export default function RecentUsers(props : any) {
         <UserFormModal
           show={showModal}
           onHide={() => setShowModal(false)}
-          onUserChange={(user : any, isNewUser : any) => {
+          onUserChange={(user: any, isNewUser: any) => {
             if (isNewUser) {
               setFilteredUsers((prev) => [...(prev ?? users), user])
               addUser(user).then((res) => console.log(res))
               setShowToast(true)
             } else {
-              setFilteredUsers((prev : any) =>
-                (prev ?? users).map((item : any) => (item.id === user.id ? { ...item, ...user } : item)),
+              setFilteredUsers((prev: any) =>
+                (prev ?? users).map((item: any) => (item.id === user.id ? { ...item, ...user } : item)),
               )
               updateUser(user.id, user).then((res) => console.log(res))
               setShowToast(true)
@@ -185,14 +189,14 @@ export default function RecentUsers(props : any) {
 
             <table>
               <tbody>
-                
+
                 <RenderUser
-                displayedUsers={displayedUsers}
-                inPage={props.inPage}
-                editButton={editButton}
-                showCart={showCart}
-                openedUserId={openedUserId}
-                onSelectUser={props.onSelectUser}
+                  displayedUsers={displayedUsers}
+                  inPage={props.inPage}
+                  editButton={editButton}
+                  showCart={showCart}
+                  openedUserId={openedUserId}
+                  onSelectUser={props.onSelectUser}
                 />
               </tbody>
             </table>
