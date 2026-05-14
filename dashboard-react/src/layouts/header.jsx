@@ -36,7 +36,7 @@ export default function Header() {
                   onClick={() => console.log('PRODOTTI: ', userProduct)}
                 />
                 {userProduct && userProduct.length > 0 && (
-                  <span className='notification-count'>{userProduct.length}</span>
+                  <span className='notification-count'>{userProduct.length >= 9 ? "9+" : userProduct.length}</span>
                 )}
               </div>
             </Link>

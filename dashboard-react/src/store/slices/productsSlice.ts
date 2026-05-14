@@ -1,29 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { fetchProducts, fetchProductsCategory } from '@/services/requests'
+import { createSlice } from '@reduxjs/toolkit'
 
-// createAsyncThunk è usato qui per gestire automaticamente tre stati di richieste asincrone:
-// pending, fulfilled e rejected. Questo semplifica molto la logica rispetto al thunk manuale.
-// export const loadProducts = createAsyncThunk(
-//   'products/loadProducts',
-//   async ({ pageSize, page, userId }: any) => {
-//     console.log(pageSize, page, userId)
-//     // Qui effettuiamo la chiamata API usando la funzione condivisa dal file requests.
-//     const response = await fetchProducts(userId, pageSize, page)
-
-//     return { ...response, page, pageSize }
-//   },
-// )
-
-// export const loadFilteredProducts = createAsyncThunk(
-//   'products/loadFilteredProducts',
-//   async ({ categoryId }: any) => {
-//     console.log(categoryId)
-//     // Qui effettuiamo la chiamata API usando la funzione condivisa dal file requests.
-//     const response = await fetchProductsCategory(categoryId)
-
-//     return response
-//   },
-// )
 const initialState = {
   products: [],
   userProducts: [],
@@ -48,7 +24,7 @@ const productsSlice = createSlice({
       state.status = 'loading'
       state.error = null
     },
-    
+
     // Azione inviata quando i carrelli sono stati caricati con successo.
     // Qui salviamo la lista e il totale nel store.
     fetchProductSuccess: (state, action) => {
@@ -87,6 +63,18 @@ const productsSlice = createSlice({
         price,
       })
     },
+    resetCart(state,action){
+      state.userProducts = []
+    },
+    removeToCart(state, action) {
+      const index = state.userProducts.findIndex(
+        item => item.product === action.payload.product
+      )
+
+      if (index !== -1) {
+        state.userProducts.splice(index, 1)
+      }
+    },
     // Resetta il dominio products allo stato iniziale.
     clearProducts: (state) => {
       state.products = []
@@ -97,42 +85,6 @@ const productsSlice = createSlice({
       state.error = null
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     // Quando la richiesta è in corso impostiamo lo stato in loading e cancelliamo l'errore precedente.
-  //     .addCase(loadProducts.pending, (state) => {
-  //       state.status = 'loading'
-  //       state.error = null
-  //     })
-  //     // Quando la richiesta ha successo memorizziamo i prodotti nel store.
-  //     .addCase(loadProducts.fulfilled, (state, action) => {
-  //       state.status = 'succeeded'
-  //       state.products = action.payload.products || []
-  //       state.total = action.payload.total ?? 0
-  //       // La categoria selezionata non viene ridefinita qui per mantenere il filtro attuale.
-  //     })
-  //     // In caso di errore salviamo il messaggio per visualizzarlo all'utente.
-  //     .addCase(loadProducts.rejected, (state, action) => {
-  //       state.status = 'failed'
-  //       state.error = action.error.message
-  //     })
-  //     .addCase(loadFilteredProducts.pending, (state) => {
-  //       state.status = 'loading'
-  //       state.error = null
-  //     })
-  //     // Quando la richiesta ha successo memorizziamo i prodotti nel store.
-  //     .addCase(loadFilteredProducts.fulfilled, (state, action) => {
-  //       state.status = 'succeeded'
-  //       state.products = action.payload || []
-  //       console.log(action.payload)
-  //       // La categoria selezionata non viene ridefinita qui per mantenere il filtro attuale.
-  //     })
-  //     // In caso di errore salviamo il messaggio per visualizzarlo all'utente.
-  //     .addCase(loadFilteredProducts.rejected, (state, action) => {
-  //       state.status = 'failed'
-  //       state.error = action.error.message
-  //     })
-  // },
 })
 
 export const {
@@ -144,9 +96,11 @@ export const {
   fetchProductFailure,
   setProductCategories,
   setSelectedCategory,
+  removeToCart,
   clearProducts,
   addToCart,
-  
+  resetCart,
+
 } = productsSlice.actions
 
 // Selector per prendere i dati dei prodotti dal root state.
