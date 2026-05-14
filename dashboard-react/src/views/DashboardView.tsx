@@ -37,7 +37,6 @@ export default function DashboardView() {
     return (
       <>
         <main>
-          {/* todo style spostare nel css */}
           <div className='welcome-container'>
             <div className="d-flex">
               <h1>Benvenuto <input maxLength={13} className="input-text" type="text" disabled={isDisbaled} defaultValue={nome == '' ? "Marco" : nome} onChange={(e) => setSelectNameInput(e.target.value)}/></h1>

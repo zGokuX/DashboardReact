@@ -29,7 +29,7 @@ export default function Header() {
               <i className='fa-solid fa-bell'></i>
               <span className='notification-count'>3</span>
             </div>
-            <Link to='/cartCheckout'>
+            <Link style={{"textDecoration": "none"}} to='/cartCheckout'>
               <div style={{ cursor: 'pointer' }} className='cart-icon ms-3'>
                 <CartFill
                   size={25}

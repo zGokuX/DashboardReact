@@ -932,7 +932,7 @@ nav {
 }
 
 .notification-count {
-  background: red;
+  background: #ff4f4f;
   color: white;
   width: 14px;
   height: 14px;
@@ -952,11 +952,18 @@ nav {
 }
 
 .cart-icon .notification-count {
-  position: absolute;
-  position: relative;
-  top: -27px;
-  right: -20px;
-  text-decoration: none;
+    position: relative;
+    width: 14px;
+    list-style: none;
+    height: 14px;
+    border: none;
+    top: -27px;
+    right: -20px;
+    text-decoration: none;
+}
+
+.cart-icon {
+  color: #333;
 }
 
 .movement {
