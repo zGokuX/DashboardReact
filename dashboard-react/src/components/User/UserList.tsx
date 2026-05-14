@@ -11,7 +11,7 @@ import { ITEM_PER_PAGE } from "@/Constants"
 import { RenderUser } from "./RenderUser"
 import { UnknownAction } from "@reduxjs/toolkit"
 import { User } from "./user.type"
-import { selectUsers, selectUsersTotal } from "@/store/slices/usersSlice"
+import { fetchUsersRequest, selectUsers, selectUsersTotal } from "@/store/slices/usersSlice"
 
 
 // Importiamo useDispatch e useSelector da react-redux per leggere e scrivere nel store globale.
@@ -45,7 +45,7 @@ export default function RecentUsers(props : any) {
   // Effettuiamo il dispatch dell'azione fetchUsers quando il componente viene montato
   // o quando cambia la pagina. Questo aggiorna il Redux store con i nuovi utenti.
   useEffect(() => {
-    dispatch(fetchUsers({ pageSize: props.maxViewUser || ITEM_PER_PAGE, page: pagination }) as unknown as UnknownAction)
+    dispatch(fetchUsersRequest({ pageSize: props.maxViewUser || ITEM_PER_PAGE, page: pagination }) as unknown as UnknownAction)
   }, [dispatch, props.maxViewUser, pagination])
 
   // Per il view, manteniamo altri stati locali (esempio: modale, filtro),

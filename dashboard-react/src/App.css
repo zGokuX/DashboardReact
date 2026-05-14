@@ -833,3 +833,16 @@ position: absolute;
     font-weight: bold;
 }
     
+.movement{
+    position: absolute;
+    top: 44rem;
+    right: 55rem;
+    transition: 1s ease;
+}
+
+.movement.active {
+    display: block;
+    top: -7px;
+    right: 180px;
+    transform: scale(0.8);
+}

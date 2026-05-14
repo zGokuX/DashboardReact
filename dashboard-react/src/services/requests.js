@@ -75,8 +75,8 @@ export function fetchAllCategories() {
   return fetch('https://dummyjson.com/products/category-list').then(res => res.json());
 }
 
-export function fetchProducts(userId = null, pageSize = 25, page = 0) {
-  return fetch(`https://dummyjson.com/products?limit=${pageSize ? pageSize : 10}&skip=${page * pageSize}&userId=${userId}`).then(res => res.json()).then(productResponse => {
+export function fetchProducts(pageSize = 25, page = 0) {
+  return fetch(`https://dummyjson.com/products?limit=${pageSize ? pageSize : 25}&skip=${page * pageSize}`).then(res => res.json()).then(productResponse => {
     return productResponse
 
   })

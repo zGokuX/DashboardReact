@@ -35,6 +35,27 @@ const usersSlice = createSlice({
       state.error = null
     },
 
+    fetchUsersFilterRequest: (state) => {
+      state.status = 'loading'
+      state.error = null
+    },
+
+    fetchUsersFilterSuccess: (
+      state,
+      action: PayloadAction<{
+        users: User[]
+        total: number
+        page?: number
+        pageSize?: number
+      }>
+    ) => {
+      state.status = 'succeeded'
+      state.users = action.payload.users || []
+      state.total = action.payload.total || 0
+      state.page = action.payload.page ?? state.page
+      state.limit = action.payload.pageSize ?? state.limit
+    },
+
     fetchUsersSuccess: (
       state,
       action: PayloadAction<{
@@ -52,6 +73,14 @@ const usersSlice = createSlice({
     },
 
     fetchUsersFailure: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.status = 'failed'
+      state.error = action.payload
+    },
+
+    fetchUsersFilterFailure: (
       state,
       action: PayloadAction<string>
     ) => {

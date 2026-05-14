@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  loadFilteredProducts,
-  loadProducts,
+  fetchProductRequest,
+  fetchProductRequestByCategory,
   selectProducts,
 } from '@/store/slices/productsSlice'
 import { UnknownAction } from '@reduxjs/toolkit'
@@ -18,11 +18,9 @@ export default function Products(props : any) {
   const dispatch = useDispatch()
   const [filterCategory, setFilterCategory] = useState('default')
   const [categoryList, setCategoryList] = useState([])
-  
-
 
   useEffect(() => {
-    dispatch(loadProducts({pageSize: ITEM_PER_PAGE, page: 0, userId: 1}) as unknown as UnknownAction)
+    dispatch(fetchProductRequest({pageSize: ITEM_PER_PAGE, page: 0, }) as unknown as UnknownAction)
     fetchAllCategories().then(res => {
       setCategoryList(res)
       console.log(res)
@@ -32,6 +30,7 @@ export default function Products(props : any) {
     if (props.onProductsListChange) {
       props.onProductsListChange(productList)
     }
+    console.log(productList)
   }, [props, productList])
 
   function titleProcess(text : string) {
@@ -46,8 +45,8 @@ export default function Products(props : any) {
       return
     }
     value === 'default'
-      ? dispatch(loadProducts({ pageSize: ITEM_PER_PAGE, page: 0, userId: 1 }) as unknown as UnknownAction)
-      : dispatch(loadFilteredProducts({ categoryId: value }) as unknown as UnknownAction)
+      ? dispatch(fetchProductRequest({pageSize: ITEM_PER_PAGE, page: 0 }) as unknown as UnknownAction)
+      : dispatch(fetchProductRequestByCategory({ categoryId: value }) as unknown as UnknownAction)
   }
 
   return (
@@ -55,7 +54,7 @@ export default function Products(props : any) {
       {props.inPage && <Graphic />}
 
       <div className='clienti container-full-width'>
-        <div className='card client-card'>
+        <div className='card client-card' style={{"position":"static"}}>
           <div className='card-title'>
             <span>
               <i className='fa-solid fa-list'></i>Products

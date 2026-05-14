@@ -3,15 +3,20 @@ import { Button } from "react-bootstrap"
 import ProductModal from "./ProductModal"
 import PaginationPage from "../Common/PaginationPage"
 import { useDispatch, useSelector } from "react-redux"
-import { addToCart, loadProducts, selectProductsTotal } from "@/store/slices/productsSlice"
+import { addToCart, fetchProductRequest, selectProductsTotal } from "@/store/slices/productsSlice"
 import { BagPlusFill } from "react-bootstrap-icons"
 import NotificationAddToCart from "./NotificationAddToCart"
+import { ITEM_PER_PAGE } from "@/Constants"
 export default function ProductsTable(props) {
     const [selectProduct, setSelectProduct] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const [pagination, setPagination] = useState(0);
     const totalProducts = useSelector(selectProductsTotal)
+    const [activeProductId, setActiveProductId] = useState(null)
+    const [copiedImage, setCopiedImage] = useState(null)
     const [showToast, setShowToast] = useState(false)
+    const [animate, setAnimate] = useState(false)
+    const [showImage, setShowImage] = useState(false)
     const dispatch = useDispatch()
     function detailsProductButton(product) {
         setSelectProduct(product)
@@ -19,13 +24,73 @@ export default function ProductsTable(props) {
     }
 
     useEffect(() => {
-        dispatch(loadProducts({ pageSize: 25, page: pagination, userId: 1 }))
+        if (showImage) {
+            setAnimate(false)
+
+            const timer = setTimeout(() => {
+                setAnimate(true)
+            }, 50) // piccolo delay per trigger CSS transition
+
+            return () => clearTimeout(timer)
+        }
+    }, [showImage])
+    useEffect(() => {
+        dispatch(fetchProductRequest({ pageSize: ITEM_PER_PAGE, page: pagination }))
 
     }, [pagination]);
 
+    function handleAddToCart(item) {
+        const isActive = activeProductId === item.id
 
+        if (isActive) {
+            setActiveProductId(null)
+            setCopiedImage(null)
+            setShowImage(false)
+            return
+        }
+
+        setAnimate(false)
+        setShowImage(false)
+
+        setTimeout(() => {
+            setCopiedImage(item.thumbnail)
+            setActiveProductId(item.id)
+            setShowImage(true)
+
+            dispatch(
+                addToCart({
+                    image: item.thumbnail,
+                    product: item.title,
+                    price: item.price
+                })
+            )
+
+            setShowToast(true)
+
+            // trigger animazione DOPO render iniziale
+            requestAnimationFrame(() => {
+                setAnimate(true)
+            })
+        }, 0)
+
+        // cleanup finale
+        setTimeout(() => {
+            setActiveProductId(null)
+            setCopiedImage(null)
+            setShowImage(false)
+            setAnimate(false)
+        }, 1500)
+    }
     return (
         <>
+            {showImage && (
+                <img
+                    src={copiedImage}
+                    className={`movement ${animate ? "active" : ""}`}
+                    width="50"
+                    alt="copied"
+                />
+            )}
             {showModal &&
                 <>
                     <ProductModal
@@ -79,12 +144,12 @@ export default function ProductsTable(props) {
                                 <td>€ {Math.round(item.price)}</td>
                                 <td>{item.discountPercentage}%</td>
                                 <td>{props.modalMode && props.isCarts ? item.quantity : item.category}</td>
-                               
+
                                 {!props.isCarts &&
                                     <td>{item.availabilityStatus}</td>
                                 }
 
-                                
+
 
                                 {
                                     !props.isCarts && props.showMoreOption ? (
@@ -106,17 +171,7 @@ export default function ProductsTable(props) {
                                             See more
                                         </Button>
                                         {props.inPage &&
-                                            < Button variant="outline-primary" onClick={() => {
-                                                dispatch(
-                                                    addToCart({
-                                                        image: item.thumbnail,
-                                                        product: item.title,
-                                                        price: item.price
-                                                    })
-                                                );
-
-                                                setShowToast(true);
-                                            }}>
+                                            < Button variant="outline-primary" onClick={() => handleAddToCart(item)}>
                                                 <BagPlusFill />
                                             </Button>
                                         }
