@@ -834,15 +834,16 @@ position: absolute;
 }
     
 .movement{
-    position: absolute;
-    top: 44rem;
-    right: 55rem;
+    position: fixed;
     transition: 1s ease;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 5px;
+    transform: scale(1.2);
 }
 
 .movement.active {
     display: block;
-    top: -7px;
-    right: 180px;
-    transform: scale(0.8);
+    top: -5px !important;
+    right: 185px !important;
+    transform: scale(0.5);
 }
