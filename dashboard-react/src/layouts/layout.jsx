@@ -7,6 +7,7 @@ import CartsView from "../views/CartsView";
 import RecentUsersView from "../views/RecentUsersView";
 import UserView from "../views/UserView";
 import CartCheckoutView from "@/views/CartCheckoutView";
+import CartCheckin from "@/components/CartCheckout/CartChekIn";
 
 export default function Layout() {
     return (
@@ -41,6 +42,7 @@ export default function Layout() {
                         <Route path="/cards/*" element={<CartsView/>} />
                         <Route path="/products/*" element={<ProductsView/>} />
                         <Route path="/cartCheckout/*" element={<CartCheckoutView/>} />
+                        <Route path="/checkin/*" element={<CartCheckin/>} />
                         <Route path="/user/:userid" element={<UserView/>} />
                     </Routes>
                     

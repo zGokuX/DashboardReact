@@ -29,7 +29,7 @@ export default function ProductsTable(props) {
 
             const timer = setTimeout(() => {
                 setAnimate(true)
-            }, 50) // piccolo delay per trigger CSS transition
+            }, 50)
 
             return () => clearTimeout(timer)
         }
@@ -67,13 +67,11 @@ export default function ProductsTable(props) {
 
             setShowToast(true)
 
-            // trigger animazione DOPO render iniziale
             requestAnimationFrame(() => {
                 setAnimate(true)
             })
         }, 0)
 
-        // cleanup finale
         setTimeout(() => {
             setActiveProductId(null)
             setCopiedImage(null)

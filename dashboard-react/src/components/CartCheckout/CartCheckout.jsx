@@ -35,7 +35,9 @@ export default function CartCheckout() {
                     <h1>IL TUO CARELLO</h1>
 
                     {listCart.length > 0 &&
-                        <Button variant="outline-primary">Procedi al pagamento</Button>
+                        <Link to="/checkin">
+                            <Button variant="outline-primary">Procedi al pagamento</Button>
+                        </Link>
                     }
                 </div>
                 {groupedCart.length > 0 &&
