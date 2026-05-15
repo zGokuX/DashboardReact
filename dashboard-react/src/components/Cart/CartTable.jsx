@@ -27,8 +27,6 @@ export default function CartTable({ cartList, ...props }) {
                                 Utente id
                             </th>
                         }
-
-
                         <th className="col nome">
                             Prodotti Totali
                         </th>
@@ -118,7 +116,7 @@ export default function CartTable({ cartList, ...props }) {
                     {
                         selectProduct.length > 0 &&
                         <tr>
-                            <td colSpan="5">
+                            <td colSpan="5" style={{ "paddingLeft": "30px", "paddingRight": "10px" , "paddingBottom":"15px" }}>
                                 <ProductsTable
                                     productList={selectProduct}
                                     modalMode={false}

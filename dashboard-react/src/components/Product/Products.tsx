@@ -57,7 +57,7 @@ export default function Products(props : any) {
         <div className='card client-card' style={{"position":"static"}}>
           <div className='card-title'>
             <span>
-              <i className='fa-solid fa-list'></i>Products
+              <i className='fa-solid fa-list me-2'></i>Products
             </span>
             {!props.inPage && (
               <div className='card-actions' id='btn-card-actions'>

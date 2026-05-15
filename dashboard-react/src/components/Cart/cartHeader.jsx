@@ -4,7 +4,7 @@ export default function CartHeader(props) {
     return (
         <div className='card-title'>
             <span>
-                <i className='fa-solid fa-cart-shopping'></i>
+                <i className='fa-solid fa-cart-shopping me-2'></i>
                 Carts
             </span>
 

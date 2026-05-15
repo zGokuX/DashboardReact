@@ -78,7 +78,7 @@ export function RenderUser(props) {
                     </tr>
                     {props.openedUserId == item.id && item.carts && (
                         <tr>
-                            <td colSpan="6" style={{ "paddingLeft": "30px", "paddingRight": "20px" }}>
+                            <td colSpan="6" style={{ "paddingLeft": "30px", "paddingRight": "10px", "paddingBottom":"15px"  }}>
                                 <CartTable
                                     cartList={item.carts}
                                     userId={props.userId}

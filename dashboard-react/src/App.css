@@ -170,6 +170,7 @@ input {
 .layout {
   display: flex;
   flex: 1;
+  min-height: 100vh;
   flex-direction: row;
   margin: 0;
 }
@@ -314,7 +315,6 @@ main {
 .card .card-title {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .card .card-content .card-graphic .text-in-card {
@@ -517,7 +517,7 @@ main {
 .search-form {
   display: flex;
   align-items: center;
-  margin-left: 5px;
+  margin-left: 56px;
   gap: 5px;
   width: 90%;
 }
@@ -533,6 +533,11 @@ main {
   align-items: center;
   font-size: 16px;
   padding: 0 !important;
+}
+
+.card-actions nav {
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 nav {
@@ -801,6 +806,7 @@ nav {
 }
 
 .notification-user {
+      padding-top: 5px;
   position: relative;
 }
 
@@ -818,10 +824,13 @@ nav {
 }
 
 .notification-user .notification-count {
-  position: absolute;
-  top: -5px;
-  right: -6px;
+      position: absolute;
+    top: -3px;
+    right: -7px;
 
+}
+.notification-user .fa-solid.fa-bell {
+  font-size: 21px !important;
 }
 
 .cart-icon .notification-count {
@@ -853,3 +862,4 @@ nav {
   right: 185px !important;
   transform: scale(0.5);
 }
+
