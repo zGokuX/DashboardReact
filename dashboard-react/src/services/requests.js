@@ -1,7 +1,6 @@
 export default function fetchUser(pageSize = 25, page = 0) {
   return fetch(`https://dummyjson.com/users?limit=${pageSize ? pageSize : 10}&skip=${page * pageSize}`).then(res => res.json()).then(userResponse => {
     return userResponse
-
   })
 }
 

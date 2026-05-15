@@ -20,8 +20,7 @@ export default function NotificationUserForm( {setShowToast, showToast} ) {
                 className='rounded me-2'
                 alt=''
               />
-              {/* todo cambiare il testo */}
-              <strong className='me-auto'>Bootstrap</strong> 
+              <strong className='me-auto'>Aggiornamento dati utente</strong> 
               <small>11 mins ago</small>
             </Toast.Header>
 

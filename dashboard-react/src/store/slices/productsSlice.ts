@@ -108,15 +108,15 @@ const productsSlice = createSlice({
 
 export const {
   fetchProductRequest,
+  fetchProductSuccess,
+  fetchProductFailure,
   fetchProductRequestByCategory,
   fetchProductsCategorySuccess,
   fetchProductsCategoryFailure,
-  fetchProductSuccess,
-  fetchProductFailure,
-  setProductCategories,
   fetchProductSortRequest,
   fetchProductsSortSuccess,
   fetchProductsSortFailure,
+  setProductCategories,
   setSelectedCategory,
   removeToCart,
   clearProducts,

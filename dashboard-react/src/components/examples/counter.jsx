@@ -8,7 +8,6 @@ import {
   selectCount,
 } from '@/store/slices/CounterSlice';
 
-// TODO spostare questo componente di esempio in una cartela a parte 
 
 export function Counter() {
   const count = useSelector(selectCount);

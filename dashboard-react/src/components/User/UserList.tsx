@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser, fetchCartsByUserId, fetchFilterNames, fetchUserFilter, updateUser } from "@/services/requests"
-import { fetchUsers } from "@/store/slices/UserActions"
 import UserFormModal from "./UserFormModal"
 import { Link } from "react-router-dom"
 import UserFilters from "./UserFilters"
@@ -37,6 +36,7 @@ export default function RecentUsers(props: any) {
   const [message, setMessage] = useState('')
   const [isNew, setIsNew] = useState(false)
   const [openedUserId, setOpenedUserId] = useState(false)
+  const [isFiltered, setIsFiltered] = useState(false)
 
   // displayedUsers rappresenta la lista visibile.
   // Se c'è un filtro applicato, usiamo filteredUsers, altrimenti la lista completa dal Redux store.
@@ -66,25 +66,28 @@ export default function RecentUsers(props: any) {
       setFilterRole('default')
       setFilterAge(0)
       setFilterInput('')
-
     } else if (filterName === 'role') {
       setFilterGender('default')
       setFilterAge(0)
       setFilterInput('')
-    } else {
+    } else if (filterName === 'age') {
       setFilterGender('default')
       setFilterRole('default')
       setFilterInput('')
     }
-    if (value === 'default') {
+
+    if (value === 'default' || value === '' || value === '0') {
       setFilteredUsers(null)
+      setIsFiltered(false)
       return
     }
 
+    setIsFiltered(true)
+
     if (filterName === 'age') {
-      const filtered = users.filter((user: any) => user.age > value)
-      console.log(value)
-      setFilteredUsers(filtered.length === 0 ? null : filtered)
+      const filtered = users?.filter((user: any) => user.age > Number(value)) || []
+
+      setFilteredUsers(filtered)
       return
     }
 
@@ -92,23 +95,30 @@ export default function RecentUsers(props: any) {
       setFilteredUsers(res)
     })
   }
-
   function filterNames(value: string) {
     setFilterGender('default')
     setFilterRole('default')
     setFilterAge(0)
+
+    if (!value.trim()) {
+      setFilteredUsers(null)
+      setIsFiltered(false)
+      return
+    }
+
+    setIsFiltered(true)
+
     fetchFilterNames(value).then((res) => {
       setFilteredUsers(res)
     })
   }
-
   function addButton() {
     setShowModal(true)
     setMessage('Aggiungi cliente')
     setIsNew(true)
   }
 
-  function showCart(item: any) {
+  function showCart(item: any) { //nome da cambiare => CartSubTable
     if (openedUserId === item.id) {
       setOpenedUserId(false)
     } else {
@@ -160,7 +170,7 @@ export default function RecentUsers(props: any) {
               <h4>Clienti recenti
                 <span className='card-actions' id='btn-card-actions'>
                   <Link to='/users'>
-                    <span className='card-action-list'>Vedi Tutti</span>{/*TODO:togliere underline, mettere padding e margin*/}
+                    <span className='card-action-list' style={{ "display": "inline-block", "padding": "5px", "margin": "5px" }}>Vedi Tutti</span>
                   </Link>
                 </span>
               </h4>
@@ -177,6 +187,10 @@ export default function RecentUsers(props: any) {
 
           <div className='client-list' id='client-list-id'>
             <UserFilters
+              // filters={{name:filterNames ...}}
+              // onFiltersChange={(changedFilters) => {
+              //   setFilterInput(changedFilters.name)
+              // }}
               filterInput={filterInput}
               setFilterInput={setFilterInput}
               filterNames={filterNames}
@@ -203,8 +217,7 @@ export default function RecentUsers(props: any) {
                 />
               </tbody>
             </table>
-            {/*TODO: filteredUsers && filterAge == 0 && filterGender == "default" && filterRole == "default"*/}
-            {props.inPage &&
+            {props.inPage && !isFiltered &&
               <PaginationPage
                 setPagination={setPagination}
                 pagination={pagination}

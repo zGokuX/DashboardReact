@@ -114,14 +114,26 @@ export default function ProductsTable(props) {
       <table className='card-table invoices-table'>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Img</th>
-            <th>Nome</th>
+            <th>Id prodotto</th>
+            <th>Immagine prodotto</th>
+            <th>Nome prodotto</th>
             <th>Prezzo</th>
             <th>Sconto</th>
-            <th>Categoria</th>
-            <th>Disponibilità</th>
-            <th></th>
+            {!props.inUser && (
+              <th>
+                {props.modalMode && props.isCarts ? 'Quantità' : 'Categoria'}
+              </th>
+            )}
+
+            {!props.isCarts && !props.inUser && <th>Disponibilità</th>}
+
+            {!props.isCarts && !props.modalMode && <th></th>}
+            {props.modalMode && props.showMoreOption && (
+              <>
+                <th>Descrizione prodotto</th>
+                <th>Valutazioni</th>
+              </>
+            )}
           </tr>
         </thead>
 
@@ -135,18 +147,25 @@ export default function ProductsTable(props) {
               <td>{item.title}</td>
               <td>€ {Math.round(item.price)}</td>
               <td>{item.discountPercentage}%</td>
-              <td>{item.category}</td>
-              <td>{item.availabilityStatus}</td>
+                 <td>
+                    {props.modalMode && props.isCarts
+                      ? item.quantity
+                      : item.category}
+                  </td>
+              {!props.isCarts && <td>{item.availabilityStatus}</td>}
 
               <td className='d-flex gap-2'>
-                <Button onClick={() => detailsProductButton(item)}>
-                  See more
-                </Button>
+
 
                 {props.inPage && (
-                  <Button onClick={e => handleAddToCart(item, e)}>
-                    <BagPlusFill />
-                  </Button>
+                  <>
+                    <Button onClick={() => detailsProductButton(item)}>
+                      See more
+                    </Button>
+                    <Button onClick={e => handleAddToCart(item, e)}>
+                      <BagPlusFill />
+                    </Button>
+                  </>
                 )}
               </td>
             </tr>
