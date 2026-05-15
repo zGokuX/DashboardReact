@@ -81,3 +81,9 @@ export function fetchProducts(pageSize = 25, page = 0) {
 
   })
 }
+
+export function fetchSortProductPrice(nameSort) {
+  return fetch(`https://dummyjson.com/products?sortBy=${nameSort}&order=desc`).then(res => res.json()).then(productResponse => {
+      return productResponse.products
+    })
+}
