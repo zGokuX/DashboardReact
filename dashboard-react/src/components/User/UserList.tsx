@@ -82,7 +82,8 @@ export default function RecentUsers(props: any) {
     }
 
     if (filterName === 'age') {
-      const filtered = users.filter((user: any) => user.age == value)
+      const filtered = users.filter((user: any) => user.age > value)
+      console.log(value)
       setFilteredUsers(filtered.length === 0 ? null : filtered)
       return
     }
@@ -155,13 +156,15 @@ export default function RecentUsers(props: any) {
       >
         <div className='card client-card'>
           <div className='card-title'>
-            <h4>Clienti recenti {!props.inPage && (
-              <span className='card-actions' id='btn-card-actions'>
-                <Link to='/users'>
-                  <span className='card-action-list'>Vedi Tutti</span>
-                </Link>
-              </span>
-            )}</h4>
+            {!props.inPage && (
+              <h4>Clienti recenti
+                <span className='card-actions' id='btn-card-actions'>
+                  <Link to='/users'>
+                    <span className='card-action-list'>Vedi Tutti</span>{/*TODO:togliere underline, mettere padding e margin*/}
+                  </Link>
+                </span>
+              </h4>
+            )}
 
             <button
               className='custom-btn add-client-btn btn btn-primary p-2'
@@ -200,6 +203,7 @@ export default function RecentUsers(props: any) {
                 />
               </tbody>
             </table>
+            {/*TODO: filteredUsers && filterAge == 0 && filterGender == "default" && filterRole == "default"*/}
             {props.inPage &&
               <PaginationPage
                 setPagination={setPagination}

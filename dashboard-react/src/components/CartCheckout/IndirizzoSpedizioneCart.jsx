@@ -7,9 +7,7 @@ export default function IndirizzoSpedizioneCart(){
                             className="fw-semibold mb-3"
                             style={{
                                 fontSize: 12,
-                                textTransform: "uppercase",
-                                letterSpacing: ".06em",
-                                color: "#6c757d"
+                                textTransform: "uppercase"
                             }}
                         >
                             Indirizzo di spedizione

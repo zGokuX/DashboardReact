@@ -8,9 +8,7 @@ export default function RiepilogoCart({groupedCart, total}) {
                     className="fw-semibold mb-3"
                     style={{
                         fontSize: 12,
-                        textTransform: "uppercase",
-                        letterSpacing: ".06em",
-                        color: "#6c757d"
+                        textTransform: "uppercase"
                     }}
                 >
                     Riepilogo ordine
@@ -69,7 +67,7 @@ export default function RiepilogoCart({groupedCart, total}) {
 
                 ))}
 
-                <hr className="my-3" />
+                <hr className="my-2" />
 
                 <div className="d-flex justify-content-between">
 

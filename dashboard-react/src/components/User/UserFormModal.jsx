@@ -14,58 +14,65 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
 
     return (
         <>
-        
-            <Modal show={show} onHide={onHide}>
+
+            <Modal className='modal-xl' show={show} onHide={onHide}>
                 <Modal.Header closeButton>
                     <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className='p-4'>
                     <form action="" onSubmit={(e) => e.preventDefault}>
+                        <div className='row'>
+                            <div className="col-6"><Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Nome</Form.Label>
+                                <Form.Control type="text" defaultValue={localUser.firstName} placeholder="Scrivi il tuo nome..." onChange={(e) => setLocalUser({ ...localUser, firstName: e.target.value })} />
+                            </Form.Group></div>
 
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Nome</Form.Label>
-                            <Form.Control type="text" defaultValue={localUser.firstName} placeholder="Scrivi il tuo nome..." onChange={(e) => setLocalUser({ ...localUser, firstName: e.target.value })} />
-                        </Form.Group>
+                            <div className="col-6"><Form.Group className="mb-3">
+                                <Form.Label>Cognome</Form.Label>
+                                <Form.Control type="text" defaultValue={localUser.lastName} placeholder="Scrivi il tuo cognome..." onChange={(e) => setLocalUser({ ...localUser, lastName: e.target.value })} />
+                            </Form.Group></div>
 
-                        <Form.Group className="mb-3">
-                            <Form.Label>Cognome</Form.Label>
-                            <Form.Control type="text" defaultValue={localUser.lastName} placeholder="Scrivi il tuo cognome..." onChange={(e) => setLocalUser({ ...localUser, lastName: e.target.value })} />
-                        </Form.Group>
+                            <div className="col-6"><Form.Group className="mb-3">
+                                <Form.Label>Azienda</Form.Label>
+                                <Form.Control type="text" defaultValue={localUser?.company?.department} placeholder="Inserisci la tua azienda..." onChange={(e) => setLocalUser({ ...localUser, company: { department: e.target.value } })} />
+                            </Form.Group></div>
 
-                        <Form.Group className="mb-3">
-                            <Form.Label>Azienda</Form.Label>
-                            <Form.Control type="text" defaultValue={localUser?.company?.department} placeholder="Inserisci la tua azienda..." onChange={(e) => setLocalUser({ ...localUser, company: { department: e.target.value } })} />
-                        </Form.Group>
+                            <div className="col-6"><Form.Group className="mb-3">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control type="email" defaultValue={localUser.email} placeholder='Inserisci la tua email...' onChange={(e) => setLocalUser({ ...localUser, email: e.target.value })} />
+                            </Form.Group></div>
 
-                        <Form.Group className="mb-3">
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" defaultValue={localUser.email} placeholder='Inserisci la tua email...' onChange={(e) => setLocalUser({ ...localUser, email: e.target.value })} />
-                        </Form.Group>
+                            <div className="col-6"><Form.Group className="mb-3">
+                                <Form.Label>Numero di telefono</Form.Label>
+                                <Form.Control type="text" defaultValue={localUser.phone} placeholder='Inserisci il tuo numero di telefono...' onChange={(e) => setLocalUser({ ...localUser, phone: e.target.value })} />
+                            </Form.Group></div>
 
-                        <Form.Group className="mb-3">
-                            <Form.Label>Numero di telefono</Form.Label>
-                            <Form.Control type="text" defaultValue={localUser.phone} placeholder='Inserisci il tuo numero di telefono...' onChange={(e) => setLocalUser({ ...localUser, phone: e.target.value })} />
-                        </Form.Group>
+                            <div className="col-6"><Form.Group className="mb-3">
+                                <Form.Label>Luogo di nascità</Form.Label>
+                                <Form.Control type="text" defaultValue={localUser.address?.city} placeholder='Inserisci il tuo luogo di nascita...' onChange={(e) => setLocalUser({ ...localUser, address: { city: e.target.value } })} />
+                            </Form.Group></div>
 
-                        <Form.Group className="mb-3">
-                            <Form.Label>Luogo di nascità</Form.Label>
-                            <Form.Control type="text" defaultValue={localUser.address?.city} placeholder='Inserisci il tuo luogo di nascita...' onChange={(e) => setLocalUser({ ...localUser, address: {city: e.target.value}})} />
-                        </Form.Group>
+                            <div className="col-12"><Form.Group className="mb-3">
+                                <Form.Label>Età - {localUser.age}</Form.Label>
+                                <Form.Range max={140} defaultValue={localUser.age} onChange={(e) => setLocalUser({ ...localUser, age: e.target.value })} />
+                            </Form.Group></div>
 
-                        <Form.Group className="mb-3">
-                            <Form.Label>Università</Form.Label>
-                            <Form.Control type="text" defaultValue={localUser.university} placeholder='Inserisci la tua università...' onChange={(e) => setLocalUser({ ...localUser, university: e.target.value })} />
-                        </Form.Group>
 
-                        <Form.Group className="mb-3">
-                            <Form.Label>Età - {localUser.age}</Form.Label>
-                            <Form.Range max={140} defaultValue={localUser.age} onChange={(e) => setLocalUser({ ...localUser, age: e.target.value })} />
-                        </Form.Group>
-                        <Form.Select aria-label="Default select example" onChange={(e) => setLocalUser({ ...localUser, gender: e.target.value })}>
-                            <option>Inserisci il tuo Genere</option>
-                            <option value="male">Maschio</option>
-                            <option value="female">Femmina</option>
-                        </Form.Select>
+                            <div className="col-6"><Form.Group className="mb-3">
+                                <Form.Label>Università</Form.Label>
+                                <Form.Control type="text" defaultValue={localUser.university} placeholder='Inserisci la tua università...' onChange={(e) => setLocalUser({ ...localUser, university: e.target.value })} />
+                            </Form.Group></div>
+
+
+                            <div className='col-6'>
+                                    <Form.Label>Genere</Form.Label>
+                                <Form.Select aria-label="Default select example" onChange={(e) => setLocalUser({ ...localUser, gender: e.target.value })}>
+                                    <option>Inserisci il tuo Genere</option>
+                                    <option value="male">Maschio</option>
+                                    <option value="female">Femmina</option>
+                                </Form.Select>
+                            </div>
+                        </div>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>

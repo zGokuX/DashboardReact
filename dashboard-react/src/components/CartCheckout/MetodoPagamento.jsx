@@ -11,9 +11,7 @@ export default function MetodoPagamento({setPaymentMethod,paymentMethod,cardData
                             className="fw-semibold mb-3"
                             style={{
                                 fontSize: 12,
-                                textTransform: "uppercase",
-                                letterSpacing: ".06em",
-                                color: "#6c757d"
+                                textTransform: "uppercase"
                             }}
                         >
                             Metodo di pagamento
@@ -241,14 +239,7 @@ export default function MetodoPagamento({setPaymentMethod,paymentMethod,cardData
                         )}
 
                         <button
-                            className="btn w-100 mt-3 d-flex align-items-center justify-content-center gap-2"
-                            style={{
-                                background: "#1e3a5f",
-                                color: "#fff",
-                                borderRadius: 8,
-                                padding: "10px",
-                                fontWeight: 500
-                            }}
+                            className="btn-primary btn w-100 mt-3 d-flex align-items-center justify-content-center gap-2"
                             onClick={handleConfirm}
                         >
 
