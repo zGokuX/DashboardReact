@@ -116,9 +116,9 @@ export default function ProductsTable(props) {
           <tr>
             <th>Id prodotto</th>
             <th>Immagine prodotto</th>
-            <th>Nome prodotto</th>
-            <th>Prezzo</th>
-            <th>Sconto</th>
+            <th><a href='#' onClick={() => props.filterProductSort('title')}>Nome prodotto</a></th>
+            <th><a href='#' onClick={() => props.filterProductSort('price')}>Prezzo</a></th>
+            <th><a href='#' onClick={() => props.filterProductSort('discountPercentage')}>Sconto</a></th>
             {!props.inUser && (
               <th>
                 {props.modalMode && props.isCarts ? 'Quantità' : 'Categoria'}

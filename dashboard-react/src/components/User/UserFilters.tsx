@@ -1,7 +1,7 @@
-import { Button, InputGroup } from "react-bootstrap"
-import { Form } from "react-bootstrap"
-
-export default function UserFilters({filterInput,setFilterInput,filterNames,filterGender,setFilterGender,filterRole,setFilterRole,filterPlus,filterAge,setFilterAge, ...props}) {
+import { Button, Form, InputGroup } from "react-bootstrap"
+import useUserFilter from "./useUserFilter"
+export default function UserFilters({ inPage, ...props }) {
+    const { filterInput, setFilterInput, filterAge, setFilterAge, filterGender, setFilterGender, filterRole, setFilterRole, filterNames, filterPlus } = useUserFilter()
     return (
         <>
             {props.inPage && (
@@ -86,7 +86,7 @@ export default function UserFilters({filterInput,setFilterInput,filterNames,filt
                                 value={filterAge}
                                 onChange={e => {
                                     const value = e.target.value
-                                    setFilterAge(value)
+                                    setFilterAge(Number(value))
                                     filterPlus('age', value)
                                 }}
                             />

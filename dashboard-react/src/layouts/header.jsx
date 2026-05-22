@@ -25,10 +25,10 @@ export default function Header() {
             </div>
           </div>
           <div className='user-profile-container'>
-            <div className='notification-user'>
+            {/* <div className='notification-user'>
               <i className='fa-solid fa-bell'></i>
               <span className='notification-count'>3</span>
-            </div>
+            </div> */}
             <Link style={{"textDecoration": "none"}} to='/cartCheckout'>
               <div style={{ cursor: 'pointer' }} className='cart-icon ms-3'>
                 <CartFill
