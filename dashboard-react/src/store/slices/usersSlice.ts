@@ -8,6 +8,7 @@ interface User {
 }
 
 interface UsersState {
+  filteredUser: User[]
   users: User[]
   total: number
   page: number
@@ -17,6 +18,7 @@ interface UsersState {
 }
 
 const initialState: UsersState = {
+  filteredUser: [],
   users: [],
   total: 0,
   page: 0,
@@ -40,20 +42,29 @@ const usersSlice = createSlice({
       state.error = null
     },
 
+    fetchUsersFilterByNameRequest: (state) => {
+      state.status = 'loading'
+      state.error = null
+    },
+
     fetchUsersFilterSuccess: (
       state,
       action: PayloadAction<{
-        users: User[]
-        total: number
-        page?: number
-        pageSize?: number
+        filteredUser: User[]
       }>
     ) => {
       state.status = 'succeeded'
-      state.users = action.payload.users || []
-      state.total = action.payload.total || 0
-      state.page = action.payload.page ?? state.page
-      state.limit = action.payload.pageSize ?? state.limit
+      state.filteredUser = action.payload.filteredUser || []
+    },
+
+    fetchUsersFilterByNameSuccess: (
+      state,
+      action: PayloadAction<{
+        filteredUser: User[]
+      }>
+    ) => {
+      state.status = 'succeeded'
+      state.filteredUser = action.payload.filteredUser || []
     },
 
     fetchUsersSuccess: (
@@ -88,6 +99,14 @@ const usersSlice = createSlice({
       state.error = action.payload
     },
 
+    fetchUsersFilterByNameFailure: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.status = 'failed'
+      state.error = action.payload
+    },
+
     setUsersPage: (
       state,
       action: PayloadAction<number>
@@ -109,10 +128,17 @@ export const {
   fetchUsersRequest,
   fetchUsersSuccess,
   fetchUsersFailure,
+  fetchUsersFilterRequest,
+  fetchUsersFilterSuccess,
+  fetchUsersFilterFailure,
+  fetchUsersFilterByNameRequest,
+  fetchUsersFilterByNameSuccess,
+  fetchUsersFilterByNameFailure,
   setUsersPage,
   resetUsers,
 } = usersSlice.actions
 
+export const selectUserFiltered = (state: any) => state.users.filteredUser
 export const selectUsers = (state: any) => state.users.users
 export const selectUsersStatus = (state: any) => state.users.status
 export const selectUsersTotal = (state: any) => state.users.total
