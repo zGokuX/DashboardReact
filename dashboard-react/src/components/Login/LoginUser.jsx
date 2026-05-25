@@ -9,18 +9,18 @@ export default function LoginUserUI() {
     const [getPassword, setGetPassword] = useState(null)
     const navigate = useNavigate()
     function loggedUser() {
-        if ((getName || getEmail || getPassword) == null) {
+        if (getName == null || getEmail == null || getPassword == null) {
             console.log("login fallito")
             return
         }
-        dispatch(logUser({ UserLogged: { name: getName, email: getEmail, password: getPassword }}))
+
+        dispatch(logUser({ UserLogged: { name: getName, email: getEmail, password: getPassword } }))
         navigate("/")
     }
     return (
         <>
             <div className="card">
                 <div>
-
                     <h2>Accedi</h2>
                 </div>
                 <div>

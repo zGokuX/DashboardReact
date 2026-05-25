@@ -9,6 +9,7 @@ import UserView from "../views/UserView";
 import CartCheckoutView from "@/views/CartCheckoutView";
 import CartCheckin from "@/components/CartCheckout/CartChekIn";
 import LoginUserUI from "@/components/Login/LoginUser";
+import UserProfile from "@/components/ProfileUser/UserProfile";
 
 export default function Layout() {
     return (
@@ -46,6 +47,7 @@ export default function Layout() {
                         <Route path="/checkin/*" element={<CartCheckin/>} />
                         <Route path="/user/:userid" element={<UserView/>} />
                         <Route path="/login/*" element={<LoginUserUI/>} />
+                        <Route path="/profile/*" element={<UserProfile/>} />
                     </Routes>
                     
                 </div>
