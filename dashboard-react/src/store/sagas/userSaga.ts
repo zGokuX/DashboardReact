@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import fetchUser, { fetchFilterNames, fetchUserFilter } from '@/services/requests'
+import fetchUser, {  fetchFilterUserNames, fetchUserFilter } from '@/services/requests'
 import { ITEM_PER_PAGE } from '@/Constants'
 import { fetchUsersFailure, fetchUsersFilterByNameFailure, fetchUsersFilterByNameRequest, fetchUsersFilterByNameSuccess, fetchUsersFilterFailure, fetchUsersFilterRequest, fetchUsersFilterSuccess, fetchUsersRequest, fetchUsersSuccess } from '../slices/usersSlice'
 
@@ -32,7 +32,7 @@ function* handleFetchFilterUser(action) {
         // put invia l'azione di successo con i dati ricevuti.
         yield put(
             fetchUsersFilterSuccess({
-                filteredUser: response.users || []
+                filteredUser: response || []
             }),
         )
     } catch (error) {
@@ -45,11 +45,11 @@ function* handleFetchFilterUserName(action) {
     try {
         const { value } = action.payload || {}
         // call è un effetto di redux-saga che chiama la funzione API in modo testabile.
-        const response = yield call(fetchFilterNames, value)
+        const response = yield call(fetchFilterUserNames, value)
         // put invia l'azione di successo con i dati ricevuti.
         yield put(
             fetchUsersFilterByNameSuccess({
-                filteredUser: response.users || []
+                filteredUser: response || []
             }),
         )
     } catch (error) {

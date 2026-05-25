@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 
 
 import ProductsView from "../views/ProductsView";
@@ -8,6 +8,7 @@ import RecentUsersView from "../views/RecentUsersView";
 import UserView from "../views/UserView";
 import CartCheckoutView from "@/views/CartCheckoutView";
 import CartCheckin from "@/components/CartCheckout/CartChekIn";
+import LoginUserUI from "@/components/Login/LoginUser";
 
 export default function Layout() {
     return (
@@ -44,6 +45,7 @@ export default function Layout() {
                         <Route path="/cartCheckout/*" element={<CartCheckoutView/>} />
                         <Route path="/checkin/*" element={<CartCheckin/>} />
                         <Route path="/user/:userid" element={<UserView/>} />
+                        <Route path="/login/*" element={<LoginUserUI/>} />
                     </Routes>
                     
                 </div>

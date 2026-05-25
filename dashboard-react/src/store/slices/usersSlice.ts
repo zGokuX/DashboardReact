@@ -42,7 +42,7 @@ const usersSlice = createSlice({
       state.error = null
     },
 
-    fetchUsersFilterByNameRequest: (state) => {
+    fetchUsersFilterByNameRequest: (state,action : any) => {
       state.status = 'loading'
       state.error = null
     },
@@ -53,6 +53,7 @@ const usersSlice = createSlice({
         filteredUser: User[]
       }>
     ) => {
+      console.log(action.payload)
       state.status = 'succeeded'
       state.filteredUser = action.payload.filteredUser || []
     },

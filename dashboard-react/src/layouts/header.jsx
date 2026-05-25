@@ -1,14 +1,19 @@
-import { CartFill } from 'react-bootstrap-icons'
+import { CartFill, PersonCircle } from 'react-bootstrap-icons'
 import { useSelector } from 'react-redux'
-import { selectName } from '@/store/slices/NameSlice'
 import { selectUserProduct } from '@/store/slices/productsSlice'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { selectIsLogged, selectUserLogged } from '@/store/slices/LoginUser'
 
 export default function Header() {
-  const nome = useSelector(selectName).value
+
   const userProduct = useSelector(selectUserProduct)
-
-
+  const navigate = useNavigate()
+  const isLogged = useSelector(selectIsLogged)
+  const user = useSelector(selectUserLogged).UserLogged
+  function navigatoToDetailProfile(){
+    console.log("naviga")
+    navigate("profile")
+  }
   return (
     <>
       <header>
@@ -25,11 +30,11 @@ export default function Header() {
             </div>
           </div>
           <div className='user-profile-container'>
-            <div className='notification-user'>
+            {/* <div className='notification-user'>
               <i className='fa-solid fa-bell'></i>
               <span className='notification-count'>3</span>
-            </div>
-            <Link style={{"textDecoration": "none"}} to='/cartCheckout'>
+            </div> */}
+            <Link style={{ "textDecoration": "none" }} to={isLogged ? '/cartCheckout' : '/login'}>
               <div style={{ cursor: 'pointer' }} className='cart-icon ms-3'>
                 <CartFill
                   size={25}
@@ -40,27 +45,29 @@ export default function Header() {
                 )}
               </div>
             </Link>
-            <div className='user-profile' id='user-profile-id'>
-              <div className='user-avatar'>
-                <img src='assets/avatars/2.png' alt='User Avatar' />
+            {!isLogged &&
+              <div className='user-profile' id='user-profile-id'>
+                <Link to="/login">
+                  <span className='user-name me-2'>
+                    Accedi 
+                  </span>
+                  <PersonCircle size={22}/>
+                </Link>
               </div>
-              <div className='user-menu'>
-                <span className='user-name'>
-                  {nome == '' ? 'Marco' : nome} Rossi
-                </span>
-                <ul id='appear-ul'>
-                  <li>
-                    <a href='#'>Profile</a>
-                  </li>
-                  <li>
-                    <a href='#'>Settings</a>
-                  </li>
-                  <li>
-                    <a href='#'>Logout</a>
-                  </li>
-                </ul>
+            }
+            {isLogged &&
+              <div className='user-profile' id='user-profile-id'>
+                <div className='user-avatar'>
+                  <img src='assets/avatars/2.png' alt='User Avatar' />
+                </div>
+                <div className='user-menu'>
+                  <span className='user-name' style={{"cursor":"pointer"}} onClick={() => navigatoToDetailProfile()}>
+                    {user.name}
+                  </span>
+                </div>
               </div>
-            </div>
+            }
+
           </div>
         </div>
       </header>

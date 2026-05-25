@@ -80,11 +80,11 @@ export default function Products(props: any) {
   }
 
   function filterProductSort(value: string) {
-    if (value === 'price') {
+    if (value.length > 0) {
       setOnceFilter(true)
       dispatch(
         fetchProductSortRequest({
-          price: 'price',
+          price: value,
         }) as unknown as UnknownAction
       )
     } else {
@@ -135,15 +135,12 @@ export default function Products(props: any) {
                     </option>
                   ))}
                 </Form.Select>
-
-                <Button onClick={() => filterProductSort('price')}>
-                  Sort prezzo (desc)
-                </Button>
               </>
             )}
           </div>
 
           <ProductsTable
+            filterProductSort={filterProductSort}
             productList={productList}
             inPage={props.inPage}
             pagination={pagination}

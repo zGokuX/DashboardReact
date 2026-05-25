@@ -2,13 +2,15 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { ArrowClockwise, FileEarmarkText, PersonVcard, ShieldCheck, StarFill } from 'react-bootstrap-icons';
 import { addToCart } from '@/store/slices/productsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import NotificationAddToCart from './NotificationAddToCart';
 import { useState } from 'react';
+import { selectIsLogged } from '@/store/slices/LoginUser';
 
 function ProductModal({ show, onHide, product , ...props }) {
     const dispatch = useDispatch()
     const [showToast,setShowToast] = useState(false)
+     const isLogged = useSelector(selectIsLogged)
     return (
         <Modal show={show} onHide={onHide} dialogClassName="custom-modal">
             <Modal.Header closeButton>
@@ -92,7 +94,7 @@ function ProductModal({ show, onHide, product , ...props }) {
 
             </Modal.Body>
             <Modal.Footer>
-                {props.inPage &&
+                {props.inPage && isLogged &&
                 <Button variant='outline-primary' onClick={() =>  dispatch(addToCart({image: product.thumbnail, product: product.title,price: product.price},setShowToast(true)))}>Aggiungi al carrello</Button>
                 }
                 
