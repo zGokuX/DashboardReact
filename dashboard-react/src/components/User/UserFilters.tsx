@@ -4,7 +4,8 @@ export default function UserFilters({ inPage, ...props }) {
     const { filterInput, setFilterInput, filterAge, setFilterAge, filterGender, setFilterGender, filterRole, setFilterRole, filterNames, filterPlus } = useUserFilter()
     return (
         <>
-            {props.inPage && (
+
+            {inPage && (
                 <>
                     <form action='' onSubmit={e => e.preventDefault()}>
                         <div className='container'>

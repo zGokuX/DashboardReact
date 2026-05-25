@@ -10,12 +10,15 @@ import {
 
 import { BagPlusFill } from 'react-bootstrap-icons'
 import NotificationAddToCart from './NotificationAddToCart'
+import { selectIsLogged } from '@/store/slices/LoginUser'
 
 export default function ProductsTable(props) {
+
   const [selectProduct, setSelectProduct] = useState(null)
   const [showModal, setShowModal] = useState(false)
 
   const totalProducts = useSelector(selectProductsTotal)
+  const isLogged = useSelector(selectIsLogged)
 
   const [activeProductId, setActiveProductId] = useState(null)
   const [copiedImage, setCopiedImage] = useState(null)
@@ -147,11 +150,11 @@ export default function ProductsTable(props) {
               <td>{item.title}</td>
               <td>€ {Math.round(item.price)}</td>
               <td>{item.discountPercentage}%</td>
-                 <td>
-                    {props.modalMode && props.isCarts
-                      ? item.quantity
-                      : item.category}
-                  </td>
+              <td>
+                {props.modalMode && props.isCarts
+                  ? item.quantity
+                  : item.category}
+              </td>
               {!props.isCarts && <td>{item.availabilityStatus}</td>}
 
               <td className='d-flex gap-2'>
@@ -162,9 +165,12 @@ export default function ProductsTable(props) {
                     <Button onClick={() => detailsProductButton(item)}>
                       See more
                     </Button>
-                    <Button onClick={e => handleAddToCart(item, e)}>
-                      <BagPlusFill />
-                    </Button>
+                    {isLogged &&
+                      <Button onClick={e => handleAddToCart(item, e)}>
+                        <BagPlusFill />
+                      </Button>
+                    }
+
                   </>
                 )}
               </td>

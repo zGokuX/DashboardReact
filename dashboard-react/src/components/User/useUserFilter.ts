@@ -1,4 +1,4 @@
-import { fetchUsersFilterByNameRequest, fetchUsersFilterRequest, fetchUsersFilterSuccess, selectUserFiltered, selectUsers } from "@/store/slices/usersSlice"
+import { fetchUsersFilterByNameRequest, fetchUsersFilterRequest, fetchUsersFilterSuccess, fetchUsersRequest, selectUserFiltered, selectUsers } from "@/store/slices/usersSlice"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -29,7 +29,7 @@ export default function useUserFilter() {
             setFilterRole('default')
             setFilterInput('')
         }
-
+        
         if (value === 'default' || value === '' || value === '0') {
             setIsFiltered(false)
             return

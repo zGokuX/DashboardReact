@@ -5,6 +5,7 @@ import inputReducer from './slices/NameSlice';
 import usersReducer from './slices/usersSlice';
 import cartsReducer from './slices/cartsSlice';
 import productsReducer from './slices/productsSlice';
+import LoginReducer from './slices/LoginUser'
 import rootSaga from './sagas/rootSaga';
 
 // Creiamo il middleware saga per gestire side effect complessi fuori dai reducer.
@@ -17,6 +18,7 @@ const store = configureStore({
     users: usersReducer,
     carts: cartsReducer,
     products: productsReducer,
+    Login: LoginReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
