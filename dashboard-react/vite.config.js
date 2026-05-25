@@ -8,6 +8,9 @@ export default defineConfig(({ command }) => {
     base: command === 'serve'
       ? '/'
       : '/DashboardReact/',
+    build: {
+        outDir: '../docs'
+    },
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
