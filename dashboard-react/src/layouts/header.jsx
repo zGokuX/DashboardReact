@@ -1,14 +1,19 @@
 import { CartFill, PersonCircle } from 'react-bootstrap-icons'
 import { useSelector } from 'react-redux'
 import { selectUserProduct } from '@/store/slices/productsSlice'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { selectIsLogged, selectUserLogged } from '@/store/slices/LoginUser'
 
 export default function Header() {
 
   const userProduct = useSelector(selectUserProduct)
+  const navigate = useNavigate()
   const isLogged = useSelector(selectIsLogged)
   const user = useSelector(selectUserLogged).UserLogged
+  function navigatoToDetailProfile(){
+    console.log("naviga")
+    navigate("profile")
+  }
   return (
     <>
       <header>
@@ -56,20 +61,9 @@ export default function Header() {
                   <img src='assets/avatars/2.png' alt='User Avatar' />
                 </div>
                 <div className='user-menu'>
-                  <span className='user-name'>
+                  <span className='user-name' style={{"cursor":"pointer"}} onClick={() => navigatoToDetailProfile()}>
                     {user.name}
                   </span>
-                  <ul id='appear-ul'>
-                    <li>
-                      <a href='#'>Profile</a>
-                    </li>
-                    <li>
-                      <a href='#'>Settings</a>
-                    </li>
-                    <li>
-                      <a href='#'>Logout</a>
-                    </li>
-                  </ul>
                 </div>
               </div>
             }

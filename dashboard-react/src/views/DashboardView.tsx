@@ -5,10 +5,7 @@ import Carts from "@/components/Cart/Carts";
 import Graphic from "../layouts/Graphic";
 import Products from "@/components/Product/Products";
 import RecentUsers from "@/components/User/UserList";
-import { useDispatch, useSelector } from "react-redux";
-import { addName, selectName } from "@/store/slices/NameSlice"
-import { Button } from "react-bootstrap";
-import { Opencollective } from "react-bootstrap-icons";
+import { useSelector } from "react-redux";;
 import { User } from "@/components/User/user.type";
 
 import "@/components/styles/Dashboard.css"
