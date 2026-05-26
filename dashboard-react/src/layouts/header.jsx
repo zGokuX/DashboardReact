@@ -67,6 +67,27 @@ export default function Header() {
                 </div>
               </div>
             }
+{/*             <div className='user-profile' id='user-profile-id'>
+              <div className='user-avatar'>
+                <img src='assets/avatars/2.png' alt='User Avatar' />
+              </div>
+              <div className='user-menu'>
+                <span className='user-name'>
+                  Marco Rossi
+                </span>
+                <ul id='appear-ul'>
+                  <li>
+                    <a href='#'>Profile</a>
+                  </li>
+                  <li>
+                    <a href='#'>Settings</a>
+                  </li>
+                  <li>
+                    <a href='#'>Logout</a>
+                  </li>
+                </ul>
+              </div>
+            </div> */}
 
           </div>
         </div>

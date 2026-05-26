@@ -22,8 +22,8 @@ function NavBarProfile({setNavBarMarker,navBarMarker, ...props}) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#" onClick={() => setProfileMarker()}>Profile config</Nav.Link>
-            <Nav.Link href="#" onClick={() => setOptionalMarker()}>Optional config</Nav.Link>
+            <Nav.Link href="#" onClick={() => setProfileMarker()} style={{"textDecoration": navBarMarker === 1 ? "underline" : "none"}}>Profile config</Nav.Link>
+            <Nav.Link href="#" onClick={() => setOptionalMarker()} style={{"textDecoration": navBarMarker === 2 ? "underline" : "none"}}>Optional config</Nav.Link>
           </Nav>
         </Navbar.Collapse>
     </Navbar>
