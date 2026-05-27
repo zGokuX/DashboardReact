@@ -4,7 +4,8 @@ import { selectUserProduct } from '@/store/slices/productsSlice'
 import { Link } from 'react-router-dom'
 import { logOutUser, selectIsLogged, selectUserLogged } from '@/store/slices/LoginUser'
 import { Dropdown, DropdownButton } from 'react-bootstrap'
-
+import avatar2 from "../assets/avatars/2.png";
+import logo from "../assets/logosite.png";
 export default function Header() {
 
   const userProduct = useSelector(selectUserProduct)
@@ -17,7 +18,7 @@ export default function Header() {
         <div className='topbar-main'>
           <div className='logo-container'>
             <a href='#'>
-              <img src='assets/logosite.png' alt='Logo' />
+              <img src={logo} alt='Logo' />
             </a>
           </div>
           <div className='search-container'>
@@ -51,7 +52,7 @@ export default function Header() {
             {isLogged &&
               <div className='user-profile' id='user-profile-id'>
                 <div className='user-avatar'>
-                  <img src='assets/avatars/2.png' alt='User Avatar' />
+                  <img src={avatar2} alt='User Avatar' />
                 </div>
                 <div>
                   <DropdownButton id="dropdown-basic-button" title={user.name}>
