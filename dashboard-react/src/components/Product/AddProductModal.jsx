@@ -36,7 +36,7 @@ export default function AddProductModal({ show, onHide }) {
                 title: getTitle,
                 price: getPrice,
                 category: getCategory,
-                discountPercentage: getDiscount || "None",
+                discountPercentage: Number(getDiscount) || 0,
                 availabilityStatus: "In Stock",
             })
         );
@@ -63,7 +63,7 @@ export default function AddProductModal({ show, onHide }) {
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Prezzo prodotto</Form.Label>
-                        <Form.Control type="number" placeholder="Inserisci il prezzo del prodotto" onChange={(e) => setGetPrice(e.target.value)} />
+                        <Form.Control type="number"  placeholder="Inserisci il prezzo del prodotto" onChange={(e) => setGetPrice(Number(e.target.value) > 99999999 ? 99999999 : Number(e.target.value))} />
                     </Form.Group>
 
                     <Form.Select
@@ -87,7 +87,7 @@ export default function AddProductModal({ show, onHide }) {
                         {isChecked &&
                             <>
                                 <Form.Label>Di quanto?</Form.Label>
-                                <Form.Control type="number" placeholder="Inserisci sconto" onChange={(e) => setGetDiscount(e.target.value)} />
+                                <Form.Control type="number" placeholder="Inserisci sconto" onChange={(e) => setGetDiscount(Number(e.target.value) > 100 ? 100 : Number(e.target.value))} />
                             </>
                         }
                     </Form.Group>

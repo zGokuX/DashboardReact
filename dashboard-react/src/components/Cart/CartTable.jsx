@@ -76,7 +76,7 @@ export default function CartTable({ cartList, ...props }) {
                                                     props.detailsButton(item)
                                                 }}
                                             >
-                                                details
+                                                Details
                                             </Button>
                                         }
 
@@ -93,16 +93,15 @@ export default function CartTable({ cartList, ...props }) {
                                         }
 
                                         {props.inPage && !props.inUser &&
-                                            <Button variant="danger">
+                                            <Button variant="danger" onClick={() => {
+                                                props.setSelectCart(item);
+                                                props.setShowConfirmModal(
+                                                    true
+                                                );
+
+                                            }}>
                                                 <TrashFill
                                                     size={20}
-                                                    onClick={() => {
-                                                        props.setSelectCart(item);
-                                                        props.setShowConfirmModal(
-                                                            true
-                                                        );
-
-                                                    }}
                                                 >
                                                     Delete
                                                 </TrashFill>
@@ -116,7 +115,7 @@ export default function CartTable({ cartList, ...props }) {
                     {
                         selectProduct.length > 0 &&
                         <tr>
-                            <td colSpan="5" style={{ "paddingLeft": "30px", "paddingRight": "10px" , "paddingBottom":"15px" }}>
+                            <td colSpan="5" style={{ "paddingLeft": "30px", "paddingRight": "10px", "paddingBottom": "15px" }}>
                                 <ProductsTable
                                     productList={selectProduct}
                                     modalMode={false}

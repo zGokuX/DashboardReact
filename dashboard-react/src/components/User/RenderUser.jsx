@@ -17,9 +17,6 @@ export function RenderUser(props) {
                             <h5>{item.firstName + ' ' + item.lastName}</h5>
                             <h6>{item.company.department}</h6>
                         </td>
-                        {/*                     <td className='client-info'>
-                        <span>{item.age}</span>
-                    </td> */}
                         {props.inPage &&
                             <>
                                 <td className='client-info'>
