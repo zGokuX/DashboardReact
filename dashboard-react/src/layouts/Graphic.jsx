@@ -6,7 +6,8 @@ import { selectProducts } from '@/store/slices/productsSlice'
 export default function Graphic() {
 
   const productList = useSelector(selectProducts)
-
+  const date = new Date()
+  const message = "Media calcolata nell'arco del " + date.getFullYear()
 
   const categories = useMemo(() => {
     if (!productList || productList.length === 0) {
@@ -41,7 +42,7 @@ export default function Graphic() {
 
                 <Series
                   type='column'
-                  name="Media calcolata nell'arco del 2026"
+                  name={message}
                   data={Object.values(categories).map(item => item.reduce((acc, price) => acc + price, 0) / item.length)}
                 />
               </Chart>

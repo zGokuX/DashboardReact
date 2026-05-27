@@ -1,5 +1,5 @@
 import { logOutUser, logUser, selectUserLogged } from "@/store/slices/LoginUser"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -18,6 +18,12 @@ export default function UserProfile() {
     const [newBirthPlace, setNewBirthPlace] = useState(null)
     const [newDate, setNewDate] = useState(null)
     const [navBarMarker, setNavBarMarker] = useState(1)
+    useEffect(() => {
+        if(!user){
+            navigate("/")
+        }
+    }, [])
+    
     function logOut() {
         dispatch(logOutUser())
         navigate("/")
@@ -67,7 +73,7 @@ export default function UserProfile() {
                     <>
                         <div className="userName d-flex flex-column gap-2">
                             <label htmlFor="exampleInputEmail1" className="form-label">Username</label>
-                            <input type="text" disabled={isActiveInputName} defaultValue={user.name} style={{ "width": "25rem" }} onChange={(e) => setNewName(e.target.value)} />
+                            <input type="text" disabled={isActiveInputName} defaultValue={user?.name} style={{ "width": "25rem" }} onChange={(e) => setNewName(e.target.value)} />
                             <div className="buttons d-flex gap-3">
                                 <Button style={{ "width": "10rem" }} onClick={() => setIsActiveInputName(false)}>Modifica</Button>
                                 {!isActiveInputName &&
@@ -79,7 +85,7 @@ export default function UserProfile() {
 
                         <div className="userName d-flex flex-column gap-2">
                             <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
-                            <input type="text" disabled defaultValue={user.email} style={{ "width": "25rem" }} />
+                            <input type="text" disabled defaultValue={user?.email} style={{ "width": "25rem" }} />
                         </div>
                     </>
                 }
@@ -87,7 +93,7 @@ export default function UserProfile() {
                     <>
                         <div className="userName d-flex flex-column gap-2">
                             <label htmlFor="exampleInputEmail1" className="form-label">Numero di telefono</label>
-                            <input type="text" disabled={isActiveInputPhone} placeholder={user.phone} style={{ "width": "25rem" }} onChange={(e) => setNewPhone(e.target.value)} />
+                            <input type="text" disabled={isActiveInputPhone} placeholder={user?.phone} style={{ "width": "25rem" }} onChange={(e) => setNewPhone(e.target.value)} />
                             <div className="buttons d-flex gap-3">
                                 <Button style={{ "width": "10rem" }} onClick={() => setIsActiveInputPhone(false)}>Modifica</Button>
                                 {!isActiveInputPhone &&
@@ -98,7 +104,7 @@ export default function UserProfile() {
                         </div>
                         <div className="userName d-flex flex-column gap-2">
                             <label htmlFor="exampleInputEmail1" className="form-label">Luogo di nascita</label>
-                            <input type="text" disabled={isActiveInputBirthPlace} placeholder={user.birthPlace} style={{ "width": "25rem" }} onChange={(e) => setNewBirthPlace(e.target.value)} />
+                            <input type="text" disabled={isActiveInputBirthPlace} placeholder={user?.birthPlace} style={{ "width": "25rem" }} onChange={(e) => setNewBirthPlace(e.target.value)} />
                             <div className="buttons d-flex gap-3">
                                 <Button style={{ "width": "10rem" }} onClick={() => setIsActiveInputBirthPlace(false)}>Modifica</Button>
                                 {!isActiveInputBirthPlace &&
@@ -110,7 +116,7 @@ export default function UserProfile() {
 
                         <div className="userName d-flex flex-column gap-2">
                             <label htmlFor="exampleInputEmail1" className="form-label">Data di nascita</label>
-                            <input type="date" disabled={isActiveInputDate} defaultValue={user.date} style={{ "width": "25rem" }} onChange={(e) => setNewDate(e.target.value)} />
+                            <input type="date" disabled={isActiveInputDate} defaultValue={user?.date} style={{ "width": "25rem" }} onChange={(e) => setNewDate(e.target.value)} />
                             <div className="buttons d-flex gap-3">
                                 <Button style={{ "width": "10rem" }} onClick={() => setIsActiveInputDate(false)}>Modifica</Button>
                                 {!isActiveInputDate &&

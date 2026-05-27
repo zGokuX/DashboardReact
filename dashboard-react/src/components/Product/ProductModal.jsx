@@ -7,10 +7,10 @@ import NotificationAddToCart from './NotificationAddToCart';
 import { useState } from 'react';
 import { selectIsLogged } from '@/store/slices/LoginUser';
 
-function ProductModal({ show, onHide, product , ...props }) {
+function ProductModal({ show, onHide, product, ...props }) {
     const dispatch = useDispatch()
-    const [showToast,setShowToast] = useState(false)
-     const isLogged = useSelector(selectIsLogged)
+    const [showToast, setShowToast] = useState(false)
+    const isLogged = useSelector(selectIsLogged)
     return (
         <Modal show={show} onHide={onHide} dialogClassName="custom-modal">
             <Modal.Header closeButton>
@@ -39,65 +39,73 @@ function ProductModal({ show, onHide, product , ...props }) {
                                     <PersonVcard className='mt-3 text-primary' size={32} />
                                     <span className='text-muted'>ID prodotto<p className='mt-2 mb-1 text-dark'><b>{product.id}</b></p></span>
                                 </div>
-                                <div className='d-flex gap-2 p-3 rating-product-container bg-warning-subtle border id-product-container rounded p-2'>
-                                    <StarFill className='mt-3 text-warning' size={32} />
-                                    <span className='text-muted '>Valutazione <p className='mt-2 mb-1 text-dark'><b>{product.rating}</b></p></span>
+                                {product.rating &&
+                                    <div className='d-flex gap-2 p-3 rating-product-container bg-warning-subtle border id-product-container rounded p-2'>
+                                        <StarFill className='mt-3 text-warning' size={32} />
+                                        <span className='text-muted '>Valutazione <p className='mt-2 mb-1 text-dark'><b>{product?.rating}</b></p></span>
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    {product.description &&
+                        <div className='container-card d-flex gap-4'>
+                            <div className='card w-50'>
+                                <div className='d-flex gap-2 p-3 flex-row '>
+                                    <FileEarmarkText
+                                        className='bg-light border-0 text-primary rounded-circle p-2'
+                                        width={95}
+                                        height={40}
+                                    />
+
+                                    <span>
+                                        Descrizione
+                                        <p className='text-muted w-75 small'>
+                                            {product?.description}
+                                        </p>
+                                    </span>
+                                </div>
+                                <hr className="my-1" />
+                                <div className='d-flex gap-2 p-3 flex-row'>
+                                    <ArrowClockwise className='bg-light border-0 text-primary  rounded-circle p-1' size={38} />
+                                    <span>Policy rimborso <p className='text-muted small'>{product.returnPolicy}</p></span>
+                                </div>
+                                <hr className="my-1" />
+                                <div className='d-flex gap-2 p-3 flex-row'>
+                                    <ShieldCheck className='bg-light border-0 text-primary  rounded-circle p-1' size={38} />
+                                    <span>Garaniza <p className='text-muted small'>{product.warrantyInformation}</p></span>
                                 </div>
 
-                            </div>
-                        </div>
 
-                    </div>
-
-                    <div className='container-card d-flex gap-4'>
-                        <div className='card w-50'>
-                            <div className='d-flex gap-2 p-3 flex-row '>
-                                <FileEarmarkText
-                                    className='bg-light border-0 text-primary rounded-circle p-2'
-                                    width={95}
-                                    height={40}
-                                />
-
-                                <span>
-                                    Descrizione
-                                    <p className='text-muted w-75 small'>
-                                        {product.description}
-                                    </p>
-                                </span>
                             </div>
-                            <hr className="my-1" />
-                            <div className='d-flex gap-2 p-3 flex-row'>
-                                <ArrowClockwise className='bg-light border-0 text-primary  rounded-circle p-1' size={38} />
-                                <span>Policy rimborso <p className='text-muted small'>{product.returnPolicy}</p></span>
-                            </div>
-                            <hr className="my-1" />
-                            <div className='d-flex gap-2 p-3 flex-row'>
-                                <ShieldCheck className='bg-light border-0 text-primary  rounded-circle p-1' size={38} />
-                                <span>Garaniza <p className='text-muted small'>{product.warrantyInformation}</p></span>
-                            </div>
-
+                            {product.reviews &&
+                                <div className='card p-3 w-50 h-25'>
+                                    <ul className='p-0 '>
+                                        <h5>Ultime valutazioni con commento</h5>
+                                        {product?.reviews?.map((item, index) => (
+                                            <div key={index} className='mb-2 card d-flex flex-row align-items-center p-3 bg-body-tertiary lh-1'>
+                                                <StarFill className='text-warning' size={20} />
+                                                <span> <b className='me-5'>{item.rating}</b> {item.comment}</span>
+                                            </div>
+                                        ))}
+                                    </ul>
+                                </div>
+                            }
 
                         </div>
-                        <div className='card p-3 w-50 h-25'>
-                            <ul className='p-0 '>
-                                <h5>Ultime valutazioni con commento</h5>
-                                {product.reviews.map((item, index) => (
-                                    <div key={index} className='mb-2 card d-flex flex-row align-items-center p-3 bg-body-tertiary lh-1'>
-                                        <StarFill className='text-warning' size={20} />
-                                        <span> <b className='me-5'>{item.rating}</b> {item.comment}</span>
-                                    </div>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
+                    }
+
                 </div>
 
             </Modal.Body>
             <Modal.Footer>
                 {props.inPage && isLogged &&
-                <Button variant='outline-primary' onClick={() =>  dispatch(addToCart({image: product.thumbnail, product: product.title,price: product.price},setShowToast(true)))}>Aggiungi al carrello</Button>
+                    <Button variant='outline-primary' onClick={() => dispatch(addToCart({ image: product.thumbnail, product: product.title, price: product.price }, setShowToast(true)))}>Aggiungi al carrello</Button>
                 }
-                
+
                 <Button variant="danger" onClick={onHide}>
                     Chiudi
                 </Button>

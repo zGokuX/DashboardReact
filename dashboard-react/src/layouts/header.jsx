@@ -1,8 +1,9 @@
 import { CartFill, PersonCircle } from 'react-bootstrap-icons'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectUserProduct } from '@/store/slices/productsSlice'
 import { Link, useNavigate } from 'react-router-dom'
-import { selectIsLogged, selectUserLogged } from '@/store/slices/LoginUser'
+import { logOutUser, selectIsLogged, selectUserLogged } from '@/store/slices/LoginUser'
+import { Dropdown, DropdownButton } from 'react-bootstrap'
 
 export default function Header() {
 
@@ -10,7 +11,8 @@ export default function Header() {
   const navigate = useNavigate()
   const isLogged = useSelector(selectIsLogged)
   const user = useSelector(selectUserLogged).UserLogged
-  function navigatoToDetailProfile(){
+  const dispatch = useDispatch()
+  function navigatoToDetailProfile() {
     console.log("naviga")
     navigate("profile")
   }
@@ -49,9 +51,9 @@ export default function Header() {
               <div className='user-profile' id='user-profile-id'>
                 <Link to="/login">
                   <span className='user-name me-2'>
-                    Accedi 
+                    Accedi
                   </span>
-                  <PersonCircle size={22}/>
+                  <PersonCircle size={22} />
                 </Link>
               </div>
             }
@@ -60,14 +62,18 @@ export default function Header() {
                 <div className='user-avatar'>
                   <img src='assets/avatars/2.png' alt='User Avatar' />
                 </div>
-                <div className='user-menu'>
-                  <span className='user-name' style={{"cursor":"pointer"}} onClick={() => navigatoToDetailProfile()}>
+                <div>
+                  <DropdownButton id="dropdown-basic-button" title={user.name}>
+                    <Dropdown.Item href="#/profile">Vai al menu</Dropdown.Item>
+                    <Dropdown.Item href="#/" className='bg-danger text-light' onClick={() => dispatch(logOutUser())}>Logout</Dropdown.Item>
+                  </DropdownButton>
+{/*                   <span className='user-name' style={{ "cursor": "pointer" }} onClick={() => navigatoToDetailProfile()}>
                     {user.name}
-                  </span>
+                  </span> */}
                 </div>
               </div>
             }
-{/*             <div className='user-profile' id='user-profile-id'>
+            {/*             <div className='user-profile' id='user-profile-id'>
               <div className='user-avatar'>
                 <img src='assets/avatars/2.png' alt='User Avatar' />
               </div>

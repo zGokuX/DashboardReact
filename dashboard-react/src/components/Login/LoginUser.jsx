@@ -14,6 +14,10 @@ export default function LoginUserUI() {
             return
         }
 
+        if(getName.length >= 15){
+            return
+        }
+
         dispatch(logUser({ UserLogged: { name: getName, email: getEmail, password: getPassword, phone: "Numero di telefono non inserito", birthPlace: "Luogo di nascita non inserito", date: "1970-01-01" } }))
         navigate("/")
     }

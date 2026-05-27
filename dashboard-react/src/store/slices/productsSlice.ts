@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { act } from 'react'
 
 const initialState = {
   products: [],
+  prodcutsCategory: [],
   userProducts: [],
   total: 0,
   categories: [],
@@ -24,6 +26,10 @@ const productsSlice = createSlice({
       state.status = 'loading'
       state.error = null
     },
+    fetchProductsAllCategoryRequest: (state, action) => {
+      state.status = 'loading'
+      state.error = null
+    },
 
     fetchProductSortRequest: (state, action) => {
       state.status = 'loading'
@@ -42,6 +48,11 @@ const productsSlice = createSlice({
       state.total = action.payload.total ?? 0
     },
 
+    fetchProductsAllCategorySuccess: (state, action) => {
+      state.status = 'succeeded'
+      state.prodcutsCategory = action.payload
+    },
+
     fetchProductsSortSuccess: (state, action) => {
       state.status = 'succeeded'
       state.products = action.payload.products || []
@@ -49,6 +60,10 @@ const productsSlice = createSlice({
     },
 
     fetchProductFailure: (state, action) => {
+      state.status = 'failed'
+      state.error = action.payload
+    },
+    fetchProductsAllCategoryFailure: (state, action) => {
       state.status = 'failed'
       state.error = action.payload
     },
@@ -79,6 +94,11 @@ const productsSlice = createSlice({
         product,
         price,
       })
+    },
+
+    addProduct(state,action){
+      state.products.push(action.payload)
+      state.total = action.payload.total ?? 0
     },
 
     resetCart(state, action) {
@@ -116,16 +136,23 @@ export const {
   fetchProductSortRequest,
   fetchProductsSortSuccess,
   fetchProductsSortFailure,
+  fetchProductsAllCategoryRequest,
+  fetchProductsAllCategorySuccess,
+  fetchProductsAllCategoryFailure,
   setProductCategories,
   setSelectedCategory,
   removeToCart,
   clearProducts,
   addToCart,
   resetCart,
+  addProduct,
 } = productsSlice.actions
 
 export const selectProducts = state =>
   state.products.products
+
+export const selectAllCategory = state => 
+  state.products.prodcutsCategory
 
 export const selectProductsTotal = state =>
   state.products.total

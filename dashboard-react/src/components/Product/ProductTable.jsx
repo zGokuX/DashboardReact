@@ -111,17 +111,33 @@ export default function ProductsTable(props) {
           onHide={() => setShowModal(false)}
           product={selectProduct}
           inPage={props.inPage}
-        />
-      )}
-
+          />
+        )}
+      {props.onceFilter &&
+        <Button className='mb-4' style={{"width":"10rem"}} onClick={() => props.filterProductSort('')}>Resetta i filtri</Button>
+      
+      }
       <table className='card-table invoices-table'>
         <thead>
           <tr>
             <th>Id prodotto</th>
             <th>Immagine prodotto</th>
-            <th><a href='#' onClick={() => props.filterProductSort('title')}>Nome prodotto</a></th>
-            <th><a href='#' onClick={() => props.filterProductSort('price')}>Prezzo</a></th>
-            <th><a href='#' onClick={() => props.filterProductSort('discountPercentage')}>Sconto</a></th>
+            {props.inPage &&
+            <>
+            <th><a href='#/products' onClick={() => props.filterProductSort('title')}>Nome prodotto</a></th>
+            <th><a href='#/products' onClick={() => props.filterProductSort('price')}>Prezzo</a></th>
+            <th><a href='#/products' onClick={() => props.filterProductSort('discountPercentage')}>Sconto</a></th>
+            </>
+            }
+
+            {!props.inPage &&
+            <>
+            <th>Nome prodotto</th>
+            <th>Prezzo</th>
+            <th>Sconto</th>
+            </>
+            }
+            
             {!props.inUser && (
               <th>
                 {props.modalMode && props.isCarts ? 'Quantità' : 'Categoria'}
@@ -139,7 +155,6 @@ export default function ProductsTable(props) {
             )}
           </tr>
         </thead>
-
         <tbody>
           {props.productList?.map(item => (
             <tr key={item.id}>
@@ -149,7 +164,7 @@ export default function ProductsTable(props) {
               </td>
               <td>{item.title}</td>
               <td>€ {Math.round(item.price)}</td>
-              <td>{item.discountPercentage}%</td>
+              <td>{item.discountPercentage != "None" ? item.discountPercentage + "%" : item.discountPercentage + ""}</td>
               <td>
                 {props.modalMode && props.isCarts
                   ? item.quantity

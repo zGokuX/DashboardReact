@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects'
 import { watchFetchCarts } from './cartsSaga'
-import { watchFetchProduct, watchFetchProductCategory, watchFetchProductSort } from './productSaga'
+import { watchFetchProduct, watchFetchProductAllCategory, watchFetchProductCategory, watchFetchProductSort } from './productSaga'
 import { watchFetchUser, watchFetchUserFiltered,watchFetchUserFilteredByName } from './userSaga'
 
 // Root saga: composizione di tutti i watcher saga dell'applicazione.
@@ -15,5 +15,6 @@ export default function* rootSaga() {
     watchFetchUserFiltered(),
     watchFetchUserFilteredByName(),
     watchFetchProductSort(),
+    watchFetchProductAllCategory(),
   ])
 }

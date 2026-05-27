@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 
 import {
+  fetchAllCategories,
   fetchProducts,
   fetchProductsCategory,
   fetchSortProductPrice,
@@ -10,6 +11,9 @@ import {
   fetchProductFailure,
   fetchProductRequest,
   fetchProductRequestByCategory,
+  fetchProductsAllCategoryFailure,
+  fetchProductsAllCategoryRequest,
+  fetchProductsAllCategorySuccess,
   fetchProductsCategoryFailure,
   fetchProductsCategorySuccess,
   fetchProductSortRequest,
@@ -70,6 +74,26 @@ function* handleFetchProductCategory(action) {
   }
 }
 
+function* handleFetchProductAllCategorys() {
+  try {
+
+    const response = yield call(
+      fetchAllCategories
+    )
+
+    yield put(
+      fetchProductsAllCategorySuccess(response)
+    )
+  } catch (error) {
+    yield put(
+      fetchProductsAllCategoryFailure(
+        error.message || 'Failed to load products'
+      )
+    )
+  }
+}
+
+
 function* handleFetchProductSort(action) {
   try {
     const { price } = action.payload || {}
@@ -112,5 +136,12 @@ export function* watchFetchProductSort() {
   yield takeLatest(
     fetchProductSortRequest.type,
     handleFetchProductSort
+  )
+}
+
+export function* watchFetchProductAllCategory() {
+  yield takeLatest(
+    fetchProductsAllCategoryRequest.type,
+    handleFetchProductAllCategorys
   )
 }
