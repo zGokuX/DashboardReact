@@ -158,6 +158,7 @@ export default function Products(props: any) {
             productList={productList}
             inPage={props.inPage}
             pagination={pagination}
+            setFilterCategory={setFilterCategory}
             setPagination={setPagination}
             onceFilter={onceFilter}
           />

@@ -64,6 +64,7 @@ export default function AddProductModal({ show, onHide }) {
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Prezzo prodotto</Form.Label>
                         <Form.Control type="number"  placeholder="Inserisci il prezzo del prodotto" onChange={(e) => setGetPrice(Number(e.target.value) > 99999999 ? 99999999 : Number(e.target.value))} />
+                            <small style={{"fontSize":"13px"}}>Ricorda se il numero inserito è al di sopra dei 99999999 verrà sovrascritto in 99999999</small>
                     </Form.Group>
 
                     <Form.Select
@@ -88,6 +89,7 @@ export default function AddProductModal({ show, onHide }) {
                             <>
                                 <Form.Label>Di quanto?</Form.Label>
                                 <Form.Control type="number" placeholder="Inserisci sconto" onChange={(e) => setGetDiscount(Number(e.target.value) > 100 ? 100 : Number(e.target.value))} />
+                                    <small style={{"fontSize":"13px"}}>Ricorda se il numero inserito è al di sopra dei 100 verrà sovrascritto in 100</small>
                             </>
                         }
                     </Form.Group>

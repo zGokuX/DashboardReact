@@ -114,7 +114,11 @@ export default function ProductsTable(props) {
           />
         )}
       {props.onceFilter &&
-        <Button className='mb-4' style={{"width":"10rem"}} onClick={() => props.filterProductSort('')}>Resetta i filtri</Button>
+        <Button className='mb-4' style={{"width":"10rem"}} onClick={() => {
+          props.filterProductSort('')
+          props.setFilterCategory("default")
+        }}
+        >Resetta i filtri</Button>
       
       }
       <table className='card-table invoices-table'>
