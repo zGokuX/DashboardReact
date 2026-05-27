@@ -49,7 +49,7 @@ export function RenderUser(props) {
                                     <Button
                                         variant='outline-primary'
                                         className='modify-btn'
-                                        onClick={() => props.showCart(item)}
+                                        onClick={() => props.CartSubtable(item)}
                                     >
                                         Mostra carrelli {props.openedUserId === item.id ? <CaretUpFill /> : <CaretDownFill />}
                                     </Button>

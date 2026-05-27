@@ -177,7 +177,7 @@ export default function RecentUsers(props: any) {
                   displayedUsers={displayedUsers}
                   inPage={props.inPage}
                   editButton={editButton}
-                  showCart={CartSubtable}
+                  CartSubtable={CartSubtable}
                   openedUserId={openedUserId}
                   onSelectUser={props.onSelectUser}
                 />

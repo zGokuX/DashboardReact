@@ -10,6 +10,7 @@ import CartCheckoutView from "@/views/CartCheckoutView";
 import CartCheckin from "@/components/CartCheckout/CartChekIn";
 import LoginUserUI from "@/components/Login/LoginUser";
 import UserProfile from "@/components/ProfileUser/UserProfile";
+import FeedbackImprove from "@/Feedback/FeedbackImprove";
 
 export default function Layout() {
     return (
@@ -31,6 +32,10 @@ export default function Layout() {
                                 <li>
                                     <Link to="/products">Products</Link>
                                 </li>
+
+                                <li>
+                                    <Link to="/feeback">Feedback</Link>
+                                </li>
                             </ul>
 
                         </nav>
@@ -45,6 +50,7 @@ export default function Layout() {
                         <Route path="/user/:userid" element={<UserView/>} />
                         <Route path="/login/*" element={<LoginUserUI/>} />
                         <Route path="/profile/*" element={<UserProfile/>} />
+                        <Route path="/feeback/*" element={<FeedbackImprove/>} />
                     </Routes>
                     
                 </div>

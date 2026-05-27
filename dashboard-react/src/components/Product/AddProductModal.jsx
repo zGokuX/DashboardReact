@@ -13,6 +13,7 @@ export default function AddProductModal({ show, onHide }) {
     const [getTitle, setGetTitle] = useState(null)
     const [getCategory, setGetCategory] = useState(null)
     const [getPrice, setGetPrice] = useState(null)
+    const [getDesc, setGetDesc] = useState(null)
     /* const [getImage, setGetImage] = useState(null) */
     const [getDiscount, setGetDiscount] = useState(null)
 
@@ -38,6 +39,7 @@ export default function AddProductModal({ show, onHide }) {
                 category: getCategory,
                 discountPercentage: Number(getDiscount) || 0,
                 availabilityStatus: "In Stock",
+                description: getDesc
             })
         );
 
@@ -61,10 +63,15 @@ export default function AddProductModal({ show, onHide }) {
                         <Form.Control type="text" placeholder="Inserisci il nome del prodotto" onChange={(e) => setGetTitle(e.target.value)} />
                     </Form.Group>
 
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Descrizione prodotto</Form.Label>
+                        <Form.Control type="text" placeholder="Inserisci la descrizione del prodotto" onChange={(e) => setGetDesc(e.target.value)} />
+                    </Form.Group>
+
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Prezzo prodotto</Form.Label>
-                        <Form.Control type="number"  placeholder="Inserisci il prezzo del prodotto" onChange={(e) => setGetPrice(Number(e.target.value) > 99999999 ? 99999999 : Number(e.target.value))} />
-                            <small style={{"fontSize":"13px"}}>Ricorda se il numero inserito è al di sopra dei 99999999 verrà sovrascritto in 99999999</small>
+                        <Form.Control type="number" placeholder="Inserisci il prezzo del prodotto" onChange={(e) => setGetPrice(Number(e.target.value) > 99999999 ? 99999999 : Number(e.target.value))} />
+                        <small style={{ "fontSize": "13px" }}>Ricorda se il numero inserito è al di sopra dei 99999999 verrà sovrascritto in 99999999</small>
                     </Form.Group>
 
                     <Form.Select
@@ -89,7 +96,7 @@ export default function AddProductModal({ show, onHide }) {
                             <>
                                 <Form.Label>Di quanto?</Form.Label>
                                 <Form.Control type="number" placeholder="Inserisci sconto" onChange={(e) => setGetDiscount(Number(e.target.value) > 100 ? 100 : Number(e.target.value))} />
-                                    <small style={{"fontSize":"13px"}}>Ricorda se il numero inserito è al di sopra dei 100 verrà sovrascritto in 100</small>
+                                <small style={{ "fontSize": "13px" }}>Ricorda se il numero inserito è al di sopra dei 100 verrà sovrascritto in 100</small>
                             </>
                         }
                     </Form.Group>
