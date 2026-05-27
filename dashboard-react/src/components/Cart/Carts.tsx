@@ -5,7 +5,7 @@ import UserDetail from '../User/UserDetailModal'
 import CartTable from './CartTable'
 import PaginationPage from '../Common/PaginationPage'
 import { useDispatch, useSelector } from 'react-redux'
-
+import AsyncSelect from 'react-select/async';
 import {
   fetchCartsRequest,
   selectCarts,
@@ -13,7 +13,7 @@ import {
   deleteCart as deleteCartAction,
 } from '@/store/slices/cartsSlice'
 
-import { deleteCart as deleteCartRequest } from '@/services/requests'
+import { deleteCart as deleteCartRequest, fetchFilterUserNames } from '@/services/requests'
 
 import { Cart } from './carts.type'
 import CartHeader from './cartHeader'
@@ -45,7 +45,7 @@ export default function Carts(props: any) {
   }, [dispatch, pagination])
 
   function detailsButton(cart: any) {
-    setSelectSingleCart(cart.products)
+    setSelectSingleCart(cart)
     setShowModal(true)
   }
 
@@ -70,9 +70,38 @@ export default function Carts(props: any) {
     setSelectUserByIdCart(cartId)
     setUserDetailModalShow(true)
   }
+  const colourOptions = [
+    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
+    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
+    { value: 'purple', label: 'Purple', color: '#5243AA' },
+    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
+    { value: 'orange', label: 'Orange', color: '#FF8B00' },
+    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
+    { value: 'green', label: 'Green', color: '#36B37E' },
+    { value: 'forest', label: 'Forest', color: '#00875A' },
+    { value: 'slate', label: 'Slate', color: '#253858' },
+    { value: 'silver', label: 'Silver', color: '#666666' },
+  ];
+
+  const promiseOptions = async (inputValue: string) => {
+    const response = await fetchFilterUserNames(inputValue).then((res) => res.map(item => {
+      return {
+        value: item.id,
+        label: item.firstName + " " + item.lastName
+      }
+    }))
+    console.log(response)
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(response);
+      }, 300);
+    });
+
+  };
 
   return (
     <>
+
       {showConfirmModal && selectCart && (
         <ConfirmModal
           show={showConfirmModal}
@@ -97,6 +126,8 @@ export default function Carts(props: any) {
           userId={selectUserByIdCart}
         />
       )}
+
+      <AsyncSelect cacheOptions defaultOptions loadOptions={promiseOptions} />
 
       <div className='clienti container-full-width'>
         <div className='card client-card'>
