@@ -19,45 +19,47 @@ export default function UserProfile() {
     const [newDate, setNewDate] = useState(null)
     const [navBarMarker, setNavBarMarker] = useState(1)
     useEffect(() => {
-        if(!user){
+        if (!user) {
             navigate("/")
+            return
         }
-    }, [])
-    
+        console.log(user)
+    }, [user])
+
     function logOut() {
         dispatch(logOutUser())
         navigate("/")
     }
     function updateName() {
-        if(newName === user.name){
+        if (newName === user.name) {
             setIsActiveInputName(true)
             return
         }
-        dispatch(logUser({ UserLogged: { name: newName, email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: user.date } }))
+        dispatch(logUser({ UserLogged: { name: newName, email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: user.date, historyProduct: user.historyProduct } }))
         setIsActiveInputName(true)
     }
     function updatePhone() {
-        if(newPhone.replace(/ /g, '-') == user.phone){
+        if (newPhone.replace(/ /g, '-') == user.phone) {
             setIsActiveInputPhone(true)
             return
         }
-        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone:newPhone.replace(/ /g, '-'), birthPlace: user.birthPlace, date: user.date } }))
+        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: newPhone.replace(/ /g, '-'), birthPlace: user.birthPlace, date: user.date, historyProduct: user.historyProduct } }))
         setIsActiveInputPhone(true)
     }
     function updateBirthPlace() {
-        if(newBirthPlace === user.birthPlace){
+        if (newBirthPlace === user.birthPlace) {
             setIsActiveInputBirthPlace(true)
             return
         }
-        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: newBirthPlace, date: user.date } }))
+        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: newBirthPlace, date: user.date, historyProduct: user.historyProduct } }))
         setIsActiveInputBirthPlace(true)
     }
     function updateDate() {
-        if(newDate === user.date){
+        if (newDate === user.date) {
             setIsActiveInputDate(true)
             return
         }
-        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: newDate } }))
+        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: newDate, historyProduct: user.historyProduct } }))
         setIsActiveInputDate(true)
     }
 
@@ -68,7 +70,7 @@ export default function UserProfile() {
                     setNavBarMarker={setNavBarMarker}
                     navBarMarker={navBarMarker}
                 />
-                <h3>Dati personali</h3>
+                <h3>{navBarMarker === 3 ? "Pagamenti precedenti" : "Dati personali"}</h3>
                 {navBarMarker === 1 &&
                     <>
                         <div className="userName d-flex flex-column gap-2">
@@ -126,6 +128,38 @@ export default function UserProfile() {
 
                         </div>
                     </>
+                }
+                {navBarMarker === 3 && user.historyProduct && user.historyProduct.length > 0 &&
+                    <div className="userName d-flex flex-column gap-2">
+                        <ol>
+                            {user.historyProduct?.map((item, index) => (
+                                <li key={index} className="d-flex align-items-center gap-2 mb-2">
+
+                                    <img
+                                        src={item.image}
+                                        alt={item.product}
+                                        style={{
+                                            "width": "40px",
+                                            "height": "40px",
+                                            "borderRadius": "6px"
+                                        }}
+                                    />
+
+                                    <div>
+                                        <div>
+                                            {item.product} - €{item.price} x {item.quantity}
+                                        </div>
+
+                                        <small style={{ color: "#666" }}>
+                                            Pagato il: {new Date(item.paidAt).toLocaleString()}
+                                        </small>
+                                    </div>
+
+                                </li>
+                            ))}
+
+                        </ol>
+                    </div>
                 }
                 <Button variant="danger" style={{ "width": "10rem" }} onClick={() => logOut()}>LogOut</Button>
             </div>
