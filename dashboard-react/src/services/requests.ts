@@ -19,7 +19,7 @@ export function fetchFilterUserNames(value) {
 }
 
 export function fetchSingleUser(userId) {
-  return fetch(`https://dummyjson.com/users/${userId ? userId : 1}`).then(res => res.json());
+  return fetch(`https://dummyjson.com/users/${userId}`).then(res => res.json());
 }
 
 export function fetchCarts(pageSize = 25, page = 0) {

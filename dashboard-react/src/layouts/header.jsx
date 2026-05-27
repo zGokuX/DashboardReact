@@ -1,21 +1,16 @@
 import { CartFill, PersonCircle } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUserProduct } from '@/store/slices/productsSlice'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { logOutUser, selectIsLogged, selectUserLogged } from '@/store/slices/LoginUser'
 import { Dropdown, DropdownButton } from 'react-bootstrap'
 
 export default function Header() {
 
   const userProduct = useSelector(selectUserProduct)
-  const navigate = useNavigate()
   const isLogged = useSelector(selectIsLogged)
   const user = useSelector(selectUserLogged).UserLogged
   const dispatch = useDispatch()
-  function navigatoToDetailProfile() {
-    console.log("naviga")
-    navigate("profile")
-  }
   return (
     <>
       <header>
@@ -32,14 +27,10 @@ export default function Header() {
             </div>
           </div>
           <div className='user-profile-container'>
-            {/* <div className='notification-user'>
-              <i className='fa-solid fa-bell'></i>
-              <span className='notification-count'>3</span>
-            </div> */}
             <Link style={{ "textDecoration": "none" }} to={isLogged ? '/cartCheckout' : '/login'}>
               <div style={{ cursor: 'pointer' }} className='cart-icon ms-3'>
                 <CartFill
-                  size={25}
+                  size={21}
                   onClick={() => console.log('PRODOTTI: ', userProduct)}
                 />
                 {userProduct && userProduct.length > 0 && (
@@ -67,34 +58,9 @@ export default function Header() {
                     <Dropdown.Item href="#/profile">Vai al menu</Dropdown.Item>
                     <Dropdown.Item href="#/" className='bg-danger text-light' onClick={() => dispatch(logOutUser())}>Logout</Dropdown.Item>
                   </DropdownButton>
-{/*                   <span className='user-name' style={{ "cursor": "pointer" }} onClick={() => navigatoToDetailProfile()}>
-                    {user.name}
-                  </span> */}
                 </div>
               </div>
             }
-            {/*             <div className='user-profile' id='user-profile-id'>
-              <div className='user-avatar'>
-                <img src='assets/avatars/2.png' alt='User Avatar' />
-              </div>
-              <div className='user-menu'>
-                <span className='user-name'>
-                  Marco Rossi
-                </span>
-                <ul id='appear-ul'>
-                  <li>
-                    <a href='#'>Profile</a>
-                  </li>
-                  <li>
-                    <a href='#'>Settings</a>
-                  </li>
-                  <li>
-                    <a href='#'>Logout</a>
-                  </li>
-                </ul>
-              </div>
-            </div> */}
-
           </div>
         </div>
       </header>

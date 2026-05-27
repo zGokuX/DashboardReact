@@ -22,9 +22,6 @@ export default function Layout() {
                                     <Link to="/">Home</Link>
                                 </li>
                                 <li>
-                                    <Link to="/">Dashboard</Link>
-                                </li>
-                                <li>
                                     <Link to="/users">Users</Link>
                                 </li>
                                 <li>

@@ -8,7 +8,7 @@ function CartsModal({ show, onHide, products }) {
     const [cartUser, setCartUser] = useState(null)
     {console.log(products)}
     useEffect(() => {
-        fetchSingleUser(products?.userId).then((res => {
+        fetchSingleUser(products.userId).then((res => {
             setCartUser(res)
         }))
 
@@ -26,7 +26,7 @@ function CartsModal({ show, onHide, products }) {
                             <h3> {cartUser.firstName + " " + cartUser.lastName}</h3>
                         </>
                         }
-                        <ProductsTable productList={products} modalMode={true} isCarts={true} showMoreOption={false} />
+                        <ProductsTable productList={products.products} modalMode={true} isCarts={true} showMoreOption={false} />
                     </div>
                 </div>
 
