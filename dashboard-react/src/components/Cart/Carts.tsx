@@ -167,7 +167,7 @@ export default function Carts(props: any) {
             openModalDetail={openModalDetail}
           />
 
-          {props.inPage && (
+          {props.inPage && selectionSingleValue < 0 && (
             <PaginationPage
               setPagination={setPagination}
               pagination={pagination}

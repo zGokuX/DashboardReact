@@ -35,7 +35,7 @@ export default function UserProfile() {
             setIsActiveInputName(true)
             return
         }
-        dispatch(logUser({ UserLogged: { name: newName.charAt(0).toUpperCase() + newName.slice(1), email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: user.date, historyProduct: user.historyProduct } }))
+        dispatch(logUser({ UserLogged: { name: newName && newName.length > 0 ? newName.charAt(0).toUpperCase() + newName.slice(1) : user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: user.date, historyProduct: user.historyProduct } }))
         setIsActiveInputName(true)
     }
     function updatePhone() {
