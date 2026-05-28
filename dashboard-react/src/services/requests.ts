@@ -1,5 +1,5 @@
 
-export default function fetchUser(pageSize = 25, page = 0){
+export default function fetchUser(pageSize = 25, page = 0) {
   return fetch(`https://dummyjson.com/users?limit=${pageSize ? pageSize : 10}&skip=${page * pageSize}`).then(res => res.json()).then(userResponse => {
     return userResponse
   })
@@ -7,10 +7,10 @@ export default function fetchUser(pageSize = 25, page = 0){
 
 export function fetchUserFilter(key, value) {
   return fetch(`https://dummyjson.com/users/filter?key=${key}&value=${value}`)
-  .then(res => res.json()).then(userResponse => {
-    return userResponse.users
-    
-  })
+    .then(res => res.json()).then(userResponse => {
+      return userResponse.users
+
+    })
 }
 export function fetchFilterUserNames(value) {
   return fetch(`https://dummyjson.com/users/search?q=${value}`).then(res => res.json()).then(userResponse => {
@@ -36,6 +36,13 @@ export function fetchCartsByUserId(userId = null) {
   })
 }
 
+export function fetchCartsBySingleUserId(userId = null) {
+ return fetch(`https://dummyjson.com/carts/user/${userId}`)
+    .then(res => res.json())
+    .then(cartResponse => {
+      return cartResponse.carts
+    })
+}
 
 export function deleteCart(cartId) {
   return fetch(`https://dummyjson.com/carts/${cartId}`, {
@@ -85,6 +92,6 @@ export function fetchProducts(pageSize = 25, page = 0) {
 
 export function fetchSortProductPrice(nameSort) {
   return fetch(`https://dummyjson.com/products?sortBy=${nameSort}&order=desc`).then(res => res.json()).then(productResponse => {
-      return productResponse.products
-    })
+    return productResponse.products
+  })
 }

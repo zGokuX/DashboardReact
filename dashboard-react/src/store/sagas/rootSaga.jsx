@@ -1,5 +1,5 @@
 import { all } from 'redux-saga/effects'
-import { watchFetchCarts } from './cartsSaga'
+import { watchFetchCarts, watchFetchSingleCart } from './cartsSaga'
 import { watchFetchProduct, watchFetchProductAllCategory, watchFetchProductCategory, watchFetchProductSort } from './productSaga'
 import { watchFetchUser, watchFetchUserFiltered,watchFetchUserFilteredByName } from './userSaga'
 
@@ -16,5 +16,6 @@ export default function* rootSaga() {
     watchFetchUserFilteredByName(),
     watchFetchProductSort(),
     watchFetchProductAllCategory(),
+    watchFetchSingleCart(),
   ])
 }

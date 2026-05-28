@@ -29,7 +29,6 @@ export default function FeedbackImprove() {
 }
     const navigate = useNavigate()
     useEffect(() => {
-        console.log(isLogged)
         if (!isLogged) {
             navigate("/login")
         }

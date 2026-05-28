@@ -17,6 +17,7 @@ export default function CartTable({ cartList, ...props }) {
             setSelectProduct(item.products)
         }
     }
+    console.log(cartList.map(item => console.log(item)))
     return (
         <>
             <table className="card-table">

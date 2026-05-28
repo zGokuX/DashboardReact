@@ -1,95 +1,114 @@
-import { useEffect, useState } from 'react'
-import CartsModal from './CartsModal'
-import ConfirmModal from './ConfirmModal'
-import UserDetail from '../User/UserDetailModal'
-import CartTable from './CartTable'
-import PaginationPage from '../Common/PaginationPage'
-import { useDispatch, useSelector } from 'react-redux'
-import AsyncSelect from 'react-select/async';
+import { useEffect, useState } from "react";
+import CartsModal from "./CartsModal";
+import ConfirmModal from "./ConfirmModal";
+import UserDetail from "../User/UserDetailModal";
+import CartTable from "./CartTable";
+import PaginationPage from "../Common/PaginationPage";
+import { useDispatch, useSelector } from "react-redux";
+import AsyncSelect from "react-select/async";
 import {
   fetchCartsRequest,
   selectCarts,
   selectCartsTotal,
   deleteCart as deleteCartAction,
-} from '@/store/slices/cartsSlice'
+  selectSingleCarts,
+  fetchSingleCartsRequest,
+} from "@/store/slices/cartsSlice";
 
-import { deleteCart as deleteCartRequest, fetchFilterUserNames } from '@/services/requests'
+import {
+  deleteCart as deleteCartRequest,
+  fetchFilterUserNames,
+} from "@/services/requests";
 
-import { Cart } from './carts.type'
-import CartHeader from './cartHeader'
-import NotificationCartDelete from './NotificationCartDelete'
-import { ITEM_PER_PAGE } from '@/Constants'
+import { Cart } from "./carts.type";
+import CartHeader from "./cartHeader";
+import NotificationCartDelete from "./NotificationCartDelete";
+import { ITEM_PER_PAGE } from "@/Constants";
+import { Button } from "react-bootstrap";
 
 export default function Carts(props: any) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [showToast, setShowToast] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const [selectSingleCart, setSelectSingleCart] = useState(null)
-  const [pagination, setPagination] = useState(0)
-  const [userDetailModalShow, setUserDetailModalShow] = useState(false)
-  const [selectCart, setSelectCart] = useState<any>(null)
-  const [showConfirmModal, setShowConfirmModal] = useState(false)
-  const [selectUserByIdCart, setSelectUserByIdCart] = useState(null)
+  const [showToast, setShowToast] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [selectSingleCart, setSelectSingleCart] = useState(null);
+  const [pagination, setPagination] = useState(0);
+  const [userDetailModalShow, setUserDetailModalShow] = useState(false);
+  const [selectCart, setSelectCart] = useState<any>(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectUserByIdCart, setSelectUserByIdCart] = useState(null);
+  const [selectionSingleValue, setSelectionSingleValue] = useState(-1)
+  const cartList: Cart[] = useSelector(selectCarts);
+  const singleCart:Cart[] = useSelector(selectSingleCarts)
+  const totalCarts = useSelector(selectCartsTotal);
 
-  const cartList: Cart[] = useSelector(selectCarts)
-  const totalCarts = useSelector(selectCartsTotal)
-
-  useEffect(() => {
+  function requestData(){
+        console.log("DAJEEEEEEEEEEEEEEE",selectionSingleValue)
+    if(selectionSingleValue > 0){
+      console.log("sono entrato")
+      dispatch(fetchSingleCartsRequest(selectionSingleValue))
+      return
+    }
     dispatch(
       fetchCartsRequest({
         pageSize: ITEM_PER_PAGE,
         page: pagination,
-      })
-    )
-  }, [dispatch, pagination])
+      }),
+    );
+
+
+  }
+
+  useEffect(() => {
+    requestData()
+  }, [dispatch, pagination,selectionSingleValue]);
 
   function detailsButton(cart: any) {
-    setSelectSingleCart(cart)
-    setShowModal(true)
+    setSelectSingleCart(cart);
+    setShowModal(true);
   }
 
   async function removeCart(cartId: number) {
     try {
       // DELETE API
-      await deleteCartRequest(cartId)
+      await deleteCartRequest(cartId);
 
       // UPDATE REDUX STATE
-      dispatch(deleteCartAction({ id: cartId }))
+      dispatch(deleteCartAction({ id: cartId }));
 
       // TOAST
-      setShowToast(true)
+      setShowToast(true);
     } catch (error) {
-      console.error('Errore eliminazione carrello:', error)
+      console.error("Errore eliminazione carrello:", error);
     }
   }
 
   function openModalDetail(e: any, cartId: any) {
-    e.preventDefault()
+    e.preventDefault();
 
-    setSelectUserByIdCart(cartId)
-    setUserDetailModalShow(true)
+    setSelectUserByIdCart(cartId);
+    setUserDetailModalShow(true);
   }
 
   const promiseOptions = async (inputValue: string) => {
-    const response = await fetchFilterUserNames(inputValue).then((res) => res.map(item => {
-      return {
-        value: item.id,
-        label: item.firstName + " " + item.lastName
-      }
-    }))
-    console.log(response)
+    const response = await fetchFilterUserNames(inputValue).then((res) =>
+      res.map((item) => {
+        return {
+          value: item.id,
+          label: item.firstName + " " + item.lastName,
+        };
+      }),
+    );
+    console.log(response);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(response);
       }, 300);
     });
-
   };
 
   return (
     <>
-
       {showConfirmModal && selectCart && (
         <ConfirmModal
           show={showConfirmModal}
@@ -114,17 +133,19 @@ export default function Carts(props: any) {
           userId={selectUserByIdCart}
         />
       )}
-{props.inPage &&
-      <AsyncSelect cacheOptions defaultOptions loadOptions={promiseOptions} />
+      {props.inPage && (
+        <AsyncSelect cacheOptions defaultOptions loadOptions={promiseOptions} onChange={(e) => setSelectionSingleValue(e.value)}/>
+      )}
 
-}
-
-      <div className='clienti container-full-width'>
-        <div className='card client-card'>
+      <div className="clienti container-full-width">
+        <div className="card client-card">
           <CartHeader inPage={props.inPage} />
-
+          {selectionSingleValue > 0 &&
+          
+      <Button style={{width:"10rem"}} onClick={() => setSelectionSingleValue(-1)}>Resetta il filtro</Button>
+          }
           <CartTable
-            cartList={cartList}
+            cartList={selectionSingleValue > 0 ? singleCart:  cartList}
             detailsButton={detailsButton}
             userId={props.userId}
             inPage={props.inPage}
@@ -148,5 +169,5 @@ export default function Carts(props: any) {
         />
       </div>
     </>
-  )
+  );
 }
