@@ -24,9 +24,7 @@ function* handleFetchCarts(action) {
 
 function* handleFetchSingleCarts(action) {
   try {
-    const userId   = action.payload
-    console.log("AZIONE",action.payload)
-    console.log(userId)
+    const userId = action.payload
     // call è un effetto di redux-saga che chiama la funzione API in modo testabile.
     const response = yield call(fetchCartsBySingleUserId, userId)
     // put invia l'azione di successo con i dati ricevuti.

@@ -43,9 +43,7 @@ export default function Carts(props: any) {
   const totalCarts = useSelector(selectCartsTotal);
 
   function requestData(){
-        console.log("DAJEEEEEEEEEEEEEEE",selectionSingleValue)
     if(selectionSingleValue > 0){
-      console.log("sono entrato")
       dispatch(fetchSingleCartsRequest(selectionSingleValue))
       return
     }

@@ -32,7 +32,6 @@ const cartsSlice = createSlice({
       state.total = action.payload.total ?? 0;
     },
     fetchSingleCartsSuccess: (state, action) => {
-      console.log("success")
       state.status = "succeeded";
       state.carts = action.payload.carts || [];
     },
@@ -45,7 +44,6 @@ const cartsSlice = createSlice({
     fetchSingleCartsFailure: (state, action) => {
       state.status = "failed";
       state.error = action.payload;
-      console.log(state.error )
     },
 
     setCartsPage: (state, action) => {
