@@ -97,7 +97,6 @@ export default function Carts(props: any) {
         };
       }),
     );
-    console.log(response);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(response);
