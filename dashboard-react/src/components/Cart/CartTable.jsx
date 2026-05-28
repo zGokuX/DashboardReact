@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";;
 import { CaretDownFill, CaretUpFill, TrashFill } from "react-bootstrap-icons";
 import ProductsTable from "../Product/ProductTable";
+import Loading from "../LoadingGif/Loading";
 
 export default function CartTable({ cartList, ...props }) {
     // eslint-disable-next-line no-unused-vars
@@ -19,6 +20,8 @@ export default function CartTable({ cartList, ...props }) {
     }
     return (
         <>
+        {cartList.length === 0 ? <Loading/> : cartList &&
+
             <table className="card-table">
                 <thead>
                     <tr className="table-header">
@@ -128,6 +131,7 @@ export default function CartTable({ cartList, ...props }) {
                     }
                 </tbody>
             </table >
+                        }
         </>
     )
 }

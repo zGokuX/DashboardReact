@@ -11,6 +11,7 @@ import {
 import { BagPlusFill } from 'react-bootstrap-icons'
 import NotificationAddToCart from './NotificationAddToCart'
 import { selectIsLogged } from '@/store/slices/LoginUser'
+import Loading from '../LoadingGif/Loading'
 
 export default function ProductsTable(props) {
 
@@ -121,6 +122,8 @@ export default function ProductsTable(props) {
         >Resetta i filtri</Button>
       
       }
+      {props.productList.length === 0 ? <Loading/> : props.productList &&
+  
       <table className='card-table invoices-table'>
         <thead>
           <tr>
@@ -197,7 +200,7 @@ export default function ProductsTable(props) {
           ))}
         </tbody>
       </table>
-
+    }
       <NotificationAddToCart
         setShowToast={setShowToast}
         showToast={showToast}

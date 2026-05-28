@@ -37,15 +37,15 @@ export default function Carts(props: any) {
   const [selectCart, setSelectCart] = useState<any>(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [selectUserByIdCart, setSelectUserByIdCart] = useState(null);
-  const [selectionSingleValue, setSelectionSingleValue] = useState(-1)
+  const [selectionSingleValue, setSelectionSingleValue] = useState(-1);
   const cartList: Cart[] = useSelector(selectCarts);
-  const singleCart:Cart[] = useSelector(selectSingleCarts)
+  const singleCart: Cart[] = useSelector(selectSingleCarts);
   const totalCarts = useSelector(selectCartsTotal);
 
-  function requestData(){
-    if(selectionSingleValue > 0){
-      dispatch(fetchSingleCartsRequest(selectionSingleValue))
-      return
+  function requestData() {
+    if (selectionSingleValue > 0) {
+      dispatch(fetchSingleCartsRequest(selectionSingleValue));
+      return;
     }
     dispatch(
       fetchCartsRequest({
@@ -53,13 +53,11 @@ export default function Carts(props: any) {
         page: pagination,
       }),
     );
-
-
   }
 
   useEffect(() => {
-    requestData()
-  }, [dispatch, pagination,selectionSingleValue]);
+    requestData();
+  }, [dispatch, pagination, selectionSingleValue]);
 
   function detailsButton(cart: any) {
     setSelectSingleCart(cart);
@@ -131,18 +129,36 @@ export default function Carts(props: any) {
         />
       )}
       {props.inPage && (
-        <AsyncSelect cacheOptions defaultOptions loadOptions={promiseOptions} onChange={(e) => setSelectionSingleValue(e.value)}/>
+        <>
+          <label>
+            Qui puoi selezionare gli utenti per controllare i loro carrelli
+          </label>
+          <div className="d-flex gap-3 m-2">
+            <AsyncSelect
+              cacheOptions
+              defaultOptions
+              className="w-25"
+              loadOptions={promiseOptions}
+              onChange={(e) => setSelectionSingleValue(e.value)}
+            />
+            {selectionSingleValue > 0 && (
+              <Button
+                style={{ width: "10rem" }}
+                onClick={() => setSelectionSingleValue(-1)}
+              >
+                Resetta il filtro
+              </Button>
+            )}
+          </div>
+        </>
       )}
 
       <div className="clienti container-full-width">
         <div className="card client-card">
           <CartHeader inPage={props.inPage} />
-          {selectionSingleValue > 0 &&
-          
-      <Button style={{width:"10rem"}} onClick={() => setSelectionSingleValue(-1)}>Resetta il filtro</Button>
-          }
+
           <CartTable
-            cartList={selectionSingleValue > 0 ? singleCart:  cartList}
+            cartList={selectionSingleValue > 0 ? singleCart : cartList}
             detailsButton={detailsButton}
             userId={props.userId}
             inPage={props.inPage}

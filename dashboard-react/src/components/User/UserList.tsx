@@ -18,6 +18,7 @@ import {
   selectUsersTotal,
 } from "@/store/slices/usersSlice";
 import { selectIsLogged } from "@/store/slices/LoginUser";
+import Loading from "../LoadingGif/Loading";
 
 // Importiamo useDispatch e useSelector da react-redux per leggere e scrivere nel store globale.
 // useSelector prende i dati dallo stato Redux, mentre useDispatch serve per inviare azioni.
@@ -171,6 +172,7 @@ export default function RecentUsers(props: any) {
               inPage={props.inPage}
             />
 
+          {displayedUsers.length === 0 ? <Loading/> : displayedUsers &&
             <table>
               <tbody>
                 <RenderUser
@@ -183,6 +185,7 @@ export default function RecentUsers(props: any) {
                 />
               </tbody>
             </table>
+                          }
             {props.inPage && filteredUsers.length < 0 && (
               <PaginationPage
                 setPagination={setPagination}
