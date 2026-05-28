@@ -152,7 +152,7 @@ export default function RecentUsers(props: any) {
               </h4>
             )}
 
-            {isLogged && (
+            {isLogged && props.inPage && (
               <button
                 className="custom-btn add-client-btn btn btn-primary p-2"
                 id="add-clients"
@@ -165,10 +165,6 @@ export default function RecentUsers(props: any) {
 
           <div className="client-list" id="client-list-id">
             <UserFilters
-              // filters={{name:filterNames ...}}
-              // onFiltersChange={(changedFilters) => {
-              //   setFilterInput(changedFilters.name)
-              // }}
               inPage={props.inPage}
             />
 

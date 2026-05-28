@@ -50,8 +50,8 @@ export default function LoginUserUI() {
                             {...register("username", {
                                 required: "Username richiesto",
                                 maxLength: {
-                                    value: 15,
-                                    message: "Lunghezza massima 15",
+                                    value: 25,
+                                    message: "Lunghezza massima 25",
                                 },
                                 minLength: {
                                     value: 4,
