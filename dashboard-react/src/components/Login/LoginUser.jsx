@@ -35,7 +35,7 @@ export default function LoginUserUI() {
 
     return (
         <>
-            <div className="card mt-2 d-flex flex-column  align-items-center">
+            <div className="d-flex flex-column m-auto mt-3 align-items-center">
 
                 <h2>Accedi</h2>
 
