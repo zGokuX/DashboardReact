@@ -1,18 +1,44 @@
 import { logUser } from "@/store/slices/LoginUser"
-import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form";
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
 
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 export default function LoginUserUI() {
+
+    const loginSchema = z.object({
+        email: z
+            .string()
+            .min(1, "Email richiesta(es. MarcoRossi@gmail.com)")
+            .email("Invalid email"),
+
+        username: z
+            .string()
+            .max(25, "Lunghezza massima 25")
+            .min(4, "Lunghezza minima 4"),
+
+        password: z
+            .string()
+            .min(6, "Lunghezza min 6"),
+    });
+
+    type LoginFormData = z.infer<typeof loginSchema>;
 
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-    } = useForm();
+    } = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    });
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -21,6 +47,7 @@ export default function LoginUserUI() {
 
         dispatch(logUser({
             UserLogged: {
+                picture: data.picture,
                 name: data.username,
                 email: data.email,
                 password: data.password,
@@ -47,17 +74,7 @@ export default function LoginUserUI() {
                         <input
                             type="text"
                             className="form-control"
-                            {...register("username", {
-                                required: "Username richiesto",
-                                maxLength: {
-                                    value: 25,
-                                    message: "Lunghezza massima 25",
-                                },
-                                minLength: {
-                                    value: 4,
-                                    message: "Lunghezza minima 4",
-                                },
-                            })}
+                            {...register("username")}
                         />
 
                         {errors.username && (
@@ -73,13 +90,14 @@ export default function LoginUserUI() {
                         <input
                             type="email"
                             className="form-control"
-                            {...register("email", {
-                                required: "Email richiesta(es. MarcoRossi@gmail.com)",
-                                pattern: {
-                                    value: /^\S+@gmail\.com$/i,
-                                    message: "Email non valida",
-                                },
-                            })}
+                            {...register("email")}
+                        // {...register("email", {
+                        //     required: "Email richiesta(es. MarcoRossi@gmail.com)",
+                        //     pattern: {
+                        //         value: /^\S+@gmail\.com$/i,
+                        //         message: "Email non valida",
+                        //     },
+                        // })}
                         />
 
                         {errors.email && (
@@ -95,13 +113,7 @@ export default function LoginUserUI() {
                         <input
                             type="password"
                             className="form-control"
-                            {...register("password", {
-                                required: "Password richiesta",
-                                minLength: {
-                                    value: 6,
-                                    message: "Lunghezza minima 6",
-                                },
-                            })}
+                            {...register("password")}
                         />
 
                         {errors.password && (
@@ -134,6 +146,7 @@ export default function LoginUserUI() {
 
                                     dispatch(logUser({
                                         UserLogged: {
+                                            picture: decoded.picture,
                                             name: decoded.name,
                                             email: decoded.email,
                                             phone: "Numero di telefono non inserito",

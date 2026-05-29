@@ -6,12 +6,15 @@ import { logOutUser, selectIsLogged, selectUserLogged } from '@/store/slices/Log
 import { Dropdown, DropdownButton } from 'react-bootstrap'
 import avatar2 from "../assets/avatars/2.png";
 import logo from "../assets/logosite.png";
+import { useEffect } from 'react'
 export default function Header() {
 
   const userProduct = useSelector(selectUserProduct)
   const isLogged = useSelector(selectIsLogged)
   const user = useSelector(selectUserLogged).UserLogged
   const dispatch = useDispatch()
+
+
   return (
     <>
       <header>
@@ -52,7 +55,8 @@ export default function Header() {
             {isLogged &&
               <div className='user-profile' id='user-profile-id'>
                 <div className='user-avatar'>
-                  <img src={avatar2} alt='User Avatar' />
+  
+                  <img src={user?.picture?.length > 0 ? user.picture : avatar2} alt='User Avatar' />
                 </div>
                 <div>
                   <DropdownButton id="dropdown-basic-button" title={user.name}>
