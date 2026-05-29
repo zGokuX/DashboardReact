@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useSelector } from 'react-redux';
 
-function NavBarProfile({setNavBarMarker,navBarMarker, ...props}) {
+function NavBarProfile({setNavBarMarker,navBarMarker}) {
 const user = useSelector(selectUserLogged).UserLogged
   function setMarker(value){
         if(navBarMarker === value){

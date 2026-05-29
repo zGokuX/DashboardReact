@@ -1,4 +1,5 @@
 import './App.css'
+import './theme.css'
 import Layout from './layouts/layout'
 import Header from './layouts/header'
 

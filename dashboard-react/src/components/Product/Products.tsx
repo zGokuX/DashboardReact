@@ -111,7 +111,7 @@ export default function Products(props: any) {
         />
       )}
 
-      <div className="clienti container-full-width mt-3">
+      <div className={ 'clienti container-full-width '}>
         <div className="card client-card" style={{ position: "static" }}>
           <div className="card-title">
             <span>

@@ -23,11 +23,9 @@ export default function DashboardView() {
       <main>
         <div className="welcome-container">
           <div className="d-flex">
-            <h2>
-              {isLogged
-                ? "Benvenuto " + user.name
-                : "Clicca 'Accedi' per ottenere tutte le funzionalità"}
-            </h2>
+            <h3>
+              {isLogged &&  "Benvenuto " + user.name }
+            </h3>
           </div>
 
           <h3>Ecco una paronamica del tuo business</h3>

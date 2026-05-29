@@ -52,6 +52,10 @@ body {
   font-size: 15px;
 }
 
+.btn svg {
+  margin-left: 17px;
+}
+
 .fixed {
   display: flex !important;
   flex-direction: column !important;
@@ -71,11 +75,18 @@ header {
 }
 
 header .topbar-main {
-  background-color: var(--background-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--accent-bg-color);
+
 }
+
+header .topbar-main .btn-outline-primary{
+  color: #fff;
+  border-color: #fff;
+}
+
 
 .container-full-width {
   display: flex;
@@ -92,7 +103,7 @@ header .topbar-main {
 
 .logo-container {
   width: 200px;
-  height: 3rem;
+  padding: 5px;
 }
 
 .user-profile-container {
@@ -173,6 +184,7 @@ input {
   min-height: 100vh;
   flex-direction: row;
   margin: 0;
+  gap: 0px;
 }
 
 .layout aside nav ul {
@@ -330,46 +342,90 @@ main {
   font-size: 22px;
 }
 
-.statistica.container-full-width .card .card-title .card-actions .card-action-button {
+.statistica.container-full-width
+  .card
+  .card-title
+  .card-actions
+  .card-action-button {
   border: none;
   border-radius: 5px;
   padding: 4px;
   font-size: 16px;
 }
 
-.statistica.container-full-width .card .card-title .card-actions .card-action-button.project-btn {
+.statistica.container-full-width
+  .card
+  .card-title
+  .card-actions
+  .card-action-button.project-btn {
   background-color: #d7e0f7;
 }
 
-.statistica.container-full-width .card .card-title .card-actions .card-action-button.project-btn i {
+.statistica.container-full-width
+  .card
+  .card-title
+  .card-actions
+  .card-action-button.project-btn
+  i {
   color: #688bc5;
 }
 
-.statistica.container-full-width .card .card-title .card-actions .card-action-button.revenue-per-month {
+.statistica.container-full-width
+  .card
+  .card-title
+  .card-actions
+  .card-action-button.revenue-per-month {
   background-color: var(--success-bg-color);
 }
 
-.statistica.container-full-width .card .card-title .card-actions .card-action-button.revenue-per-month {
+.statistica.container-full-width
+  .card
+  .card-title
+  .card-actions
+  .card-action-button.revenue-per-month {
   color: var(--success-text-color);
 }
 
-.statistica.container-full-width .card .card-title .card-actions .card-action-button.revenue-per-month i {
+.statistica.container-full-width
+  .card
+  .card-title
+  .card-actions
+  .card-action-button.revenue-per-month
+  i {
   font-size: 12px;
 }
 
-.statistica.container-full-width .card .card-title .card-actions .card-action-button.expired {
+.statistica.container-full-width
+  .card
+  .card-title
+  .card-actions
+  .card-action-button.expired {
   background-color: #fbf1f3;
 }
 
-.statistica.container-full-width .card .card-title .card-actions .card-action-button.expired i {
+.statistica.container-full-width
+  .card
+  .card-title
+  .card-actions
+  .card-action-button.expired
+  i {
   color: #b9443b;
 }
 
-.statistica.container-full-width .card .card-title .card-actions .card-action-button.total-expenses {
+.statistica.container-full-width
+  .card
+  .card-title
+  .card-actions
+  .card-action-button.total-expenses {
   background-color: #ccd8f1;
 }
 
-.statistica.container-full-width .card .card-title .card-actions .card-action-button.total-expenses i {
+.statistica.container-full-width
+  .card
+  .card-title
+  .card-actions
+  .card-action-button.total-expenses
+  i {
   color: var(--waiting-text-color);
 }
 
@@ -382,6 +438,10 @@ main {
 
 .container-full-width.clienti.in-page .row-list {
   display: table-row;
+}
+
+.container-full-width.clienti .row-list .client-info{
+  font-size: 14px;
 }
 
 .container-full-width.clienti .row-list .client-info .custom-btn {
@@ -407,27 +467,45 @@ main {
   flex: 2;
 }
 
-.clienti.container-full-width .card.client-card .client-list .row-list .client-info {
+.clienti.container-full-width
+  .card.client-card
+  .client-list
+  .row-list
+  .client-info {
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex: 1;
 }
 
-.clienti.container-full-width.in-page .card.client-card .client-list .row-list .client-info {
+.clienti.container-full-width.in-page
+  .card.client-card
+  .client-list
+  .row-list
+  .client-info {
   display: table-cell;
   flex-direction: column;
   justify-content: center;
   flex: 1;
 }
 
-.clienti.container-full-width .card.client-card .client-list .row-list .client-info h5 {
-  font-size: 1rem;
+.clienti.container-full-width
+  .card.client-card
+  .client-list
+  .row-list
+  .client-info
+  h5 {
+  font-size: 14px;
   font-weight: 600;
 }
 
-.clienti.container-full-width .card.client-card .client-list .row-list .client-info h6 {
-  font-size: 0.8rem;
+.clienti.container-full-width
+  .card.client-card
+  .client-list
+  .row-list
+  .client-info
+  h6 {
+  font-size: 12px;
   font-weight: 600;
   font-family: Verdana, sans-serif;
 }
@@ -436,8 +514,13 @@ main {
   margin-top: 15px;
 }
 
+.clienti.container-full-width .card.client-card .client-list .client-actions button{
+  margin: auto;
+  white-space:nowrap;
+}
+
+
 .clienti.container-full-width .card.client-card .custom-btn {
-  background-color: #688bc5;
   color: white;
   border: none;
   padding: 5px;
@@ -452,7 +535,11 @@ main {
   padding: 6px 12px;
 }
 
-.clienti.container-full-width .card.client-card .client-list .row-list .client-price::after {
+.clienti.container-full-width
+  .card.client-card
+  .client-list
+  .row-list
+  .client-price::after {
   content: '\f054';
   font-family: 'Font Awesome 6 Free';
   margin-left: 5px;
@@ -462,11 +549,20 @@ main {
   align-items: center;
 }
 
-.clienti.container-full-width .card.client-card .client-list .row-list .client-price span {
+.clienti.container-full-width
+  .card.client-card
+  .client-list
+  .row-list
+  .client-price
+  span {
   font-weight: 600;
 }
 
-.clienti.container-full-width .card.client-card .client-list .row-list .client-price {
+.clienti.container-full-width
+  .card.client-card
+  .client-list
+  .row-list
+  .client-price {
   display: flex;
   align-items: center;
 }
@@ -517,9 +613,9 @@ main {
 .search-form {
   display: flex;
   align-items: center;
-  margin-left: 56px;
   gap: 5px;
-  width: 90%;
+  width: 100%;
+ 
 }
 
 .area-gradient {
@@ -527,11 +623,13 @@ main {
   opacity: 1;
 }
 
-.clienti.container-full-width .card.client-card .card-title .card-actions .card-action-list {
-  background-color: #f0f3fb;
-  color: #24427a;
+.clienti.container-full-width
+  .card.client-card
+  .card-title
+  .card-actions
+  .card-action-list {
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   padding: 0 !important;
 }
 
@@ -544,13 +642,17 @@ nav {
   height: 0 !important;
 }
 
-.clienti.container-full-width .card.client-card .card-title .card-actions .card-action-list::after {
+/* .clienti.container-full-width
+  .card.client-card
+  .card-title
+  .card-actions
+  .card-action-list::after {
   content: '\f054';
   font-family: 'Font Awesome 6 Free';
   margin-left: 5px;
   font-size: 12px;
   font-weight: 900;
-}
+} */
 
 .line {
   fill: none;
@@ -567,7 +669,7 @@ nav {
   text-align: left;
   padding: 5px;
   padding-inline: 6px;
-  font-weight: 600;
+  font-size: 14px;
 }
 
 .container-full-width .card .card-table td {
@@ -584,7 +686,10 @@ nav {
   font-size: 18px;
 }
 
-.container-full-width .card.container-full-width-card .card-title.task-title span {
+.container-full-width
+  .card.container-full-width-card
+  .card-title.task-title
+  span {
   white-space: nowrap;
 }
 
@@ -604,7 +709,12 @@ nav {
   font-weight: 600;
 }
 
-.layout .clienti.container-full-width .card .card-title .card-actions.summary-actions span {
+.layout
+  .clienti.container-full-width
+  .card
+  .card-title
+  .card-actions.summary-actions
+  span {
   font-size: 22px;
 }
 
@@ -622,7 +732,10 @@ nav {
   align-items: center;
 }
 
-.container-full-width .card.container-full-width-card .card-title .card-action::after {
+.container-full-width
+  .card.container-full-width-card
+  .card-title
+  .card-action::after {
   content: '\f054';
   font-family: 'Font Awesome 6 Free';
   margin-left: 5px;
@@ -640,7 +753,11 @@ nav {
   padding-inline: 0;
 }
 
-.container-full-width .card.container-full-width-card .card-table .col-stato .badge {
+.container-full-width
+  .card.container-full-width-card
+  .card-table
+  .col-stato
+  .badge {
   display: inline-block;
   white-space: nowrap;
   font-size: 11px;
@@ -664,7 +781,13 @@ nav {
   margin-bottom: 5px;
 }
 
-.layout .container-full-width .card.container-full-width-card .card-table.no-justify-content tr td div {
+.layout
+  .container-full-width
+  .card.container-full-width-card
+  .card-table.no-justify-content
+  tr
+  td
+  div {
   display: flex;
   flex-direction: row;
   padding-top: 0px;
@@ -672,7 +795,11 @@ nav {
   align-items: baseline;
 }
 
-.clienti.container-full-width .card .card-content .card-graphic .container-full-width-graphic {
+.clienti.container-full-width
+  .card
+  .card-content
+  .card-graphic
+  .container-full-width-graphic {
   display: flex;
   gap: 5px;
 }
@@ -686,18 +813,38 @@ nav {
   justify-content: space-around;
 }
 
-.clienti.container-full-width .card .card-content .card-graphic .summary .table-summary {
+.clienti.container-full-width
+  .card
+  .card-content
+  .card-graphic
+  .summary
+  .table-summary {
   text-align: center;
   align-items: center;
   padding: 5px;
   margin-top: 30px;
 }
 
-.clienti.container-full-width .card .card-content .card-graphic .summary .table-summary tr td {
+.clienti.container-full-width
+  .card
+  .card-content
+  .card-graphic
+  .summary
+  .table-summary
+  tr
+  td {
   padding: 15px 10px;
 }
 
-.clienti.container-full-width .card .card-content .card-graphic .summary .table-summary .table-header-summary tr th {
+.clienti.container-full-width
+  .card
+  .card-content
+  .card-graphic
+  .summary
+  .table-summary
+  .table-header-summary
+  tr
+  th {
   font-size: 12px;
   color: #797d88;
 }
@@ -806,7 +953,7 @@ nav {
 }
 
 .notification-user {
-      padding-top: 5px;
+  padding-top: 5px;
   position: relative;
 }
 
@@ -824,10 +971,9 @@ nav {
 }
 
 .notification-user .notification-count {
-      position: absolute;
-    top: -3px;
-    right: -7px;
-
+  position: absolute;
+  top: -3px;
+  right: -7px;
 }
 .notification-user .fa-solid.fa-bell {
   font-size: 21px !important;
@@ -848,6 +994,11 @@ nav {
   color: #333;
 }
 
+
+.cart-icon svg{
+  margin-bottom:3px;
+}
+
 .movement {
   position: fixed;
   transition: 1s ease;
@@ -862,4 +1013,3 @@ nav {
   right: 185px !important;
   transform: scale(0.5);
 }
-
