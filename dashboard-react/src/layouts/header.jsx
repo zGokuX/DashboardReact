@@ -38,6 +38,7 @@ export default function Header() {
               <div style={{ cursor: 'pointer' }} className='cart-icon ms-3'>
                 <CartFill
                   size={21}
+                  className='text-light'
                   onClick={() => console.log('PRODOTTI: ', userProduct)}
                 />
                 {userProduct && userProduct.length > 0 && (
