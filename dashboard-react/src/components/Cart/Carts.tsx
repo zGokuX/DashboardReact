@@ -133,13 +133,13 @@ export default function Carts(props: any) {
           <label>
             Qui puoi selezionare gli utenti per controllare i loro carrelli
           </label>
-          <div className="d-flex gap-3 m-2">
+          <div className="d-flex gap-3 my-2 mx-0">
             <AsyncSelect
               cacheOptions
               defaultOptions
               className="w-25"
               loadOptions={promiseOptions}
-              onChange={(e) => setSelectionSingleValue(e.value)}
+              onChange={(eç) => setSelectionSingleValue(e.value)}
             />
             {selectionSingleValue > 0 && (
               <Button

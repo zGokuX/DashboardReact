@@ -28,40 +28,51 @@ export default function Header() {
             </div>
           </div>
           <div className='user-profile-container'>
-            <Link style={{ "textDecoration": "none" }} to={isLogged ? '/cartCheckout' : '/login'}>
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={isLogged ? '/cartCheckout' : '/login'}
+            >
               <div style={{ cursor: 'pointer' }} className='cart-icon ms-3'>
                 <CartFill
                   size={21}
                   onClick={() => console.log('PRODOTTI: ', userProduct)}
                 />
                 {userProduct && userProduct.length > 0 && (
-                  <span className='notification-count'>{userProduct.length >= 9 ? "9+" : userProduct.length}</span>
+                  <span className='notification-count'>
+                    {userProduct.length >= 9 ? '9+' : userProduct.length}
+                  </span>
                 )}
               </div>
             </Link>
-            {!isLogged &&
+            {!isLogged && (
               <div className='user-profile' id='user-profile-id'>
-                <Link to="/login">
-                  <span className='user-name me-2'>
+                <Link to='/login'>
+                  <span className='user-name btn btn-outline-primary  me-2'>
                     Accedi
+                    <PersonCircle size={16} />
                   </span>
-                  <PersonCircle size={22} />
                 </Link>
               </div>
-            }
-            {isLogged &&
+            )}
+            {isLogged && (
               <div className='user-profile' id='user-profile-id'>
                 <div className='user-avatar'>
                   <img src={avatar2} alt='User Avatar' />
                 </div>
                 <div>
-                  <DropdownButton id="dropdown-basic-button" title={user.name}>
-                    <Dropdown.Item href="#/profile">Vai al menu</Dropdown.Item>
-                    <Dropdown.Item href="#/" className='bg-danger text-light' onClick={() => dispatch(logOutUser())}>Logout</Dropdown.Item>
+                  <DropdownButton id='dropdown-basic-button' title={user.name}>
+                    <Dropdown.Item href='#/profile'>Vai al menu</Dropdown.Item>
+                    <Dropdown.Item
+                      href='#/'
+                      className='bg-danger text-light'
+                      onClick={() => dispatch(logOutUser())}
+                    >
+                      Logout
+                    </Dropdown.Item>
                   </DropdownButton>
                 </div>
               </div>
-            }
+            )}
           </div>
         </div>
       </header>

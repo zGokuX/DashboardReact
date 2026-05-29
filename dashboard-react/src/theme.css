@@ -1,0 +1,14 @@
+.btn{
+  border-radius: 0px;
+  padding: 4px 15px;
+  font-size: 12px;
+}
+
+.btn-primary{
+  backgroud-color: var(--bs-btn-border-color);
+}
+
+
+.btn-outline-primary{
+  border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+}

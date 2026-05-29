@@ -51,69 +51,72 @@ export default function CartTable({ cartList, ...props }) {
                         })
                         .map((item) => {
                             return (
-                                <tr key={item.id}>
-                                    {!props.inUser &&
-                                        <td><a href="#" onClick={(e) => props.openModalDetail(e, item.userId)}>Utente {item.id}</a></td>
+                              <tr key={item.id}>
+                                {!props.inUser && (
+                                  <td>
+                                    <a
+                                      href='#'
+                                      onClick={e =>
+                                        props.openModalDetail(e, item.userId)
+                                      }
+                                    >
+                                      Utente {item.id}
+                                    </a>
+                                  </td>
+                                )}
 
-                                    }
+                                <td>{item.totalProducts}</td>
+                                <td>{item.totalQuantity}</td>
+                                <td>€ {Math.round(item.total)}</td>
+                                <td>€{Math.round(item.discountedTotal)}</td>
 
-                                    <td>{item.totalProducts}</td>
-                                    <td>{item.totalQuantity}</td>
-                                    <td>
-                                        € {Math.round(item.total)}
-                                    </td>
-                                    <td>
-                                        €
-                                        {Math.round(
-                                            item.discountedTotal
-                                        )}
-                                    </td>
+                                <td className='d-flex gap-3'>
+                                  {!props.inUser && (
+                                    <Button
+                                      variant='outline-primary'
+                                      onClick={() => {
+                                        setShowModal(true)
+                                        props.setSelectCart(item)
+                                        props.detailsButton(item)
+                                      }}
+                                    >
+                                      Details
+                                    </Button>
+                                  )}
 
-                                    <td className="d-flex gap-3">
-                                        {!props.inUser &&
-                                            < Button
-                                                variant="outline-primary"
-                                                onClick={() => {
-                                                    setShowModal(true)
-                                                    props.setSelectCart(item)
-                                                    props.detailsButton(item)
-                                                }}
-                                            >
-                                                Details
-                                            </Button>
-                                        }
+                                  {props.inUser && (
+                                    <Button
+                                      className='text-nowrap'
+                                      variant='outline-primary'
+                                      onClick={() => {
+                                        showProduct(item)
+                                      }}
+                                    >
+                                      Mostra Prodotti{' '}
+                                      {openedUserId === item.id ? (
+                                        <CaretUpFill />
+                                      ) : (
+                                        <CaretDownFill />
+                                      )}
+                                    </Button>
+                                  )}
 
-                                        {props.inUser &&
-                                            <Button
-                                                className="text-nowrap"
-                                                variant="outline-primary"
-                                                onClick={() => {
-                                                    showProduct(item)
-                                                }}
-                                            >
-                                                Mostra Prodotti {openedUserId === item.id ? <CaretUpFill /> : <CaretDownFill />}
-                                            </Button>
-                                        }
-
-                                        {props.inPage && !props.inUser &&
-                                            <Button variant="danger" onClick={() => {
-                                                props.setSelectCart(item);
-                                                props.setShowConfirmModal(
-                                                    true
-                                                );
-
-                                            }}>
-                                                <TrashFill
-                                                    size={20}
-                                                >
-                                                    Delete
-                                                </TrashFill>
-                                            </Button>
-                                        }
-                                    </td>
-
-                                </tr>
-                            );
+                                  {props.inPage && !props.inUser && (
+                                    <Button
+                                      variant='danger'
+                                      onClick={() => {
+                                        props.setSelectCart(item)
+                                        props.setShowConfirmModal(true)
+                                      }}
+                                    >
+                                      <TrashFill size={14} className='m-0'>
+                                        Delete
+                                      </TrashFill>
+                                    </Button>
+                                  )}
+                                </td>
+                              </tr>
+                            )
                         })}
                     {
                         selectProduct.length > 0 &&
