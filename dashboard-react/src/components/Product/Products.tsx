@@ -111,7 +111,7 @@ export default function Products(props: any) {
         />
       )}
 
-      <div className={ 'clienti container-full-width '}>
+      <div className={`clienti container-full-width ${props.inPage ? "mt-3" : "" }`}>
         <div className="card client-card" style={{ position: "static" }}>
           <div className="card-title">
             <span>
@@ -121,11 +121,16 @@ export default function Products(props: any) {
 
             {!props.inPage && (
               <div className="card-actions">
-                <nav>
-                  <Link to="/products">
-                    <span className="card-action-list">Vedi Tutti</span>
-                  </Link>
-                </nav>
+
+                <Link to="/products">
+                  <span style={{
+                    display: "inline-block",
+                    padding: "5px",
+                    margin: "5px",
+                  }} className="card-action-list">Vedi Tutti</span>
+                </Link>
+
+
               </div>
             )}
 
@@ -144,11 +149,9 @@ export default function Products(props: any) {
                     </option>
                   ))}
                 </Form.Select>
-                {isLogged && (
-                  <Button onClick={() => setShowAddProductModal(true)}>
+                  <Button disabled={!isLogged} onClick={() => setShowAddProductModal(true)}>
                     Aggiungi prodotto
                   </Button>
-                )}
               </>
             )}
           </div>

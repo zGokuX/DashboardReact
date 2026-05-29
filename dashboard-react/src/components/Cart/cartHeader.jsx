@@ -11,7 +11,11 @@ export default function CartHeader(props) {
       {!props.inPage && (
         <div className='card-actions' id='btn-card-actions'>
           <Link to='/cards'>
-            <span className='card-action-list'>Vedi Tutti</span>
+            <span  style={{
+                        display: "inline-block",
+                        padding: "5px",
+                        margin: "5px",
+                      }} className='card-action-list'>Vedi Tutti</span>
           </Link>
         </div>
       )}

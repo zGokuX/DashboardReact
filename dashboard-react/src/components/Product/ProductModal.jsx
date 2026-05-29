@@ -102,8 +102,8 @@ function ProductModal({ show, onHide, product, ...props }) {
 
             </Modal.Body>
             <Modal.Footer>
-                {props.inPage && isLogged &&
-                    <Button variant='outline-primary' onClick={() => dispatch(addToCart({ image: product.thumbnail, product: product.title, price: product.price }, setShowToast(true)))}>Aggiungi al carrello</Button>
+                {props.inPage &&
+                    <Button variant='outline-primary' disabled={isLogged} onClick={() => dispatch(addToCart({ image: product.thumbnail, product: product.title, price: product.price }, setShowToast(true)))}>Aggiungi al carrello</Button>
                 }
 
                 <Button variant="danger" onClick={onHide}>

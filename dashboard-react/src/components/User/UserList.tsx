@@ -152,10 +152,11 @@ export default function RecentUsers(props: any) {
               </h4>
             )}
 
-            {isLogged && props.inPage && (
+            {props.inPage && (
               <button
                 className="custom-btn add-client-btn btn btn-primary p-2"
                 id="add-clients"
+                disabled={!isLogged}
                 onClick={addButton}
               >
                 Aggiungi cliente{" "}

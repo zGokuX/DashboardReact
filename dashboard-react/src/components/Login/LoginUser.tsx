@@ -35,6 +35,7 @@ export default function LoginUserUI() {
     } = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
+            username: "",
             email: "",
             password: "",
         },

@@ -52,10 +52,10 @@ body {
   font-size: 15px;
 }
 
-.btn svg {
+/* .btn svg {
   margin-left: 17px;
-}
-
+} */
+ 
 .fixed {
   display: flex !important;
   flex-direction: column !important;
