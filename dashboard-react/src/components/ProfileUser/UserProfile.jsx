@@ -13,10 +13,13 @@ export default function UserProfile() {
     const [isActiveInputPhone, setIsActiveInputPhone] = useState(true)
     const [isActiveInputBirthPlace, setIsActiveInputBirthPlace] = useState(true)
     const [isActiveInputDate, setIsActiveInputDate] = useState(true)
+    const [isActiveInputImage, setIsActiveInputImage] = useState(true)
     const [newName, setNewName] = useState(null)
     const [newPhone, setNewPhone] = useState(null)
     const [newBirthPlace, setNewBirthPlace] = useState(null)
     const [newDate, setNewDate] = useState(null)
+    const [preview, setPreview] = useState(false)
+    const [newImage, setNewImage] = useState(null)
     const [navBarMarker, setNavBarMarker] = useState(1)
     useEffect(() => {
         if (!user) {
@@ -43,7 +46,7 @@ export default function UserProfile() {
             setIsActiveInputPhone(true)
             return
         }
-        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: newPhone.replace(/ /g, '-'), birthPlace: user.birthPlace, date: user.date, historyProduct: user.historyProduct,  picture: user.picture} }))
+        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: newPhone.replace(/ /g, '-'), birthPlace: user.birthPlace, date: user.date, historyProduct: user.historyProduct, picture: user.picture } }))
         setIsActiveInputPhone(true)
     }
     function updateBirthPlace() {
@@ -51,7 +54,7 @@ export default function UserProfile() {
             setIsActiveInputBirthPlace(true)
             return
         }
-        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: newBirthPlace, date: user.date, historyProduct: user.historyProduct , picture: user.picture } }))
+        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: newBirthPlace, date: user.date, historyProduct: user.historyProduct, picture: user.picture } }))
         setIsActiveInputBirthPlace(true)
     }
     function updateDate() {
@@ -59,8 +62,18 @@ export default function UserProfile() {
             setIsActiveInputDate(true)
             return
         }
-        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: newDate, historyProduct: user.historyProduct , picture: user.picture } }))
+        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: newDate, historyProduct: user.historyProduct, picture: user.picture } }))
         setIsActiveInputDate(true)
+    }
+
+    function updateImage() {
+        if (newImage === user.picture) {
+            setIsActiveInputImage(true)
+            return
+        }
+        dispatch(logUser({ UserLogged: { name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: user.date, historyProduct: user.historyProduct, picture: newImage } }))
+        setIsActiveInputImage(true)
+        setPreview(false)
     }
 
     return (
@@ -73,6 +86,35 @@ export default function UserProfile() {
                 <h3>{navBarMarker === 3 ? "Pagamenti precedenti" : "Dati personali"}</h3>
                 {navBarMarker === 1 &&
                     <>
+                        <div className="userName d-flex flex-column gap-2">
+                            <label htmlFor="exampleInputEmail1" className="form-label">Carica foto profilo</label>
+                            <div className="d-flex flex-row gap-3   ">
+                                <img src={preview ? newImage : user?.picture} className="rounded-circle" height={75} width={75}></img>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    disabled={isActiveInputImage}
+                                    style={{ width: "25rem" }}
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            setNewImage(URL.createObjectURL(file));
+                                            setPreview(true)
+                                        }
+                                    }}
+                                />
+
+                            </div>
+                            <div className="buttons d-flex gap-3">
+                                <Button style={{ "width": "10rem" }} onClick={() => setIsActiveInputImage(false)}>Modifica</Button>
+                                {!isActiveInputImage &&
+                                    <Button style={{ "width": "10rem" }} onClick={() => updateImage()}>Salva modifiche</Button>
+                                }
+                            </div>
+
+
+                        </div>
+
                         <div className="userName d-flex flex-column gap-2">
                             <label htmlFor="exampleInputEmail1" className="form-label">Username</label>
                             <input type="text" disabled={isActiveInputName} defaultValue={user?.name} style={{ "width": "25rem" }} onChange={(e) => setNewName(e.target.value)} />

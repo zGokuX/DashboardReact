@@ -49,9 +49,9 @@ export default function Header() {
               </div>
             </Link>
             {!isLogged && (
-              <div className='user-profile' id='user-profile-id'>
+              <div className='user-profile' id='user-profile-id '>
                 <Link to='/login'>
-                  <span className='user-name btn btn-outline-primary  me-2'>
+                  <span className='user-name btn btn-outline-primary me-2 d-flex gap-2 align-items-center'>
                     Accedi
                     <PersonCircle size={16} />
                   </span>
