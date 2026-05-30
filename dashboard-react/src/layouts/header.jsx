@@ -67,7 +67,7 @@ export default function Header() {
                 <div>
                   <DropdownButton id='dropdown-basic-button' title={user.name}>
                     <Dropdown.Item href='#/profile' className='d-flex gap-2 align-items-center'><PersonCircle size={18}/>Il mio profilo</Dropdown.Item>
-                    <Dropdown.Item href='#/profile' className='d-flex gap-2 align-items-center'><MoonFill className='text-warning' size={18}/>Dark mode</Dropdown.Item>
+                    <Dropdown.Item href='#' className='d-flex gap-2 align-items-center'><MoonFill className='text-warning' size={18}/>Dark mode</Dropdown.Item>
                     <Dropdown.Item
                       href='#/'
                       className='bg-danger text-light d-flex gap-2 align-items-center '
