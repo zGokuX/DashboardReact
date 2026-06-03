@@ -7,6 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
     const AddUserSchema = z.object({
+        username: z
+            .string()
+            .min(4,"Lunghezza minima 4")
+            .max(25,"lunghezza massima 25"),
+            
+        password: z
+            .string()
+            .min(6, "Lunghezza min 6"),
         name: z
             .string()
             .min(4, "Lunghezza minima 4")
@@ -29,8 +37,7 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
 
         phone: z
             .string()
-            .min(5, "Numero troppo corto")
-            .max(15, "Lunghezza massima 15"),
+            .min(5, "Numero troppo corto"),
 
         placeBirth: z
             .string()
@@ -51,6 +58,8 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
     } = useForm({
         resolver: zodResolver(AddUserSchema),
         defaultValues: {
+            username: user.username || "",
+            password: user.password || "",
             name: user?.firstName || "",
             surname: user?.lastName || "",
             company: user?.company?.department || "",
@@ -65,6 +74,7 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
 
     function saveHandler(data: AddUserSchema) {
         const formattedUser = {
+            id: user?.id,
             firstName: data.name,
             lastName: data.surname,
             company: {
@@ -92,7 +102,36 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
 
             <Modal.Body className="p-4">
                 <Form onSubmit={handleSubmit(saveHandler)}>
+
                     <div className="row">
+
+                        {user?.role == "admin" &&
+                            <>
+                                <div className="col-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Username</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Username"
+                                            {...register("username")}
+                                        />
+                                    </Form.Group>
+                                </div>
+
+                                <div className="col-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Password</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Password"
+                                            {...register("password")}
+                                        />
+                                    </Form.Group>
+                                </div>
+                            </>
+
+                        }
+
 
                         <div className="col-6">
                             <Form.Group className="mb-3">

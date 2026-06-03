@@ -3,8 +3,11 @@ import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import CartTable from '../Cart/CartTable'
 import { CaretDownFill, CaretUpFill } from 'react-bootstrap-icons'
+import { useSelector } from 'react-redux'
+import { selectIsLogged } from '@/store/slices/LoginUser'
 
 export function RenderUser(props) {
+    const isLogged = useSelector(selectIsLogged);
   return props.displayedUsers.map(item => {
     return (
       <React.Fragment key={item.id + item.firstName}>
@@ -41,6 +44,7 @@ export function RenderUser(props) {
                   <Button
                     variant='outline-primary'
                     className='modify-btn'
+                    disabled={!isLogged}
                     onClick={() => props.editButton(item)}
                   >
                     Modifica
