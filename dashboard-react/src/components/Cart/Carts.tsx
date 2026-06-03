@@ -66,13 +66,10 @@ export default function Carts(props: any) {
 
   async function removeCart(cartId: number) {
     try {
-      // DELETE API
       await deleteCartRequest(cartId);
 
-      // UPDATE REDUX STATE
       dispatch(deleteCartAction({ id: cartId }));
 
-      // TOAST
       setShowToast(true);
     } catch (error) {
       console.error("Errore eliminazione carrello:", error);
@@ -139,7 +136,7 @@ export default function Carts(props: any) {
               defaultOptions
               className="w-25"
               loadOptions={promiseOptions}
-              onChange={(eç) => setSelectionSingleValue(e.value)}
+              onChange={(e) => setSelectionSingleValue(e.value)}
             />
             {selectionSingleValue > 0 && (
               <Button
