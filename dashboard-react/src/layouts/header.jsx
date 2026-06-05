@@ -70,15 +70,16 @@ export default function Header() {
                   <img src={user?.picture?.length > 0 ? user.picture : avatar2} alt='User Avatar' />
                 </div>
                 <div>
-                  <DropdownButton id='dropdown-basic-button' title={user.name}>
-                    <Dropdown.Item href='#/profile' className='d-flex gap-2 align-items-center'><PersonCircle size={18} />Il mio profilo</Dropdown.Item>
-                    <Dropdown.Item href='#' className='d-flex gap-2 align-items-center'><MoonFill className='text-warning' size={18} />Dark mode</Dropdown.Item>
+                  <DropdownButton id='dropdown-basic-button' title={user.name} >
+                    <Dropdown.Item href='#/profile' className='d-flex gap-2 align-items-center' style={{fontSize: "15px"}}><PersonCircle size={15} />Il mio profilo</Dropdown.Item>
+                    <Dropdown.Item href='#' className='d-flex gap-2 align-items-center' style={{fontSize: "15px"}}><MoonFill className='text-warning' size={15} />Dark mode</Dropdown.Item>
                     <Dropdown.Item
+                      style={{fontSize: "15px"}}
                       href='#/'
                       className='bg-danger text-light d-flex gap-2 align-items-center '
                       onClick={() => dispatch(logOutUser())}
                     >
-                      <BoxArrowInLeft size={18} />
+                      <BoxArrowInLeft size={15} />
                       Logout
                     </Dropdown.Item>
 
