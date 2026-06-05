@@ -38,6 +38,11 @@ export default function Layout() {
                                 </li>
 
                                 <li className="d-flex align-items-center">
+                                    <i class="fa-solid fa-gamepad  me-2"></i>
+                                    <Link to="/relax">Relax Mode</Link>
+                                </li>
+
+                                <li className="d-flex align-items-center">
                                     <i class="fa-solid fa-comment me-2"></i>
                                     <Link to="/feeback">Feedback</Link>
                                 </li>
