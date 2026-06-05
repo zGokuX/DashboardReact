@@ -1,4 +1,4 @@
-import { logOutUser, logUser, selectUserLogged } from "@/store/slices/LoginUser"
+import { logOutUser, logUser, selectAllHistory, selectUserLogged } from "@/store/slices/LoginUser"
 import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
@@ -7,6 +7,7 @@ import NavBarProfile from "./NavBarProfile"
 
 export default function UserProfile() {
     const user = useSelector(selectUserLogged).UserLogged
+    const historyProduct = useSelector(selectAllHistory)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [isActiveInputName, setIsActiveInputName] = useState(true)
@@ -21,6 +22,7 @@ export default function UserProfile() {
     const [preview, setPreview] = useState(false)
     const [newImage, setNewImage] = useState(null)
     const [navBarMarker, setNavBarMarker] = useState(1)
+    console.log("PRODOTTI TOTALI: ", historyProduct)
     useEffect(() => {
         if (!user) {
             navigate("/")
@@ -171,12 +173,11 @@ export default function UserProfile() {
                         </div>
                     </>
                 }
-                {navBarMarker === 3 && user.historyProduct && user.historyProduct.length > 0 &&
+                {navBarMarker === 3 && historyProduct && historyProduct.length > 0 &&
                     <div className="userName d-flex flex-column gap-2">
                         <ol>
-                            {user.historyProduct?.map((item, index) => (
+                            {historyProduct.map((item, index) => (
                                 <li key={index} className="d-flex align-items-center gap-2 mb-2">
-
                                     <img
                                         src={item.image}
                                         alt={item.product}

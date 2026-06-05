@@ -1,10 +1,10 @@
-import { selectUserLogged } from '@/store/slices/LoginUser';
+import { selectAllHistory } from '@/store/slices/LoginUser';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useSelector } from 'react-redux';
 
 function NavBarProfile({setNavBarMarker,navBarMarker}) {
-const user = useSelector(selectUserLogged).UserLogged
+const historyProduct = useSelector(selectAllHistory)
   function setMarker(value){
         if(navBarMarker === value){
             return
@@ -19,7 +19,7 @@ const user = useSelector(selectUserLogged).UserLogged
           <Nav className="me-auto">
             <Nav.Link href="#" onClick={() => setMarker(1)} style={{"textDecoration": navBarMarker === 1 ? "underline" : "none"}}>Profile config</Nav.Link>
             <Nav.Link href="#" onClick={() => setMarker(2)} style={{"textDecoration": navBarMarker === 2 ? "underline" : "none"}}>Optional config</Nav.Link>
-            {user?.historyProduct && user?.historyProduct?.length > 0 &&
+            {historyProduct && historyProduct?.length > 0 &&
             
             <Nav.Link href="#" onClick={() => setMarker(3)} style={{"textDecoration": navBarMarker === 3 ? "underline" : "none"}}>History payment </Nav.Link>
             }

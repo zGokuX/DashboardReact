@@ -5,6 +5,7 @@
     name: 'Login',
     initialState: {
           UserLogged: {},
+          HistoryProduct: [],
           isLogged: false,
     },
     reducers: {
@@ -13,6 +14,11 @@
         state.isLogged = true
         console.log(action.payload)
       },
+
+      addToHistory: (state, action) => {
+        state.HistoryProduct.push(...action.payload)
+      },
+
       logOutUser: (state) => {
         state.UserLogged = []
         state.isLogged = false
@@ -21,10 +27,11 @@
   })
 
 
-  export const { logUser,logOutUser } = LoginSlice.actions
+  export const { logUser,logOutUser,addToHistory } = LoginSlice.actions
 
 
 export const selectUserLogged = (state) => state.Login.UserLogged
+export const selectAllHistory = (state) => state.Login.HistoryProduct
 export const selectIsLogged = (state) => state.Login.isLogged
 
   export default LoginSlice.reducer

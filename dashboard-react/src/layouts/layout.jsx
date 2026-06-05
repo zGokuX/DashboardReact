@@ -20,11 +20,11 @@ export default function Layout() {
                         <nav id="move-nav">
                             <ul>
                                 <li className="d-flex align-items-center">
-                                    <i class="fa-solid fa-house me-2"></i>
+                                    <i className="fa-solid fa-house me-2"></i>
                                     <Link to="/">Home</Link>
                                 </li>
                                 <li className="d-flex align-items-center">
-                                    <i class="fa-solid fa-user me-2"></i>
+                                    <i className="fa-solid fa-user me-2"></i>
                                     <Link to="/users">Users</Link>
                                 </li>
                                 <li className="d-flex align-items-center">

@@ -12,8 +12,7 @@ export default function Header() {
   const isLogged = useSelector(selectIsLogged)
   const user = useSelector(selectUserLogged).UserLogged
   const dispatch = useDispatch()
-
-
+  
   return (
     <>
       <header>

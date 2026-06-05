@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import RiepilogoCart from "./RiepilogoCart"
 import IndirizzoSpedizioneCart from "./IndirizzoSpedizioneCart"
 import MetodoPagamento from "./MetodoPagamento"
-import { logUser, selectUserLogged } from "@/store/slices/LoginUser"
+import { addToHistory, selectAllHistory } from "@/store/slices/LoginUser"
 
 export default function CartCheckin() {
 
@@ -13,7 +13,7 @@ export default function CartCheckin() {
     const [finalTotal, setFinalTotal] = useState(0)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const user = useSelector(selectUserLogged).UserLogged
+    const historyProduct = useSelector(selectAllHistory)
     const [paymentMethod, setPaymentMethod] = useState("card")
 
     const [cardData, setCardData] = useState({
@@ -70,14 +70,21 @@ export default function CartCheckin() {
     const handleConfirm = () => {
         setFinalTotal(total)
         setConfirmed(true)
-        dispatch(logUser({
-            UserLogged: {
-                name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: user.date, historyProduct: groupedCart.map(item => ({
-                    ...item,
-                    paidAt: new Date().toISOString()
-                }))
-            }
-        }))
+        dispatch(addToHistory(
+             groupedCart.map(item => ({
+                ...item,
+                paidAt: new Date().toISOString()
+            }))
+        ))
+        console.log(historyProduct)
+        // dispatch(logUser({
+        //     UserLogged: {
+        //         name: user.name, email: user.email, password: user.password, phone: user.phone, birthPlace: user.birthPlace, date: user.date, historyProduct: groupedCart.map(item => ({
+        //             ...item,
+        //             paidAt: new Date().toISOString()
+        //         }))
+        //     }
+        // }))
     }
 
     if (confirmed) {

@@ -23,12 +23,12 @@ export default function DashboardView() {
       <main>
         <div className="welcome-container">
           <div className="d-flex">
-            <h3>
+            <h2>
               {isLogged &&  "Benvenuto " + user.name }
-            </h3>
+            </h2>
           </div>
 
-          <h3>Ecco una paronamica del tuo business</h3>
+          <h4>Ecco una paronamica del tuo business</h4>
         </div>
         <Graphic />
         <div className="clienti container-full-width">
