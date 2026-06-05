@@ -32,7 +32,7 @@ const usersSlice = createSlice({
   initialState,
 
   reducers: {
-    fetchUsersRequest: (state) => {
+    fetchUsersRequest: (state, action: PayloadAction<object>) => {
       state.status = 'loading'
       state.error = null
     },
