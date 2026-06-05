@@ -68,10 +68,6 @@ export default function CartCheckin() {
     }
 
     const handleConfirm = () => {
-        const order = {
-        products: groupedCart,
-        paidAt: new Date().toISOString()
-    }
         setFinalTotal(total)
         setConfirmed(true)
         dispatch(logUser({

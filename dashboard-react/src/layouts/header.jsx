@@ -31,7 +31,13 @@ export default function Header() {
           </div>
           <div className='user-profile-container'>
             <Link
-              style={{ textDecoration: 'none' }}
+            className='me-2'
+              style={{
+                textDecoration: "none",
+                ...(userProduct.length > 0
+                  ? { position: "relative", top: "7px" }
+                  : {})
+              }}
               to={isLogged ? '/cartCheckout' : '/login'}
             >
               <div style={{ cursor: 'pointer' }} className='cart-icon ms-3'>
@@ -60,22 +66,22 @@ export default function Header() {
             {isLogged && (
               <div className='user-profile' id='user-profile-id'>
                 <div className='user-avatar'>
-  
+
                   <img src={user?.picture?.length > 0 ? user.picture : avatar2} alt='User Avatar' />
                 </div>
                 <div>
                   <DropdownButton id='dropdown-basic-button' title={user.name}>
-                    <Dropdown.Item href='#/profile' className='d-flex gap-2 align-items-center'><PersonCircle size={18}/>Il mio profilo</Dropdown.Item>
-                    <Dropdown.Item href='#' className='d-flex gap-2 align-items-center'><MoonFill className='text-warning' size={18}/>Dark mode</Dropdown.Item>
+                    <Dropdown.Item href='#/profile' className='d-flex gap-2 align-items-center'><PersonCircle size={18} />Il mio profilo</Dropdown.Item>
+                    <Dropdown.Item href='#' className='d-flex gap-2 align-items-center'><MoonFill className='text-warning' size={18} />Dark mode</Dropdown.Item>
                     <Dropdown.Item
                       href='#/'
                       className='bg-danger text-light d-flex gap-2 align-items-center '
                       onClick={() => dispatch(logOutUser())}
                     >
-                      <BoxArrowInLeft size={18}/>
+                      <BoxArrowInLeft size={18} />
                       Logout
                     </Dropdown.Item>
-                    
+
                   </DropdownButton>
                 </div>
               </div>

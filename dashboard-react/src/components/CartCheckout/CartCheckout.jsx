@@ -81,7 +81,6 @@ export default function CartCheckout() {
                     {groupedCart.length > 0 && (
                         <tr>
                             <th></th>
-                            <th></th>
                             <th>Nome prodotto</th>
                             <th>Quantità</th>
                             <th>Prezzo</th>
@@ -92,12 +91,7 @@ export default function CartCheckout() {
                 <tbody>
                     {groupedCart.map((item, index) => (
                         <tr key={index}>
-                            <td>
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                />
-                            </td>
+                          
 
                             <td>
                                 <img

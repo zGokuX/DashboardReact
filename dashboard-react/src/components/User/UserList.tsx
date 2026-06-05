@@ -53,7 +53,7 @@ export default function RecentUsers(props: any) {
       fetchUsersRequest({
         pageSize: props.maxViewUser || ITEM_PER_PAGE,
         page: pagination,
-      }) as unknown as UnknownAction,
+      }),
     );
   }
   useEffect(() => {
@@ -74,6 +74,7 @@ export default function RecentUsers(props: any) {
     setShowModal(true);
     setMessage("Aggiungi cliente");
     setIsNew(true);
+    setSelectedUser({})
   }
 
   function CartSubtable(item: any) {

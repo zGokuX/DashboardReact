@@ -1,34 +1,42 @@
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
     const AddUserSchema = z.object({
+        role: z
+            .string()
+            .min(2, "Lunghezza minima 2")
+        ,
         username: z
             .string()
-            .min(4,"Lunghezza minima 4")
-            .max(25,"lunghezza massima 25"),
-            
+            .min(4, "Lunghezza minima 4")
+            .max(25, "lunghezza massima 25")
+            .optional()
+            ,
+
         password: z
             .string()
-            .min(6, "Lunghezza min 6"),
+            .min(6, "Lunghezza min 6")
+            .optional()
+            ,
         name: z
             .string()
             .min(4, "Lunghezza minima 4")
-            .max(15, "Lunghezza massima 15"),
+            .max(45, "Lunghezza massima 15"),
 
         surname: z
             .string()
             .min(4, "Lunghezza minima 4")
-            .max(15, "Lunghezza massima 15"),
+            .max(45, "Lunghezza massima 15"),
 
         company: z
             .string()
             .min(4, "Lunghezza minima 4")
-            .max(15, "Lunghezza massima 15"),
+            .max(45, "Lunghezza massima 15"),
 
         email: z
             .string()
@@ -49,17 +57,33 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
         university: z.string().optional(),
 
         gender: z.enum(["male", "female"]),
-    });
+    }).refine((data) => {
+        if (data.role == "admin") {
+            return !!data.username
+        }
+        return true
+    },
+        { message: "Username obbligatorio", path: ["username"] }
+    ).refine((data) => {
+        if (data.role == "admin") {
+            return !!data.password
+        }
+        return true
+    },
+        { message: "Password obbligatorio", path: ["password"] }
+    );
     type AddUserSchema = z.infer<typeof AddUserSchema>;
     const {
         register,
         handleSubmit,
         formState: { errors },
+        watch,
     } = useForm({
         resolver: zodResolver(AddUserSchema),
         defaultValues: {
-            username: user.username || "",
-            password: user.password || "",
+            role: user?.role || "",
+            username: user?.username || "",
+            password: user?.password || "",
             name: user?.firstName || "",
             surname: user?.lastName || "",
             company: user?.company?.department || "",
@@ -93,7 +117,9 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
         onUserChange(formattedUser, isNew);
         onHide();
     }
-
+    const currentRole = watch("role")
+    console.log("CIAO")
+    console.log(currentRole)
     return (
         <Modal className="modal-xl" show={show} onHide={onHide}>
             <Modal.Header closeButton>
@@ -105,7 +131,27 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
 
                     <div className="row">
 
-                        {user?.role == "admin" &&
+                        <div className="col-12">
+                            <Form.Group className="mb-3">
+                                <Form.Label>Role</Form.Label>
+                                <Form.Select {...register("role")}>
+                                    <option value="">
+                                        Seleziona ruolo
+                                    </option>
+                                    <option value="admin">Admin</option>
+                                    <option value="moderator">Moderatore</option>
+                                    <option value="user">user</option>
+                                </Form.Select>
+
+                                {errors.role && (
+                                    <p className="text-danger">
+                                        {errors.role.message}
+                                    </p>
+                                )}
+                            </Form.Group>
+                        </div>
+                                
+                        {currentRole == "admin" &&
                             <>
                                 <div className="col-6">
                                     <Form.Group className="mb-3">
@@ -129,7 +175,6 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
                                     </Form.Group>
                                 </div>
                             </>
-
                         }
 
 
