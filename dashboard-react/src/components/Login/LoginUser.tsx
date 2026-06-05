@@ -92,13 +92,6 @@ export default function LoginUserUI() {
                             type="email"
                             className="form-control"
                             {...register("email")}
-                        // {...register("email", {
-                        //     required: "Email richiesta(es. MarcoRossi@gmail.com)",
-                        //     pattern: {
-                        //         value: /^\S+@gmail\.com$/i,
-                        //         message: "Email non valida",
-                        //     },
-                        // })}
                         />
 
                         {errors.email && (

@@ -19,21 +19,26 @@ export default function Layout() {
                     <aside>
                         <nav id="move-nav">
                             <ul>
-                                <li>
+                                <li className="d-flex align-items-center">
+                                    <i class="fa-solid fa-house me-2"></i>
                                     <Link to="/">Home</Link>
                                 </li>
-                                <li>
+                                <li className="d-flex align-items-center">
+                                    <i class="fa-solid fa-user me-2"></i>
                                     <Link to="/users">Users</Link>
                                 </li>
-                                <li>
+                                <li className="d-flex align-items-center">
+                                    <i className='fa-solid fa-cart-shopping me-2'></i>
                                     <Link to="/cards">Carts</Link>
                                 </li>
 
-                                <li>
+                                <li className="d-flex align-items-center">
+                                    <i className="fa-solid fa-list me-2"></i>
                                     <Link to="/products">Products</Link>
                                 </li>
 
-                                <li>
+                                <li className="d-flex align-items-center">
+                                    <i class="fa-solid fa-comment me-2"></i>
                                     <Link to="/feeback">Feedback</Link>
                                 </li>
                             </ul>

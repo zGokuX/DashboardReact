@@ -182,7 +182,7 @@ export default function RecentUsers(props: any) {
                 />
               </tbody>
             </table>
-                          }
+            }
             {props.inPage && filteredUsers.length < 0 && (
               <PaginationPage
                 setPagination={setPagination}

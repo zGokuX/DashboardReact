@@ -6,7 +6,6 @@ import { logOutUser, selectIsLogged, selectUserLogged } from '@/store/slices/Log
 import { Dropdown, DropdownButton } from 'react-bootstrap'
 import avatar2 from "../assets/avatars/2.png";
 import logo from "../assets/logosite.png";
-import { useEffect } from 'react'
 export default function Header() {
 
   const userProduct = useSelector(selectUserProduct)
