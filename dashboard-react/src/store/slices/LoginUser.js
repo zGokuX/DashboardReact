@@ -30,8 +30,8 @@
   export const { logUser,logOutUser,addToHistory } = LoginSlice.actions
 
 
-export const selectUserLogged = (state) => state.Login.UserLogged
-export const selectAllHistory = (state) => state.Login.HistoryProduct
-export const selectIsLogged = (state) => state.Login.isLogged
+export const selectUserLogged = (state) => state?.Login?.UserLogged
+export const selectAllHistory = (state) => state?.Login?.HistoryProduct
+export const selectIsLogged = (state) => state?.Login?.isLogged
 
   export default LoginSlice.reducer
