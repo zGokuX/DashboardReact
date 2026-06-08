@@ -4,7 +4,15 @@ import userEvent from '@testing-library/user-event';
 import { vi, describe, it, expect } from 'vitest';
 import ProductModal from '../components/Product/ProductModal';
 
-
+vi.mock('react-redux', () => ({
+    useDispatch: () => vi.fn(),
+    useSelector: (fn) =>
+        fn({
+            user: {
+                name: 'Andrei',
+            },
+        }),
+}));
 
 describe('ProductModal', () => {
   it('renders title', () => {

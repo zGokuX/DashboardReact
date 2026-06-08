@@ -20,11 +20,8 @@ describe('NavBarProfile', () => {
         render(
             <NavBarProfile setNavBarMarker={vi.fn()} navBarMarker={2} />
         );
-        expect(
-            screen.getByText('Profile config')
-
-        ).exist();
-
+        expect(screen.getByText('Profile config')).toBeTruthy() 
+        expect(screen.getByText('Optional config')).toBeTruthy()
     });
     //   it('calls onSave when button is clicked', async () => {
     // const props = {

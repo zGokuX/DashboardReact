@@ -21,7 +21,7 @@ const historyProduct = useSelector(selectAllHistory)
             <Nav.Link href="#" onClick={() => setMarker(2)} style={{"textDecoration": navBarMarker === 2 ? "underline" : "none"}}>Optional config</Nav.Link>
             {historyProduct && historyProduct?.length > 0 &&
             
-            <Nav.Link href="#" onClick={() => setMarker(3)} style={{"textDecoration": navBarMarker === 3 ? "underline" : "none"}}>History payment </Nav.Link>
+            <Nav.Link href="#" onClick={() => setMarker(3)} style={{"textDecoration": navBarMarker === 3 ? "underline" : "none"}}>History payment</Nav.Link>
             }
           </Nav>
         </Navbar.Collapse>
