@@ -11,7 +11,6 @@ import CartCheckin from "@/components/CartCheckout/CartChekIn";
 import LoginUserUI from "@/components/Login/LoginUser";
 import UserProfile from "@/components/ProfileUser/UserProfile";
 import FeedbackImprove from "@/Feedback/FeedbackImprove";
-import RelaxMode from "@/components/RelaxMode/RelaxModeGame";
 
 export default function Layout() {
     return (
