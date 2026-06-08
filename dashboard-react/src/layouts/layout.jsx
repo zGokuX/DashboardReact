@@ -39,7 +39,7 @@ export default function Layout() {
 
                                 {/* <li className="d-flex align-items-center">
                                     <i class="fa-solid fa-gamepad  me-2"></i>
-                                    <Link to="/relax">Relax Mode</Link>
+                                    <Link to="/relax">Economic simulator</Link>
                                 </li> */}
 
                                 <li className="d-flex align-items-center">
