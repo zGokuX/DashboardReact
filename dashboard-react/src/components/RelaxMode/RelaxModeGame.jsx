@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+// TODO: CREARE UN CSS PER QUESTO FILE
 export default function RelaxMode() {
     return (
         <div style={{ backgroundColor: "#333", height: "100vh" }}>
@@ -21,10 +21,10 @@ export default function RelaxMode() {
                     <span style={{ backgroundColor: "#2c2c2c", boxShadow: "0px 4px 0px 0px black", border: "2px solid #403f3f", padding: "2rem" }} className="+d-flex align-items-center rounded"><i class="fa-solid fa-crosshairs"></i></span>
                 </div>
                 <div className="d-flex">
-                    <div style={{ backgroundColor: "#ffb703", border: "2px solid #fb8500", padding: "2rem", color: "black" }} className="Shop d-flex align-items-center rounded">
+                    <Button style={{ backgroundColor: "#ffb703", border: "2px solid #fb8500", padding: "2rem", color: "black" }} className="Shop d-flex align-items-center rounded fs-4">
                         <span style={{ fontWeight: "bold" }}><i class="fa-solid fa-cart-shopping me-2"></i>NEGOZIO</span>
 
-                    </div >
+                    </Button >
                     <Link to="/" style={{ textDecoration: "none" }}>
                         <Button style={{ backgroundColor: "#c1121f", border: "2px solid #780000", color: "black" }} className="Shop ms-2 rounded fs-4">
                             <p className="mb-0" style={{ fontWeight: "bold" }}>ESCI</p>
