@@ -65,7 +65,6 @@ export default function Header() {
             {isLogged && (
               <div className='user-profile' id='user-profile-id'>
                 <div className='user-avatar'>
-
                   <img src={user?.picture?.length > 0 ? user.picture : avatar2} alt='User Avatar' />
                 </div>
                 <div>
