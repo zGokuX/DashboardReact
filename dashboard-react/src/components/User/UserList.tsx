@@ -106,10 +106,15 @@ export default function RecentUsers(props: any) {
                 fetchUsersFilterSuccess({
                   filteredUser: [...(users ?? []), user],
                 }),
+                
               );
+              localStorage.setItem("utente" + user.id, JSON.stringify(user));
+              console.log("LOCAL",localStorage.getItem("utente" + user.id))
               addUser(user).then((res) => console.log(res));
               setShowToast(true);
             } else {
+              localStorage.setItem("utente" + user.id, JSON.stringify(user));
+              console.log("LOCAL",localStorage.getItem("utente" + user.id))
               dispatch(
                 fetchUsersFilterSuccess({
                   filteredUser: (users ?? []).map((item: any) =>

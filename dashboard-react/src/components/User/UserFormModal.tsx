@@ -118,8 +118,6 @@ function UserFormModal({ show, onHide, user, title, isNew, onUserChange }) {
         onHide();
     }
     const currentRole = watch("role")
-    console.log("CIAO")
-    console.log(currentRole)
     return (
         <Modal className="modal-xl" show={show} onHide={onHide}>
             <Modal.Header closeButton>
