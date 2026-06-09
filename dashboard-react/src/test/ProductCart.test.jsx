@@ -40,7 +40,7 @@ describe('ProductModal', () => {
     "returnPolicy": "No return policy",
     "minimumOrderQuantity": 48,
     "meta": "{barcode: \"5784719087687\", createdAt: \"2025-04-30T0…}",
-    "images": "[\"https://cdn.dummyjson.com/product-images/beauty/e…]",
+    "images": ["https://cdn.dummyjson.com/product-images/beauty/e"],
     "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
   },
   "inPage": true

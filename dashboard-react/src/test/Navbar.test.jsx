@@ -6,12 +6,9 @@ import NavBarProfile from '@/components/ProfileUser/NavBarProfile';
 
 vi.mock('react-redux', () => ({
     useDispatch: () => vi.fn(),
-    useSelector: (fn) =>
-        fn({
-            user: {
-                name: 'Andrei',
-            },
-        }),
+    useSelector: () => {
+        return [1,2,3]
+    }
 }));
 
 
@@ -23,6 +20,7 @@ describe('NavBarProfile', () => {
         expect(screen.getByRole('button', { name: 'Profile config' })).toBeTruthy()
         expect(screen.getByText('Profile config')).toBeTruthy()
         expect(screen.getByText('Optional config')).toBeTruthy()
+        expect(screen.getByText('History payment')).toBeTruthy()
         expect(screen.getByTestId('basic-navbar-nav')).toBeTruthy()
     });
 });

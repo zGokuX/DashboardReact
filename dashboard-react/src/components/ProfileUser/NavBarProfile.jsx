@@ -19,8 +19,8 @@ const historyProduct = useSelector(selectAllHistory)
           <Nav className="me-auto">
             <Nav.Link href="#" onClick={() => setMarker(1)} style={{"textDecoration": navBarMarker === 1 ? "underline" : "none"}}>Profile config</Nav.Link>
             <Nav.Link href="#" onClick={() => setMarker(2)} style={{"textDecoration": navBarMarker === 2 ? "underline" : "none"}}>Optional config</Nav.Link>
+            {console.log("Product: ",historyProduct)}
             {historyProduct && historyProduct?.length > 0 &&
-            
             <Nav.Link href="#" onClick={() => setMarker(3)} style={{"textDecoration": navBarMarker === 3 ? "underline" : "none"}}>History payment</Nav.Link>
             }
           </Nav>
