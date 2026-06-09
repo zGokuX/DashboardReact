@@ -54,7 +54,7 @@ export default function Header() {
             </Link>
             {!isLogged && (
               <div className='user-profile' id='user-profile-id '>
-                <Link to='/login'>
+                <Link to='/login' style={{textDecoration: "none"}}>
                   <span className='user-name btn btn-outline-primary me-2 d-flex gap-2 align-items-center'>
                     Accedi
                     <PersonCircle size={16} />

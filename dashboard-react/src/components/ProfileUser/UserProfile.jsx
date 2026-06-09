@@ -31,10 +31,6 @@ export default function UserProfile() {
         console.log(user)
     }, [user])
 
-    function logOut() {
-        dispatch(logOutUser())
-        navigate("/")
-    }
     function updateName() {
         if (newName === user.name) {
             setIsActiveInputName(true)
@@ -204,7 +200,6 @@ export default function UserProfile() {
                         </ol>
                     </div>
                 }
-                <Button variant="danger" style={{ "width": "10rem" }} onClick={() => logOut()}>LogOut</Button>
             </div>
         </>
     )
