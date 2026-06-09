@@ -46,3 +46,105 @@
 Link {
     text-decoration: none;
 }
+
+.chiodi-card {
+    box-shadow: 0px 4px 0px 0px black;
+    padding: 15px;
+    height: 11rem;
+    width: 10rem;
+    background-color: rgb(148 165 182);
+    border: 2px solid #403f3f;
+}
+
+.chiodi-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+
+.chiodi-emoji {
+    font-size: 3.5rem;
+}
+
+.chiodi-level {
+    background-color: #0000008f;
+    color: white;
+    width: 4rem;
+    text-align: center;
+    border-radius: 3px;
+    ;
+    font-weight: bolder;
+}
+
+.produzione {
+    border: 2px solid #403f3f;
+    background-color: #2c2c2c;
+    box-shadow: 0px 4px 0px 0px black;
+}
+
+.produzione-title {
+    padding: 15px;
+}
+
+.produzione-title #text-produzione {
+    color: white;
+    font-weight: bolder;
+}
+
+.produzione-title #money-per-sec {
+    color: rgb(253, 228, 0);
+    font-weight: bolder;
+}
+
+.progress-bar {
+    height: 1.3rem;
+    margin-left: 15px;
+    width: 19rem;
+    border: 2px solid #403f3f;
+    background-color: black;
+}
+
+.start {
+    height: 1.3rem;
+    width: 5rem;
+    background-color: rgb(127, 230, 31);
+}
+
+.sell {
+    border: 2px solid #403f3f;
+    margin-top: 8px;
+    height: 5rem;
+    align-items: center;
+    background-color: #252525;
+    margin-left: 15px;
+    width: 19rem;
+}
+
+.button-sell {
+    height: 3.5rem;
+    padding: 5px;
+    white-space: nowrap;
+    background-color: rgb(112 182 6);
+    border: 2px solid rgb(141 173 92);
+    border-radius: 3px;
+    margin-right: 10px;
+    align-items: center;
+}
+
+.magazzino {
+    font-size: 13px;
+    color: lightgray;
+    font-weight: bolder;
+}
+
+.money-text {
+    color: white;
+    font-weight: bolder;
+    font-size: 25px;
+    margin: 0;
+}
+
+.button-sell p {
+    color: white;
+    font-weight: bolder;
+}
