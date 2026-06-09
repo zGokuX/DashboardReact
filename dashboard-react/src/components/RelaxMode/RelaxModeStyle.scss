@@ -1,0 +1,48 @@
+.container-relax {
+    background-color: #333;
+    height: 100vh;
+}
+
+.money {
+    background-color: #2c2c2c;
+    box-shadow: 0px 4px 0px 0px black;
+    border: 2px solid #403f3f;
+    width: 18rem
+}
+
+.textNumber {
+    font-weight: bold;
+}
+
+.textNumber p {
+    font-size: 16px;
+}
+
+.other span {
+    background-color: #2c2c2c;
+    box-shadow: 0px 4px 0px 0px black;
+    border: 2px solid #403f3f;
+    padding: 2rem;
+}
+
+.shop .shopbtn {
+    background-color: #ffb703;
+    border: 2px solid #fb8500;
+    padding: 2rem;
+    color: black;
+}
+
+.shop .logout {
+    background-color: #c1121f;
+    border: 2px solid #780000;
+    color: black;
+}
+
+.shop span,
+.shop p {
+    font-weight: bold;
+}
+
+Link {
+    text-decoration: none;
+}
