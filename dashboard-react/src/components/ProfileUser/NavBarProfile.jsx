@@ -15,7 +15,7 @@ const historyProduct = useSelector(selectAllHistory)
     <Navbar expand="lg" className="bg-body-tertiary">
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse id="basic-navbar-nav" data-testid="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#" onClick={() => setMarker(1)} style={{"textDecoration": navBarMarker === 1 ? "underline" : "none"}}>Profile config</Nav.Link>
             <Nav.Link href="#" onClick={() => setMarker(2)} style={{"textDecoration": navBarMarker === 2 ? "underline" : "none"}}>Optional config</Nav.Link>

@@ -20,7 +20,9 @@ describe('NavBarProfile', () => {
         render(
             <NavBarProfile setNavBarMarker={vi.fn()} navBarMarker={2} />
         );
-        expect(screen.getByText('Profile config')).toBeTruthy() 
+        expect(screen.getByRole('button', { name: 'Profile config' })).toBeTruthy()
+        expect(screen.getByText('Profile config')).toBeTruthy()
         expect(screen.getByText('Optional config')).toBeTruthy()
+        expect(screen.getByTestId('basic-navbar-nav')).toBeTruthy()
     });
 });
