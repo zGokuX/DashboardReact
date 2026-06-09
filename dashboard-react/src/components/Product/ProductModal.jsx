@@ -19,18 +19,18 @@ function ProductModal({ show, onHide, product, ...props }) {
             <Modal.Body>
                 <div className='p-4'>
                     <div className='d-flex'>
-                        <div className='shadow-sm card image-container mb-4'>
-                            <img src={product.thumbnail} alt="" />
+                        <div className='shadow-sm card image-container mb-4' data-testid="image">
+                            <img src={product.thumbnail} alt="image" />
                         </div>
                         <div className='ms-3 card-title d-block'>
-                            <h5 className='mb-3'>{product.title}</h5>
+                            <h5 className='mb-3' data-testid="title">{product.title}</h5>
                             <div className='text-nowrap rounded d-inline-flex mb-5 bg-body-tertiary shadow-sm bg-light border justify-content-center align-items-center p-2 px-4'>
                                 <i
                                     className="text-primary fa fa-shopping-basket"
                                     aria-hidden="true"
                                 ></i>
 
-                                <span className='ms-2 text-primary'>
+                                <span className='ms-2 text-primary' data-testid="category">
                                     {product.category}
                                 </span>
                             </div>
