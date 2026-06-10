@@ -104,7 +104,7 @@ export function RenderUser(props) {
           </tr>
         )}
         <RenderMoreUser
-        moreUser={props.moreUser ? props.moreUser : []}
+        moreUser={props.moreUser}
         inPage={props.inPage}
         />
       </React.Fragment>
