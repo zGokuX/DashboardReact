@@ -5,6 +5,7 @@ import CartTable from '../Cart/CartTable'
 import { CaretDownFill, CaretUpFill } from 'react-bootstrap-icons'
 import { useSelector } from 'react-redux'
 import { selectIsLogged } from '@/store/slices/LoginUser'
+import RenderMoreUser from './RenderMoreUser'
 
 export function RenderUser(props) {
     const isLogged = useSelector(selectIsLogged);
@@ -102,6 +103,10 @@ export function RenderUser(props) {
             </td>
           </tr>
         )}
+        <RenderMoreUser
+        moreUser={props.moreUser ? props.moreUser : []}
+        inPage={props.inPage}
+        />
       </React.Fragment>
     )
   })

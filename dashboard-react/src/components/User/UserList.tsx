@@ -40,6 +40,7 @@ export default function RecentUsers(props: any) {
   const [message, setMessage] = useState("");
   const [isNew, setIsNew] = useState(false);
   const [openedUserId, setOpenedUserId] = useState(false);
+  const [moreUser, setMoreUser] = useState(null)
 
   // displayedUsers rappresenta la lista visibile.
   // Se c'è un filtro applicato, usiamo filteredUsers, altrimenti la lista completa dal Redux store.
@@ -109,12 +110,12 @@ export default function RecentUsers(props: any) {
                 
               );
               localStorage.setItem("utente" + user.id, JSON.stringify(user));
-              console.log("LOCAL",localStorage.getItem("utente" + user.id))
+              setMoreUser(localStorage.getItem("utente" + user.id))
               addUser(user).then((res) => console.log(res));
               setShowToast(true);
             } else {
               localStorage.setItem("utente" + user.id, JSON.stringify(user));
-              console.log("LOCAL",localStorage.getItem("utente" + user.id))
+              setMoreUser(localStorage.getItem("utente" + user.id))
               dispatch(
                 fetchUsersFilterSuccess({
                   filteredUser: (users ?? []).map((item: any) =>
@@ -180,6 +181,7 @@ export default function RecentUsers(props: any) {
               <tbody>
                 <RenderUser
                   displayedUsers={displayedUsers}
+                  moreUser={moreUser}
                   inPage={props.inPage}
                   editButton={editButton}
                   CartSubtable={CartSubtable}
