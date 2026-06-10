@@ -24,7 +24,7 @@ export default function RelaxMode() {
                     </Button >
                     
                         <Button className="logout ms-2 rounded fs-4">
-                            <Link to="/">
+                            <Link className="leave" to="/">
                             <p className="mb-0">ESCI</p>
                             </Link>
                         </Button>
