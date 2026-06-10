@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 
 
 export default function RenderMoreUser(moreUser , ...props){
-    const isLogged = useSelector(selectIsLogged);
     console.log(moreUser)
+    const isLogged = useSelector(selectIsLogged);
     if(moreUser.length < 0 || moreUser.length == undefined){
         return
     }

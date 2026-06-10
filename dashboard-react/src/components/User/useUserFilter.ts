@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 export default function useUserFilter() {
     const dispatch = useDispatch()
-
+    console.log("filtro")
 
     const [filterInput, setFilterInput] = useState('')
     const [filterAge, setFilterAge] = useState(0)
@@ -16,6 +16,7 @@ export default function useUserFilter() {
     const displayedUsers = filteredUsers.length > 0 ? filteredUsers : users
 
     function filterPlus(filterName: string, value: string) {
+        console.log("filtroPLUS")
         if (filterName === 'gender') {
             setFilterRole('default')
             setFilterAge(0)

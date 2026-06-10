@@ -13,12 +13,14 @@ import { User } from "./user.type";
 import {
   fetchUsersFilterSuccess,
   fetchUsersRequest,
+  fetchUsersSuccess,
   selectUserFiltered,
   selectUsers,
   selectUsersTotal,
 } from "@/store/slices/usersSlice";
 import { selectIsLogged } from "@/store/slices/LoginUser";
 import Loading from "../LoadingGif/Loading";
+import RenderMoreUser from "./RenderMoreUser";
 
 // Importiamo useDispatch e useSelector da react-redux per leggere e scrivere nel store globale.
 // useSelector prende i dati dallo stato Redux, mentre useDispatch serve per inviare azioni.
@@ -40,7 +42,7 @@ export default function RecentUsers(props: any) {
   const [message, setMessage] = useState("");
   const [isNew, setIsNew] = useState(false);
   const [openedUserId, setOpenedUserId] = useState(false);
-  const [moreUser, setMoreUser] = useState(null)
+  const [moreUser, setMoreUser] = useState(null);
 
   // displayedUsers rappresenta la lista visibile.
   // Se c'è un filtro applicato, usiamo filteredUsers, altrimenti la lista completa dal Redux store.
@@ -75,7 +77,7 @@ export default function RecentUsers(props: any) {
     setShowModal(true);
     setMessage("Aggiungi cliente");
     setIsNew(true);
-    setSelectedUser({})
+    setSelectedUser({});
   }
 
   function CartSubtable(item: any) {
@@ -95,6 +97,7 @@ export default function RecentUsers(props: any) {
     //   })
     // }
   }
+  console.log(filteredUsers.length);
   return (
     <>
       {showModal && (
@@ -104,25 +107,28 @@ export default function RecentUsers(props: any) {
           onUserChange={(user: any, isNewUser: any) => {
             if (isNewUser) {
               dispatch(
-                fetchUsersFilterSuccess({
-                  filteredUser: [...(users ?? []), user],
+                fetchUsersSuccess({
+                  users: [...(users ?? []), user],
+                  total: totalUsers + 1,
                 }),
-                
               );
+
               localStorage.setItem("utente" + user.id, JSON.stringify(user));
-              setMoreUser(localStorage.getItem("utente" + user.id))
+              setMoreUser(localStorage.getItem("utente" + user.id));
               addUser(user).then((res) => console.log(res));
               setShowToast(true);
             } else {
-              localStorage.setItem("utente" + user.id, JSON.stringify(user));
-              setMoreUser(localStorage.getItem("utente" + user.id))
+              setMoreUser(localStorage.getItem("utente" + user.id));
               dispatch(
-                fetchUsersFilterSuccess({
-                  filteredUser: (users ?? []).map((item: any) =>
+                fetchUsersSuccess({
+                  users: (users ?? []).map((item: any) =>
                     item.id === user.id ? { ...item, ...user } : item,
                   ),
+                  total: totalUsers,
                 }),
               );
+
+              localStorage.setItem("utente" + user.id, JSON.stringify(user));
               updateUser(user.id, user).then((res) => console.log(res));
               setShowToast(true);
             }
@@ -172,32 +178,41 @@ export default function RecentUsers(props: any) {
           </div>
 
           <div className="client-list" id="client-list-id">
-            <UserFilters
-              inPage={props.inPage}
-            />
+            <UserFilters inPage={props.inPage} />
 
-          {displayedUsers.length === 0 ? <Loading/> : displayedUsers &&
-            <table>
-              <tbody>
-                <RenderUser
-                  displayedUsers={displayedUsers}
-                  moreUser={moreUser}
-                  inPage={props.inPage}
-                  editButton={editButton}
-                  CartSubtable={CartSubtable}
-                  openedUserId={openedUserId}
-                  onSelectUser={props.onSelectUser}
-                />
-              </tbody>
-            </table>
-            }
-            {props.inPage && filteredUsers.length < 0 && (
-              <PaginationPage
-                setPagination={setPagination}
-                pagination={pagination}
-                totalUsers={totalUsers}
-              />
+            {displayedUsers.length === 0 ? (
+              <Loading />
+            ) : (
+              displayedUsers && (
+                <table>
+                  <tbody>
+                    <RenderUser
+                      displayedUsers={displayedUsers}
+                      moreUser={moreUser}
+                      inPage={props.inPage}
+                      editButton={editButton}
+                      CartSubtable={CartSubtable}
+                      openedUserId={openedUserId}
+                      onSelectUser={props.onSelectUser}
+                    />
+                    <RenderMoreUser
+                      moreUser={moreUser}
+                      inPage={props.inPage}
+                    />
+                  </tbody>
+                </table>
+              )
             )}
+
+            {props.inPage && moreUser?.length == undefined &&
+              (filteredUsers.length <= 0 ||
+                filteredUsers.length == undefined) && (
+                <PaginationPage
+                  setPagination={setPagination}
+                  pagination={pagination}
+                  totalUsers={totalUsers}
+                />
+              )}
           </div>
         </div>
       </div>

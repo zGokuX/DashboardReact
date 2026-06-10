@@ -8,7 +8,7 @@ import { selectIsLogged } from '@/store/slices/LoginUser'
 import RenderMoreUser from './RenderMoreUser'
 
 export function RenderUser(props) {
-    const isLogged = useSelector(selectIsLogged);
+  const isLogged = useSelector(selectIsLogged);
   return props.displayedUsers.map(item => {
     return (
       <React.Fragment key={item.id + item.firstName}>
@@ -69,7 +69,7 @@ export function RenderUser(props) {
               {!props.inPage && (
                 <Button
                   variant='outline-primary'
-                   className='filter-btn '
+                  className='filter-btn '
                   onClick={() => props.onSelectUser(item)}
                 >
                   Filtra
@@ -103,10 +103,6 @@ export function RenderUser(props) {
             </td>
           </tr>
         )}
-        <RenderMoreUser
-        moreUser={props.moreUser}
-        inPage={props.inPage}
-        />
       </React.Fragment>
     )
   })
