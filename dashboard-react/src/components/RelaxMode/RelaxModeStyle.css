@@ -53,11 +53,11 @@
 .shop span,.shop p {
     font-weight: bold;
 }
-
-/* .leave {
+/* DA SISTEMARE(si comporta in modo globale, capire il motivo) */
+.shop button .leave {
     color: white;
     text-decoration: none;
-} */
+} 
 
 .chiodi-card {
     box-shadow: 0px 4px 0px 0px black;
