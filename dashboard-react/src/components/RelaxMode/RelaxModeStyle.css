@@ -55,8 +55,8 @@
 }
 /* DA SISTEMARE(si comporta in modo globale, capire il motivo) */
 .shop button .leave {
-    color: white;
-    text-decoration: none;
+    color: white !important;
+    text-decoration: none !important;
 } 
 
 .chiodi-card {
