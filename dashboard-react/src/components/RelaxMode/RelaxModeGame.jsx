@@ -22,11 +22,12 @@ export default function RelaxMode() {
                     <Button className="shopbtn d-flex align-items-center rounded fs-4">
                         <span><i className="fa-solid fa-cart-shopping me-2"></i>NEGOZIO</span>
                     </Button >
-                    <Link to="/">
+                    
                         <Button className="logout ms-2 rounded fs-4">
+                            <Link to="/">
                             <p className="mb-0">ESCI</p>
+                            </Link>
                         </Button>
-                    </Link>
                 </div>
             </div>
             <div className="chiodi-container ps-5 d-flex">

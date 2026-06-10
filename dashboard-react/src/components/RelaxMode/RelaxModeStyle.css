@@ -30,20 +30,32 @@
     border: 2px solid #fb8500;
     padding: 2rem;
     color: black;
+    transition: 0.3s ease;
+}
+
+.shop .shopbtn:hover {
+    background-color: #c59211;
 }
 
 .shop .logout {
+    height: 3rem;
     background-color: #c1121f;
     border: 2px solid #780000;
     color: black;
+        transition: 0.3s ease;
 }
 
-.shop span,
-.shop p {
+.shop .logout:hover {
+
+    background-color: #a00712;
+}
+
+.shop span,.shop p {
     font-weight: bold;
 }
 
-Link {
+a {
+    color: white;
     text-decoration: none;
 }
 
@@ -72,7 +84,6 @@ Link {
     width: 4rem;
     text-align: center;
     border-radius: 3px;
-    ;
     font-weight: bolder;
 }
 
@@ -121,6 +132,7 @@ Link {
 }
 
 .button-sell {
+    cursor: pointer;
     height: 3.5rem;
     padding: 5px;
     white-space: nowrap;
@@ -129,9 +141,15 @@ Link {
     border-radius: 3px;
     margin-right: 10px;
     align-items: center;
+    transition: 0.3s ease;
+}
+
+.button-sell:hover{
+    background-color: rgb(89, 139, 13);
 }
 
 .magazzino {
+    margin-top: 4px !important;
     font-size: 13px;
     color: lightgray;
     font-weight: bolder;
