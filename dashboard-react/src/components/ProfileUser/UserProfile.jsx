@@ -2,7 +2,7 @@ import { logOutUser, logUser, selectAllHistory, selectUserLogged } from "@/store
 import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import NavBarProfile from "./NavBarProfile"
 
 export default function UserProfile() {
@@ -21,7 +21,13 @@ export default function UserProfile() {
     const [newDate, setNewDate] = useState(null)
     const [preview, setPreview] = useState(false)
     const [newImage, setNewImage] = useState(null)
-    const [navBarMarker, setNavBarMarker] = useState(1)
+    
+    const location = useLocation();
+
+    const navBar = location.state?.navBar || 1;
+
+    const [navBarMarker, setNavBarMarker] = useState(navBar);
+    console.log(navBarMarker)
     console.log("PRODOTTI TOTALI: ", historyProduct)
     useEffect(() => {
         if (!user) {

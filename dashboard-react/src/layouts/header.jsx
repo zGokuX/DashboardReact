@@ -1,4 +1,4 @@
-import { BoxArrowInLeft, CartFill, MoonFill, PersonCircle } from 'react-bootstrap-icons'
+import { BoxArrowInLeft, CartFill, GearFill, MoonFill, PersonCircle } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUserProduct } from '@/store/slices/productsSlice'
 import { Link } from 'react-router-dom'
@@ -12,7 +12,7 @@ export default function Header() {
   const isLogged = useSelector(selectIsLogged)
   const user = useSelector(selectUserLogged).UserLogged
   const dispatch = useDispatch()
-  
+
   return (
     <>
       <header>
@@ -30,7 +30,7 @@ export default function Header() {
           </div>
           <div className='user-profile-container'>
             <Link
-            className='me-2'
+              className='me-2'
               style={{
                 textDecoration: "none",
                 ...(userProduct.length > 0
@@ -54,7 +54,7 @@ export default function Header() {
             </Link>
             {!isLogged && (
               <div className='user-profile' id='user-profile-id '>
-                <Link to='/login' style={{textDecoration: "none"}}>
+                <Link to='/login' style={{ textDecoration: "none" }}>
                   <span className='user-name btn btn-outline-primary me-2 d-flex gap-2 align-items-center'>
                     Accedi
                     <PersonCircle size={16} />
@@ -69,10 +69,16 @@ export default function Header() {
                 </div>
                 <div>
                   <DropdownButton id='dropdown-basic-button' title={user.name} >
-                    <Dropdown.Item href='#/profile' className='d-flex gap-2 align-items-center' style={{fontSize: "15px"}}><PersonCircle size={15} />Il mio profilo</Dropdown.Item>
-                    <Dropdown.Item href='#' className='d-flex gap-2 align-items-center' style={{fontSize: "15px"}}><MoonFill className='text-warning' size={15} />Dark mode</Dropdown.Item>
+                    <Dropdown.Item href='#/profile'  state={{ navBar: 1 }} className='d-flex gap-2 align-items-center' style={{ fontSize: "15px" }}><PersonCircle size={15} />Il mio profilo</Dropdown.Item>
+                    <Dropdown.Item as={Link}
+                    style={{ fontSize: "15px" }}
+                      to="/profile"
+                      state={{ navBar: 2 }}
+                      className="d-flex gap-2 align-items-center"
+                    >
+                      <GearFill size={15} />Optional Config</Dropdown.Item>
                     <Dropdown.Item
-                      style={{fontSize: "15px"}}
+                      style={{ fontSize: "15px" }}
                       href='#/'
                       className='bg-danger text-light d-flex gap-2 align-items-center '
                       onClick={() => dispatch(logOutUser())}
