@@ -14,14 +14,14 @@ export default function RelaxMode() {
                         <p className="text-secondary">CREDITI</p>
                     </div>
                 </div>
-                <div className="other d-flex gap-3">
+                {/* <div className="other d-flex gap-3">
                     <span className="d-flex align-items-center rounded"><i className="fa-solid fa-star"></i></span>
                     <span className="+d-flex align-items-center rounded"><i className="fa-solid fa-crosshairs"></i></span>
-                </div>
+                </div> */}
                 <div className="d-flex shop">
-                    <Button className="shopbtn d-flex align-items-center rounded fs-4">
+                    {/* <Button className="shopbtn d-flex align-items-center rounded fs-4">
                         <span><i className="fa-solid fa-cart-shopping me-2"></i>NEGOZIO</span>
-                    </Button >
+                    </Button > */}
                     
                         <Button className="logout ms-2 rounded fs-4">
                             <Link className="leave" to="/">
@@ -44,7 +44,7 @@ export default function RelaxMode() {
                     <span id="money-per-sec">512/SEC</span>
                     </div>
                     <div className="progress-bar">
-                        <div className="start"></div>
+                        <progress className="start"></progress>
                     </div>
 
                     <div className="sell d-flex">
