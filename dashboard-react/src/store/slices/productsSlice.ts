@@ -1,15 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { act } from 'react'
+
+// Dopo la migrazione a React Query, lo stato "server" dei prodotti
+// (lista, categorie, totale, status) vive nella cache di React Query.
+// In Redux resta solo lo stato CLIENT: il carrello locale dell'utente.
 
 const initialState = {
-  products: [],
-  prodcutsCategory: [],
   userProducts: [],
-  total: 0,
-  categories: [],
-  selectedCategory: null,
-  status: 'idle',
-  error: null,
 }
 
 const productsSlice = createSlice({
@@ -17,75 +13,6 @@ const productsSlice = createSlice({
   initialState,
 
   reducers: {
-    fetchProductRequest: (state, action) => {
-      state.status = 'loading'
-      state.error = null
-    },
-
-    fetchProductRequestByCategory: (state, action) => {
-      state.status = 'loading'
-      state.error = null
-    },
-    fetchProductsAllCategoryRequest: (state, action) => {
-      state.status = 'loading'
-      state.error = null
-    },
-
-    fetchProductSortRequest: (state, action) => {
-      state.status = 'loading'
-      state.error = null
-    },
-
-    fetchProductSuccess: (state, action) => {
-      state.status = 'succeeded'
-      state.products = action.payload.products || []
-      state.total = action.payload.total ?? 0
-    },
-
-    fetchProductsCategorySuccess: (state, action) => {
-      state.status = 'succeeded'
-      state.products = action.payload.products || []
-      state.total = action.payload.total ?? 0
-    },
-
-    fetchProductsAllCategorySuccess: (state, action) => {
-      state.status = 'succeeded'
-      state.prodcutsCategory = action.payload
-    },
-
-    fetchProductsSortSuccess: (state, action) => {
-      state.status = 'succeeded'
-      state.products = action.payload.products || []
-      state.total = action.payload.total ?? 0
-    },
-
-    fetchProductFailure: (state, action) => {
-      state.status = 'failed'
-      state.error = action.payload
-    },
-    fetchProductsAllCategoryFailure: (state, action) => {
-      state.status = 'failed'
-      state.error = action.payload
-    },
-
-    fetchProductsCategoryFailure: (state, action) => {
-      state.status = 'failed'
-      state.error = action.payload
-    },
-
-    fetchProductsSortFailure: (state, action) => {
-      state.status = 'failed'
-      state.error = action.payload
-    },
-
-    setProductCategories: (state, action) => {
-      state.categories = action.payload
-    },
-
-    setSelectedCategory: (state, action) => {
-      state.selectedCategory = action.payload
-    },
-
     addToCart(state, action) {
       const { image, product, price } = action.payload
 
@@ -96,12 +23,7 @@ const productsSlice = createSlice({
       })
     },
 
-    addProduct(state,action){
-      state.products.push(action.payload)
-      state.total = action.payload.total ?? 0
-    },
-
-    resetCart(state, action) {
+    resetCart(state) {
       state.userProducts = []
     },
 
@@ -114,57 +36,10 @@ const productsSlice = createSlice({
         state.userProducts.splice(index, 1)
       }
     },
-
-    clearProducts: state => {
-      state.products = []
-      state.total = 0
-      state.categories = []
-      state.selectedCategory = null
-      state.status = 'idle'
-      state.error = null
-    },
   },
 })
 
-export const {
-  fetchProductRequest,
-  fetchProductSuccess,
-  fetchProductFailure,
-  fetchProductRequestByCategory,
-  fetchProductsCategorySuccess,
-  fetchProductsCategoryFailure,
-  fetchProductSortRequest,
-  fetchProductsSortSuccess,
-  fetchProductsSortFailure,
-  fetchProductsAllCategoryRequest,
-  fetchProductsAllCategorySuccess,
-  fetchProductsAllCategoryFailure,
-  setProductCategories,
-  setSelectedCategory,
-  removeToCart,
-  clearProducts,
-  addToCart,
-  resetCart,
-  addProduct,
-} = productsSlice.actions
-
-export const selectProducts = state =>
-  state.products.products
-
-export const selectAllCategory = state => 
-  state.products.prodcutsCategory
-
-export const selectProductsTotal = state =>
-  state.products.total
-
-export const selectProductCategories = state =>
-  state.products.categories
-
-export const selectSelectedCategory = state =>
-  state.products.selectedCategory
-
-export const selectProductsStatus = state =>
-  state.products.status
+export const { addToCart, resetCart, removeToCart } = productsSlice.actions
 
 export const selectUserProduct = state =>
   state.products.userProducts

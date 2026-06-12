@@ -3,10 +3,7 @@ import { Button } from 'react-bootstrap'
 import ProductModal from './ProductModal'
 import PaginationPage from '../Common/PaginationPage'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  addToCart,
-  selectProductsTotal,
-} from '@/store/slices/productsSlice'
+import { addToCart } from '@/store/slices/productsSlice'
 
 import { BagPlusFill } from 'react-bootstrap-icons'
 import NotificationAddToCart from './NotificationAddToCart'
@@ -18,7 +15,8 @@ export default function ProductsTable(props) {
   const [selectProduct, setSelectProduct] = useState(null)
   const [showModal, setShowModal] = useState(false)
 
-  const totalProducts = useSelector(selectProductsTotal)
+  // Il totale arriva ora come prop dalla query React Query (vedi Products.tsx).
+  const totalProducts = props.total ?? 0
   const isLogged = useSelector(selectIsLogged)
 
   const [activeProductId, setActiveProductId] = useState(null)

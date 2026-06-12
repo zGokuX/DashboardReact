@@ -1,60 +1,60 @@
 import { useEffect, useState } from "react";
-import { fetchAllCategories } from "@/services/requests";
 import ProductsTable from "./ProductTable";
 import Graphic from "@/layouts/Graphic";
 import { Link } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchProductRequest,
-  fetchProductRequestByCategory,
-  fetchProductSortRequest,
-  selectProducts,
-} from "@/store/slices/productsSlice";
-import { UnknownAction } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 import { ITEM_PER_PAGE } from "@/Constants";
 import AddProductModal from "./AddProductModal";
 import { selectIsLogged } from "@/store/slices/LoginUser";
+import {
+  useProducts,
+  useProductsByCategory,
+  useProductsSorted,
+  useCategories,
+} from "@/hooks/useProducts";
 
 export default function Products(props: any) {
-  const productList = useSelector(selectProducts);
-  const dispatch = useDispatch();
   const isLogged = useSelector(selectIsLogged);
   const [filterCategory, setFilterCategory] = useState("default");
-  const [categoryList, setCategoryList] = useState([]);
-  const [onceFilter, setOnceFilter] = useState(false);
+  const [sortBy, setSortBy] = useState("");
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [pagination, setPagination] = useState(0);
 
-  function productRequest() {
-    dispatch(
-      fetchProductRequest({
-        pageSize: ITEM_PER_PAGE,
-        page: pagination,
-      }) as unknown as UnknownAction,
-    );
-  }
-  useEffect(() => {
-    productRequest();
-  }, [pagination]);
+  // La modalità attiva decide quale query usare.
+  // Categoria e ordinamento sono mutuamente esclusivi: vince l'ultimo scelto.
+  const mode =
+    sortBy.length > 0
+      ? "sorted"
+      : filterCategory !== "default"
+        ? "category"
+        : "list";
 
-  useEffect(() => {
-    fetchAllCategories().then((res) => {
-      setCategoryList(res);
-    });
-  }, []);
+  // Tre query, ma solo quella della modalità attiva è abilitata.
+  const listQuery = useProducts(ITEM_PER_PAGE, pagination, {
+    enabled: mode === "list",
+  });
+  const categoryQuery = useProductsByCategory(filterCategory, {
+    enabled: mode === "category",
+  });
+  const sortedQuery = useProductsSorted(sortBy, {
+    enabled: mode === "sorted",
+  });
 
-  useEffect(() => {
-    if (!onceFilter) {
-      dispatch(
-        fetchProductRequest({
-          pageSize: ITEM_PER_PAGE,
-          page: pagination,
-        }) as unknown as UnknownAction,
-      );
-    }
-  }, [pagination, onceFilter]);
+  const activeQuery =
+    mode === "sorted"
+      ? sortedQuery
+      : mode === "category"
+        ? categoryQuery
+        : listQuery;
 
+  const productList = activeQuery.data?.products ?? [];
+  const total = activeQuery.data?.total ?? 0;
+
+  const { data: categoryList = [] } = useCategories();
+
+  // Manteniamo il comportamento precedente: notifichiamo il parent quando
+  // cambia la lista visualizzata.
   useEffect(() => {
     if (props.onProductsListChange) {
       props.onProductsListChange(productList);
@@ -66,43 +66,18 @@ export default function Products(props: any) {
   }
 
   function filterProductsCategory(value: string) {
+    setSortBy("");
     setFilterCategory(value);
-
-    if (value === "default") {
-      setOnceFilter(false);
-      productRequest();
-    } else {
-      setOnceFilter(true);
-      dispatch(
-        fetchProductRequestByCategory({
-          categoryId: value,
-        }) as unknown as UnknownAction,
-      );
-    }
   }
 
   function filterProductSort(value: string) {
-    if (value.length > 0) {
-      setOnceFilter(true);
-      dispatch(
-        fetchProductSortRequest({
-          price: value,
-        }) as unknown as UnknownAction,
-      );
-    } else {
-      setOnceFilter(false);
-      dispatch(
-        fetchProductRequest({
-          pageSize: ITEM_PER_PAGE,
-          page: pagination,
-        }) as unknown as UnknownAction,
-      );
-    }
+    setFilterCategory("default");
+    setSortBy(value);
   }
 
   return (
     <>
-      {props.inPage && <Graphic />}
+      {props.inPage && <Graphic products={productList} />}
 
       {showAddProductModal && (
         <AddProductModal
@@ -143,7 +118,7 @@ export default function Products(props: any) {
                 >
                   <option value="default">Categoria</option>
 
-                  {categoryList.map((item, index) => (
+                  {categoryList.map((item: string, index: number) => (
                     <option key={index} value={item}>
                       {titleProcess(item.replace("-", " "))}
                     </option>
@@ -159,11 +134,12 @@ export default function Products(props: any) {
           <ProductsTable
             filterProductSort={filterProductSort}
             productList={productList}
+            total={total}
             inPage={props.inPage}
             pagination={pagination}
             setFilterCategory={setFilterCategory}
             setPagination={setPagination}
-            onceFilter={onceFilter}
+            onceFilter={mode !== "list"}
           />
         </div>
       </div>

@@ -1,11 +1,16 @@
 import Highcharts from 'highcharts'
 import { Chart, Title, XAxis, YAxis, Series } from '@highcharts/react'
 import { useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { selectProducts } from '@/store/slices/productsSlice'
-export default function Graphic() {
+import { useProducts } from '@/hooks/useProducts'
+export default function Graphic({ products }) {
 
-  const productList = useSelector(selectProducts)
+  // Se il parent passa già la lista (es. Products filtrato) la usiamo,
+  // altrimenti facciamo da soli la query base (cache condivisa, nessun fetch extra).
+  const { data } = useProducts()
+  const productList = useMemo(
+    () => products ?? data?.products ?? [],
+    [products, data]
+  )
   const date = new Date()
   const message = "Media calcolata nell'arco del " + date.getFullYear()
 

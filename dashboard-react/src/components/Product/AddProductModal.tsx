@@ -1,21 +1,19 @@
-import {
-    addProduct,
-    fetchProductsAllCategoryRequest,
-    selectAllCategory,
-    selectProducts,
-} from "@/store/slices/productsSlice";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import {
+    useProducts,
+    useCategories,
+    useAddLocalProduct,
+} from "@/hooks/useProducts";
 
 export default function AddProductModal({ show, onHide }) {
-    const dispatch = useDispatch();
-
-    const products = useSelector(selectProducts);
-    const allCategory = useSelector(selectAllCategory);
+    const productsQuery = useProducts();
+    const products = productsQuery.data?.products ?? [];
+    const { data: allCategory = [] } = useCategories();
+    const addLocalProduct = useAddLocalProduct();
 
     const [isChecked, setIsChecked] = useState(false);
     const [discount, setDiscount] = useState(0);
@@ -74,28 +72,24 @@ export default function AddProductModal({ show, onHide }) {
             return;
         }
 
-        dispatch(
-            addProduct({
-                id: products.length
-                    ? Math.max(...products.map((p) => p.id)) + 1
-                    : 1,
-                title: data.title,
-                description: data.description,
-                price: data.price,
-                category: data.category,
-                discountPercentage: isChecked ? discount : 0,
-                availabilityStatus: "In Stock",
-            })
-        );
+        // dummyjson non persiste l'aggiunta: iniettiamo il prodotto nella
+        // cache di React Query invece di invalidare (che lo farebbe sparire).
+        addLocalProduct({
+            id: products.length
+                ? Math.max(...products.map((p: any) => p.id)) + 1
+                : 1,
+            title: data.title,
+            description: data.description,
+            price: data.price,
+            category: data.category,
+            discountPercentage: isChecked ? discount : 0,
+            availabilityStatus: "In Stock",
+        });
 
         setDiscount(0);
         setIsChecked(false);
         onHide();
     }
-
-    useEffect(() => {
-        dispatch(fetchProductsAllCategoryRequest());
-    }, [dispatch]);
 
     return (
         <Modal show={show} onHide={onHide} size="lg">

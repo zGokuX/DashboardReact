@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux"
 import { ITEM_PER_PAGE } from "@/Constants"
-import { selectProductsTotal } from "@/store/slices/productsSlice"
 export default function PaginationPage({setPagination,pagination,totalUsers}) {
-    const totalProducts = useSelector(selectProductsTotal)
+    // Il totale arriva ora dal parent tramite prop (entità-agnostico),
+    // non più dallo store prodotti.
+    const totalProducts = totalUsers
 
         function setPage(currentValue, goOn) {
         console.log(currentValue, goOn)
