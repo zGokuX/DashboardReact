@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { fetchSingleUser } from "../services/requests"
 import FieldUser from "@/components/User/FieldUser"
+import { Button } from "react-bootstrap"
 
 export default function UserView() {
 
     const { userid } = useParams()
+
+    const navigate = useNavigate()
 
     const [user, setUser] = useState({})
 
@@ -40,7 +43,7 @@ export default function UserView() {
                 <hr className="my-2" />
 
                 <FieldUser user={user} />
-
+                <Button variant="danger" onClick={() => navigate("/")}>Torna indietro</Button>
             </div>
         </div>
     )

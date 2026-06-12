@@ -79,14 +79,12 @@ header .topbar-main {
   justify-content: space-between;
   align-items: center;
   background-color: var(--accent-bg-color);
-
 }
 
-header .topbar-main .btn-outline-primary{
+header .topbar-main .btn-outline-primary {
   color: #fff;
   border-color: #fff;
 }
-
 
 .container-full-width {
   display: flex;
@@ -104,6 +102,9 @@ header .topbar-main .btn-outline-primary{
 .logo-container {
   width: 200px;
   padding: 5px;
+  background-color: var(--accent-bg-color);
+  display: flex;
+  align-items: center;
 }
 
 .user-profile-container {
@@ -188,8 +189,11 @@ input {
 }
 
 .layout aside nav ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   list-style: none;
-  gap: 30px;
+  gap: 20px;
 }
 
 .layout aside nav ul li {
@@ -208,18 +212,6 @@ input {
   margin-left: 15px;
   font-size: 16px;
   color: var(--accent-text-color, white);
-}
-
-.layout aside nav ul {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  list-style: none;
-  gap: 30px;
-}
-
-.layout aside nav ul li {
-  display: flex;
 }
 
 .layout aside nav ul .fixed #link-click span::after {
@@ -237,20 +229,6 @@ input {
   margin: 0;
 }
 
-.layout aside nav ul li a {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 0;
-  width: 100%;
-}
-
-.layout aside nav ul li a i {
-  margin-left: 15px;
-  font-size: 16px;
-  color: var(--accent-text-color, white);
-}
-
 .layout aside nav ul li a span {
   flex: 1;
   padding-left: 15px;
@@ -259,14 +237,14 @@ input {
 nav {
   color: var(--accent-text-color, white);
   padding: 10px 0;
-  height: 100%;
+  height: 0 !important;
 }
 
 nav a {
   color: white;
   text-decoration: none;
   margin: 0 15px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 nav a:hover {
@@ -276,12 +254,6 @@ nav a:hover {
 .layout aside {
   width: 200px;
   background-color: var(--accent-bg-color);
-}
-
-.logo-container {
-  background-color: var(--accent-bg-color);
-  display: flex;
-  align-items: center;
 }
 
 .logo-container img {
@@ -376,13 +348,6 @@ main {
   .card-actions
   .card-action-button.revenue-per-month {
   background-color: var(--success-bg-color);
-}
-
-.statistica.container-full-width
-  .card
-  .card-title
-  .card-actions
-  .card-action-button.revenue-per-month {
   color: var(--success-text-color);
 }
 
@@ -440,7 +405,7 @@ main {
   display: table-row;
 }
 
-.container-full-width.clienti .row-list .client-info{
+.container-full-width.clienti .row-list .client-info {
   font-size: 14px;
 }
 
@@ -514,11 +479,10 @@ main {
   margin-top: 15px;
 }
 
-.clienti.container-full-width .card.client-card .client-list .client-actions button{
+.clienti.container-full-width .card.client-card .client-list .client-actions button {
   margin: auto;
   white-space:nowrap;
 }
-
 
 .clienti.container-full-width .card.client-card .custom-btn {
   color: white;
@@ -604,9 +568,6 @@ main {
   align-items: center;
   flex: 1;
   gap: 10px;
-}
-
-.search-container {
   width: 100%;
 }
 
@@ -615,7 +576,6 @@ main {
   align-items: center;
   gap: 5px;
   width: 100%;
- 
 }
 
 .area-gradient {
@@ -636,10 +596,6 @@ main {
 .card-actions nav {
   padding: 0 !important;
   margin: 0 !important;
-}
-
-nav {
-  height: 0 !important;
 }
 
 /* .clienti.container-full-width
@@ -975,6 +931,7 @@ nav {
   top: -3px;
   right: -7px;
 }
+
 .notification-user .fa-solid.fa-bell {
   font-size: 21px !important;
 }
@@ -994,8 +951,7 @@ nav {
   color: #333;
 }
 
-
-.cart-icon svg{
+.cart-icon svg {
   margin-bottom:3px;
 }
 
