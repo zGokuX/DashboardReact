@@ -18,6 +18,7 @@
   --card-bg-color: #fdfdfe;
   --text-color: #131525;
   --input-bg-color: #ebecf2;
+  --bs-body-color: #555;
 }
 
 body {
@@ -465,6 +466,9 @@ main {
 
 .clienti.container-full-width .card.client-card {
   flex: 2;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 .clienti.container-full-width
