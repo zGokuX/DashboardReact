@@ -145,7 +145,6 @@ export default function CartCheckout() {
 
                             <td></td>
                             <td></td>
-                            <td></td>
 
                             <td>
                                 <b>
