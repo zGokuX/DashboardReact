@@ -1,16 +1,17 @@
-import { BoxArrowInLeft, CartFill, GearFill, MoonFill, PersonCircle } from 'react-bootstrap-icons'
+import { BoxArrowInLeft, CartFill, GearFill, PersonCircle } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUserProduct } from '@/store/slices/productsSlice'
 import { Link } from 'react-router-dom'
-import { logOutUser, selectIsLogged, selectUserLogged } from '@/store/slices/LoginUser'
+
 import { Dropdown, DropdownButton } from 'react-bootstrap'
 import avatar2 from "../assets/avatars/2.png";
 import logo from "../assets/logosite.png";
+import { logOutUser, selectIsLogged, selectUserLoggedWithStorage } from '@/store/slices/LoginUser'
 export default function Header() {
 
   const userProduct = useSelector(selectUserProduct)
   const isLogged = useSelector(selectIsLogged)
-  const user = useSelector(selectUserLogged).UserLogged
+  const user = useSelector(selectUserLoggedWithStorage).UserLogged
   const dispatch = useDispatch()
 
   return (
@@ -68,7 +69,7 @@ export default function Header() {
                   <img src={user?.picture?.length > 0 ? user.picture : avatar2} alt='User Avatar' />
                 </div>
                 <div>
-                  <DropdownButton id='dropdown-basic-button' title={user.name} >
+                  <DropdownButton id='dropdown-basic-button' title={user?.name} >
                     <Dropdown.Item href='#/profile'  state={{ navBar: 1 }} className='d-flex gap-2 align-items-center' style={{ fontSize: "15px" }}><PersonCircle size={15} />Il mio profilo</Dropdown.Item>
                     <Dropdown.Item as={Link}
                     style={{ fontSize: "15px" }}
