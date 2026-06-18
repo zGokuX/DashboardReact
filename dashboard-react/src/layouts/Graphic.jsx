@@ -3,7 +3,9 @@ import { Chart, Title, XAxis, YAxis, Series } from '@highcharts/react'
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { selectProducts } from '@/store/slices/productsSlice'
-export default function Graphic() {
+import CardTitle from '@/components/Cart/cardTitle'
+import BigGraphic from './BigGraphic'
+export default function Graphic({inPage , ...props}) {
 
   const productList = useSelector(selectProducts)
   const date = new Date()
@@ -69,7 +71,19 @@ export default function Graphic() {
             </div>
           </div>
         </div>
+        {console.log(inPage)}
+        {!inPage &&
+        
+        <div className="clienti container-full-width">
+          <div className="card">
+            <CardTitle />
+
+            <BigGraphic />
+          </div>
+        </div>
+        }
       </div>
+
     </>
   )
 }

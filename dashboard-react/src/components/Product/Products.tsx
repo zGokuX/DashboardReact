@@ -102,7 +102,7 @@ export default function Products(props: any) {
 
   return (
     <>
-      {props.inPage && <Graphic />}
+      {props.inPage && <Graphic inPage={props.inPage}/>}
 
       {showAddProductModal && (
         <AddProductModal

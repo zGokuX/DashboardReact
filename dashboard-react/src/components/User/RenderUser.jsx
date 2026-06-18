@@ -5,7 +5,6 @@ import CartTable from '../Cart/CartTable'
 import { CaretDownFill, CaretUpFill } from 'react-bootstrap-icons'
 import { useSelector } from 'react-redux'
 import { selectIsLogged } from '@/store/slices/LoginUser'
-import RenderMoreUser from './RenderMoreUser'
 
 export function RenderUser(props) {
   const isLogged = useSelector(selectIsLogged);
@@ -67,6 +66,7 @@ export function RenderUser(props) {
               )}
               {'  '}
               {!props.inPage && (
+                <a href="#client-card">
                 <Button
                   variant='outline-primary'
                   className='filter-btn '
@@ -74,6 +74,7 @@ export function RenderUser(props) {
                 >
                   Filtra
                 </Button>
+                </a>
               )}
 
               <Link to={`/user/${item.id}`}>

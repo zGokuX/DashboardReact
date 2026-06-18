@@ -32,11 +32,11 @@ export default function DashboardView() {
         </div>
         <Graphic />
         <div className="clienti container-full-width">
-          <div className="card">
+          {/* <div className="card">
             <CardTitle />
 
             <BigGraphic />
-          </div>
+          </div> */}
           <RecentUsers onSelectUser={(user: any) => setSelectUser(user)} />
         </div>
         <div className="container-full-width">

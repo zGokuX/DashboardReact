@@ -151,7 +151,7 @@ export default function Carts(props: any) {
       )}
 
       <div className="clienti container-full-width">
-        <div className="card client-card">
+        <div id="client-card" className="card client-card">
           <CartHeader inPage={props.inPage} />
 
           <CartTable
