@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, updateUser } from "@/services/requests";
+import { addUser, fetchCartsByUserId, updateUser } from "@/services/requests";
 import UserFormModal from "./UserFormModal";
 import { Link } from "react-router-dom";
 import UserFilters from "./UserFilters";
@@ -21,6 +21,7 @@ import {
 import { selectIsLogged } from "@/store/slices/LoginUser";
 import Loading from "../LoadingGif/Loading";
 import RenderMoreUser from "./RenderMoreUser";
+import { fetchSingleCartsRequest } from "@/store/slices/cartsSlice";
 
 // Importiamo useDispatch e useSelector da react-redux per leggere e scrivere nel store globale.
 // useSelector prende i dati dallo stato Redux, mentre useDispatch serve per inviare azioni.
@@ -87,15 +88,16 @@ export default function RecentUsers(props: any) {
       setOpenedUserId(item.id);
     }
 
-    // if (!item.carts) {
-    //   fetchCartsByUserId(item.id).then((cartResponse) => {
-    //     setFilteredUsers((prev: any) =>
-    //       (prev ?? users).map((user: any) =>
-    //         user.id === item.id ? { ...user, carts: cartResponse } : user,
-    //       ),
-    //     )
-    //   })
-    // }
+    if (!item.carts) {
+      // DA SISTEMARE
+      // fetchCartsByUserId(item.id).then((cartResponse) => {
+      //   setFilteredUsers((prev: any) =>
+      //     (prev ?? users).map((user: any) =>
+      //       user.id === item.id ? { ...user, carts: cartResponse } : user,
+      //     ),
+      //   )
+      // })
+    }
   }
   console.log(filteredUsers.length);
   return (

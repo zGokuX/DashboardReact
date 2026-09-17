@@ -16,7 +16,7 @@ function CartsModal({ show, onHide, products }) {
     return (
         <Modal show={show} onHide={onHide} size='lg'>
             <Modal.Header closeButton>
-                <Modal.Title>Carts details</Modal.Title>
+                <Modal.Title>Informazioni sul carello</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className='clienti container-full-width'>

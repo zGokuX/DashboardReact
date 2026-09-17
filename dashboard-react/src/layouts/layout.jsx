@@ -43,7 +43,7 @@ export default function Layout() {
                                 </li> */}
 
                                 <li className="d-flex align-items-center">
-                                    <i class="fa-solid fa-comment me-2"></i>
+                                    <i className="fa-solid fa-comment me-2"></i>
                                     <Link to="/feeback">Feedback</Link>
                                 </li>
                             </ul>

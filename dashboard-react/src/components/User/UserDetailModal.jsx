@@ -22,7 +22,7 @@ export default function UserDetail({ show, onHide, userId }) {
 
             <Modal.Header closeButton>
                 <Modal.Title>
-                    User detail modal
+                    Informazioni dell'utente
                 </Modal.Title>
             </Modal.Header>
 

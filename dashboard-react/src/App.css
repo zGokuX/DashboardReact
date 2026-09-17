@@ -86,6 +86,11 @@ header .topbar-main .btn-outline-primary {
   border-color: #fff;
 }
 
+.container-graphic {
+  display: flex;
+  gap: 6px;
+}
+
 .container-full-width {
   display: flex;
   flex-wrap: wrap;
@@ -761,12 +766,13 @@ main {
 }
 
 .clienti.container-full-width .card .card-content .card-graphic .list-cash-y {
-  display: flex;
-  flex-direction: column;
-  white-space: nowrap;
-  font-size: 12px;
-  margin-left: 10px;
-  justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 10px;
+    justify-content: space-around;
 }
 
 .clienti.container-full-width
